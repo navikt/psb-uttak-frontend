@@ -1,0 +1,9 @@
+{
+    "app": "uttak-frontend",
+    "cluster": "dev-fss",
+    "namespace": "pleiepenger",
+    "team": "pleiepenger",
+    "minReplicas": "1",
+    "maxReplicas": "2",
+    "ingresses": ["https://uttak-frontend.dev.adeo.no", "https://uttak-frontend.intern.dev.adeo.no"]
+}

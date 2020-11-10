@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Uttak frontend</title>
+
+        <style>
+            body {
+                font-family: 'Source Sans Pro', Arial, sans-serif;
+                font-size: 1rem;
+            }
+
+            .skjemagruppe__legend {
+                font-size: 1rem !important;
+                font-weight: 600 !important;
+                margin-bottom: 0.5rem !important;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script type="text/javascript">
+            setTimeout(() => {
+                window.renderUttakApp('app');
+            }, 300);
+        </script>
+    </body>
+</html>
