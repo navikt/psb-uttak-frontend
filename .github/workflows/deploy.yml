@@ -8,7 +8,7 @@ on:
         branches:
             - main
 env:
-    IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/uttak-frontend
+    IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/pleiepenger-barn-uttak-frontend
     CLUSTER: dev-fss
     NAMESPACE: default
 jobs:
@@ -82,7 +82,7 @@ jobs:
                       ```
                       <script
                         type="text/javascript"
-                        src="https://uttak-frontend.dev.adeo.no/${{ env.VERSION }}/app.js"
+                        src="https://pleiepenger-barn-uttak-frontend.dev.adeo.no/${{ env.VERSION }}/app.js"
                         integrity="sha384-${{ env.JS_HASH }}"
                         crossorigin="anonymous"
                       ></script>
@@ -92,7 +92,7 @@ jobs:
                       ```
                       <link
                         rel="stylesheet"
-                        href="https://uttak-frontend.dev.adeo.no/${{ env.VERSION }}/styles.css"
+                        href="https://pleiepenger-barn-uttak-frontend.dev.adeo.no/${{ env.VERSION }}/styles.css"
                         integrity="sha384-${{ env.CSS_HASH }}"
                         crossorigin="anonymous"
                       >
