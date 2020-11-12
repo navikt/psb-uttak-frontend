@@ -1,6 +1,7 @@
 .expanded {
     display: flex;
-    margin: 1.5rem;
+    padding: 1.5rem;
+    border: 1px solid #b7b1a9;
 
     &__column {
         width: 45%;
@@ -17,4 +18,20 @@
     &__content {
         margin: 1.5rem 0;
     }
+}
+
+.headerColumn {
+    border: none;
+}
+
+.expandButton {
+    border: none;
+
+    &--expanded {
+        transform: rotate(180deg);
+    }
+}
+
+:global .ReactCollapse--collapse {
+    transition: height 500ms;
 }

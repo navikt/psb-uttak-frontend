@@ -1,5 +1,4 @@
 import * as React from 'react';
-import styles from './fullWidthRow.less';
 
 interface FullWidthRowProps {
     children: React.ReactNode;
@@ -7,9 +6,7 @@ interface FullWidthRowProps {
 
 const FullWidthRow = ({ children }: FullWidthRowProps): JSX.Element => (
     <tr>
-        <td colSpan={6}>
-            <div className={styles.fullWidthRow}>{children}</div>
-        </td>
+        <td colSpan={6}>{children}</td>
     </tr>
 );
 
