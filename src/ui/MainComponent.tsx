@@ -31,7 +31,7 @@ const MainComponent = (): JSX.Element => {
             velgPeriodeIndex(index);
         }
     };
-    const headers = ['Periode', 'Utfall/status', 'Ant. personer', 'Hvem har uttak', 'Uttaksgrad'];
+    const headers = ['Uttaksperiode', 'Inngangsvilkår', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
     return (
         <div>
             <Table

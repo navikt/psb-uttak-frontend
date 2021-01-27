@@ -7,6 +7,7 @@
         "start": "node ./server.js",
         "build": "webpack --config webpack/webpack-config.production.js",
         "dev": "node webpack/webpack-config.development.js",
+        "api-mock": "ts-node mock/api-mock.ts",
         "version": "node ./version.js",
         "lint": "eslint 'src/**/*.{ts,tsx,js,jsx}'"
     },
@@ -48,6 +49,7 @@
         "stylelint-order": "^4.1.0",
         "stylelint-prettier": "^1.1.2",
         "terser-webpack-plugin": "^5.0.0",
+        "ts-node": "^9.1.1",
         "typescript": "^4.0.3",
         "webpack": "^5.1.3",
         "webpack-cli": "^4.1.0",
