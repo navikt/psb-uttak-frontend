@@ -2,12 +2,12 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import * as React from 'react';
 import { Collapse } from 'react-collapse';
 import uttaksperiodeMock from '../mock/uttaksperiodeMock';
-import { formatDate } from '../util/dateUtils';
 import ChevronIcon from './components/icons/ChevronIcon';
 import { TableColumn } from './components/table';
 import FullWidthRow from './components/table/FullWidthRow';
 import Table from './components/table/Table';
 import TableRow from './components/table/TableRow';
+import { prettifyDate } from '../util/dateUtils';
 import styles from './main.less';
 
 export const UtfallEnum = {
@@ -18,7 +18,7 @@ export const UtfallEnum = {
 
 const periodevisning = (periode: string): string => {
     const [fom, tom] = periode.split('/');
-    return `${formatDate(fom)} - ${formatDate(tom)}`;
+    return `${prettifyDate(fom)} - ${prettifyDate(tom)}`;
 };
 
 const MainComponent = (): JSX.Element => {

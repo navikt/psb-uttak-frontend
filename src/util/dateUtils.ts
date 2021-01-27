@@ -1,3 +1,8 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 
-export const formatDate = (date: string): string => moment(date, 'YYYY-MM-DD').format('DD.MM.YYYY');
+dayjs.extend(utc);
+
+export const prettifyDate = (date: string) => {
+    return dayjs(date).utc(true).format('DD.MM.YYYY');
+};
