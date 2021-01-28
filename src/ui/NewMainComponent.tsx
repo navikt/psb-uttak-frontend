@@ -41,8 +41,6 @@ const NewMainComponent = ({ aktivBehandlingUuid, uttaksperioderUrl }: NewMainCom
         };
     }, [aktivBehandlingUuid]);
 
-    console.log(uttaksperioder);
-
     return (
         <PageContainer
             isLoading={isLoading}
