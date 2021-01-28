@@ -4,35 +4,37 @@ import * as React from 'react';
 import { Collapse } from 'react-collapse';
 import Parter from '../../../constants/Parter';
 import Utfall from '../../../constants/Utfall';
+import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import { prettifyDate } from '../../../util/dateUtils';
+import Vilkårsliste from '../../../vilkårsliste/Vilkårsliste';
 import ChevronIcon from '../icons/ChevronIcon';
 import GreenCheckIconFilled from '../icons/GreenCheckIconFilled';
 import OnePersonIconBlue from '../icons/OnePersonIconBlue';
 import RedCrossIconFilled from '../icons/RedCrossIconFilled';
-import TableColumn from '../table/TableColumn';
 import FullWidthRow from '../table/FullWidthRow';
+import TableColumn from '../table/TableColumn';
 import TableRow from '../table/TableRow';
 import styles from './uttak.less';
-import VilkårslisteItem from '../../../vilkårsliste/VilkårslisteItem';
-import Vilkårsliste from '../../../vilkårsliste/Vilkårsliste';
+import { Period } from '../../../types/Period';
 
 const cx = classNames.bind(styles);
 
-const periodevisning = (periode: string): string => {
-    const [fom, tom] = periode.split('/');
-    return `${prettifyDate(fom)} - ${prettifyDate(tom)}`;
+const periodevisning = (periode: Period): string => {
+    return `${prettifyDate(periode.fom)} - ${prettifyDate(periode.tom)}`;
 };
 
 interface UttakProps {
-    uttak: any;
+    uttak: Uttaksperiode;
     erValgt: boolean;
     velgPeriode: () => void;
 }
 
 const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
-    const { periode, antallPersoner, mottaker, uttaksgrad, utfall } = uttak;
-    const prosentPleiebehov = antallPersoner.match(/\d/g)?.join('');
-    const harPleiebehov = prosentPleiebehov > 0;
+    const { periode, uttaksgrad, utfall } = uttak;
+    const pleiebehov = '100%'; // TODO
+    const mottaker = 'Søker'; // TODO
+    const prosentPleiebehov = pleiebehov.match(/\d/g)?.join('');
+    const harPleiebehov = +prosentPleiebehov > 0;
 
     const uttakCls = cx({
         uttak__avslått: uttaksgrad === 0,
@@ -59,7 +61,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                     <div className={styles.uttak__iconContainer}>
                         {harPleiebehov ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
                     </div>
-                    {antallPersoner}
+                    {pleiebehov}
                 </TableColumn>
                 <TableColumn>{mottaker === Parter.SØKER && <OnePersonIconBlue />}</TableColumn>
 
