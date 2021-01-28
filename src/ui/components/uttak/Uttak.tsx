@@ -9,10 +9,12 @@ import ChevronIcon from '../icons/ChevronIcon';
 import GreenCheckIconFilled from '../icons/GreenCheckIconFilled';
 import OnePersonIconBlue from '../icons/OnePersonIconBlue';
 import RedCrossIconFilled from '../icons/RedCrossIconFilled';
-import { TableColumn } from '../table';
+import TableColumn from '../table/TableColumn';
 import FullWidthRow from '../table/FullWidthRow';
 import TableRow from '../table/TableRow';
 import styles from './uttak.less';
+import VilkårslisteItem from '../../../vilkårsliste/VilkårslisteItem';
+import Vilkårsliste from '../../../vilkårsliste/Vilkårsliste';
 
 const cx = classNames.bind(styles);
 
@@ -36,6 +38,13 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
         uttak__avslått: uttaksgrad === 0,
         uttak__innvilget: uttaksgrad > 0,
     });
+    const vilkårsliste = [
+        { vilkår: 'Søknadsfrist', erOppfylt: true },
+        { vilkår: 'Søkers alder', erOppfylt: true },
+        { vilkår: 'Omsorgen for', erOppfylt: false },
+        { vilkår: 'Barnets alder', erOppfylt: true },
+        { vilkår: 'Sykdom', erOppfylt: true },
+    ];
     return (
         <>
             <TableRow className={erValgt ? styles.uttak__expandedRow : ''}>
@@ -73,11 +82,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                 <Collapse isOpened={erValgt}>
                     <div className={styles.expanded}>
                         <div className={styles.expanded__column}>
-                            <Element className={styles.expanded__heading}>Gradering mot tilsyn</Element>
-                            <div className={styles.expanded__content}>
-                                <p>100 % - 40 % tilsyn = 60 % pleiepenger </p>
-                                <p>Antall timer tilsynsordning?</p>
-                            </div>
+                            <Vilkårsliste vilkårsliste={vilkårsliste} />
                         </div>
                         <div className={styles.expanded__column}>
                             <Element className={styles.expanded__heading}>Avkorting mot arbeid</Element>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import uttaksperiodeMock from '../mock/uttaksperiodeMock';
-import { TableColumn } from './components/table';
+import TableColumn from './components/table/TableColumn';
 import Table from './components/table/Table';
 import Uttak from './components/uttak/Uttak';
 import styles from './main.less';
