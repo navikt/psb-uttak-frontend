@@ -1,15 +1,13 @@
-import React, { ReactNode, FunctionComponent } from 'react';
 import classnames from 'classnames/bind';
-
+import React, { FunctionComponent, ReactNode } from 'react';
 import styles from './tableRow.less';
-import { UtfallEnum } from '../../MainComponent';
 
 const classNames = classnames.bind(styles);
 
 interface OwnProps {
     isHeader?: boolean;
     children: ReactNode | ReactNode[];
-    utfall?: string;
+    className?: string;
 }
 
 /**
@@ -17,14 +15,12 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Tabellrad som brukes av komponenten Table.
  */
-const TableRow: FunctionComponent<OwnProps> = ({ isHeader = false, children, utfall }) => {
+const TableRow: FunctionComponent<OwnProps> = ({ isHeader = false, children, className }) => {
     return (
         <tr
-            className={classNames({
+            className={classNames(className, {
                 rowHeader: isHeader,
                 rowContent: !isHeader,
-                border__success: utfall === UtfallEnum.INNVILGET,
-                border__alert: utfall === UtfallEnum.AVSLÅTT,
             })}
         >
             {children}

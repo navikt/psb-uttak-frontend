@@ -1,0 +1,54 @@
+.expanded {
+    display: flex;
+    padding: 1.5rem;
+    border: 1px solid #b7b1a9;
+    border-top: none;
+
+    &__column {
+        width: 45%;
+
+        &:first-of-type {
+            margin-right: 3.125rem;
+        }
+    }
+
+    &__heading {
+        border-bottom: 1px solid #b7b1a9;
+    }
+
+    &__content {
+        margin: 1.5rem 0;
+    }
+}
+
+.uttak {
+    &__expandButton {
+        border: none;
+        background: none;
+
+        &--expanded {
+            transform: rotate(180deg);
+        }
+    }
+    &__avslått {
+        background: #f1d8d4;
+    }
+
+    &__innvilget {
+        background: #cde7d8;
+    }
+
+    &__iconContainer {
+        display: inline-block;
+        vertical-align: bottom;
+        margin-right: 0.625rem;
+    }
+
+    &__expandedRow {
+        background: #f1f1f1;
+    }
+}
+
+:global .ReactCollapse--collapse {
+    transition: height 500ms;
+}
