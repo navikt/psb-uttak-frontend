@@ -1,7 +1,7 @@
 import React from 'react';
 import Tabs from 'nav-frontend-tabs';
-import Uttaksperiode from '../../../types/Uttaksperiode';
 import UttaksperiodeListe from '../uttaksperiode-liste/UttaksperiodeListe';
+import { Uttaksperiode } from '../../../types/Uttaksperiode';
 
 interface UttaksperiodePageProps {
     uttaksperioder: Uttaksperiode[];

@@ -2,8 +2,9 @@ import React from 'react';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import PageContainer from './components/page-container/PageContainer';
 import UttaksperiodePage from './components/uttaksperiode-page/UttaksperiodePage';
-import Uttaksperiode from '../types/Uttaksperiode';
 import { hentUttaksperioder } from '../util/http';
+import UttaksperioderResponse from '../types/UttaksperioderResponse';
+import lagUttaksperiodeliste from '../util/uttaksperioder';
 
 interface NewMainComponentProps {
     aktivBehandlingUuid: string;
@@ -15,8 +16,8 @@ const NewMainComponent = ({ aktivBehandlingUuid, uttaksperioderUrl }: NewMainCom
     const [errorMessage, setErrorMessage] = React.useState('');
     const [uttaksperioder, setUttaksperioder] = React.useState([]);
 
-    const responseHandler = ({ data }: AxiosResponse<Uttaksperiode[]>) => {
-        setUttaksperioder(data);
+    const responseHandler = ({ data }: AxiosResponse<UttaksperioderResponse>) => {
+        setUttaksperioder(lagUttaksperiodeliste(data));
         setIsLoading(false);
     };
 
@@ -39,6 +40,8 @@ const NewMainComponent = ({ aktivBehandlingUuid, uttaksperioderUrl }: NewMainCom
             httpCanceler.cancel();
         };
     }, [aktivBehandlingUuid]);
+
+    console.log(uttaksperioder);
 
     return (
         <PageContainer

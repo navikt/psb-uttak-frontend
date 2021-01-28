@@ -1,4 +1,6 @@
-export default {
+import UttaksperioderResponse from '../types/UttaksperioderResponse';
+
+const uttaksperioderResponse: UttaksperioderResponse = {
     perioder: {
         '2024-01-01/2024-01-31': {
             utfall: 'INNVILGET',
@@ -8,8 +10,6 @@ export default {
                     arbeidsforhold: {
                         type: 'arbeidsgiver',
                         organisasjonsnummer: 'HER_ER_ORGNUMMERET',
-                        aktørId: null,
-                        arbeidsforholdId: null,
                     },
                     utbetalingsgrad: 100,
                 },
@@ -26,8 +26,6 @@ export default {
                     arbeidsforhold: {
                         type: 'arbeidsgiver',
                         organisasjonsnummer: 'HER_ER_ORGNUMMERET',
-                        aktørId: null,
-                        arbeidsforholdId: null,
                     },
                     utbetalingsgrad: 100,
                 },
@@ -38,3 +36,5 @@ export default {
         },
     },
 };
+
+export default uttaksperioderResponse;

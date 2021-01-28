@@ -1,5 +1,5 @@
 import React from 'react';
-import Uttaksperiode from '../../../types/Uttaksperiode';
+import { Uttaksperiode } from '../../../types/Uttaksperiode';
 
 interface UttaksperiodeListeProps {
     uttaksperioder: Uttaksperiode[];
