@@ -9,7 +9,8 @@ interface UttakUtregningProps {
 
 const UttakUtregning = ({ heading, children }: UttakUtregningProps): JSX.Element => (
     <div className={styles.uttakUtregning}>
-        <Element className={styles.uttakUtregning__heading}>{heading}</Element>
+        <Element>{heading}</Element>
+        <hr />
         {children}
     </div>
 );
