@@ -12,20 +12,36 @@ const formatUtbetalingsgrader = (utbetalingsgrader: Utbetalingsgrad[]) =>
         </p>
     ));
 
+const getAvslagsetiketter = (uttaksgrad: number) => {
+    const harUtilstrekkeligUttak = uttaksgrad < 20;
+    const harUtilstrekkeligTaptArbeidstid = 1 < 20; // TODO
+
+    return (
+        <>
+            {harUtilstrekkeligUttak && (
+                <EtikettAdvarsel className={styles.uttakDetaljer__etikett}>
+                    Årsak for avslag: Søker må ha minst 20 % tilgjengelig uttak.
+                </EtikettAdvarsel>
+            )}
+            {harUtilstrekkeligTaptArbeidstid && (
+                <EtikettAdvarsel className={styles.uttakDetaljer__etikett}>
+                    Årsak for avslag: Søker må ha minst 20 % tapt arbeidstid.
+                </EtikettAdvarsel>
+            )}
+        </>
+    );
+};
+
 interface UttakDetaljerProps {
     uttak: Uttaksperiode;
 }
 
 const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
-    const { utbetalingsgrader } = uttak;
+    const { utbetalingsgrader, uttaksgrad } = uttak;
+
     return (
         <div className={styles.uttakDetaljer}>
-            <EtikettAdvarsel className={styles.uttakDetaljer__etikett}>
-                Årsak for avslag: Søker må ha minst 20 % tilgjengelig uttak.
-            </EtikettAdvarsel>
-            <EtikettAdvarsel className={styles.uttakDetaljer__etikett}>
-                Årsak for avslag: Søker må ha minst 20 % tapt arbeidstid.
-            </EtikettAdvarsel>
+            {getAvslagsetiketter(uttaksgrad)}
             <div className={styles.uttakDetaljer__grid}>
                 <UttakUtregning heading="Gradering mot tilsyn">
                     <p>Data her...</p>
