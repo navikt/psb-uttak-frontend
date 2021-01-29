@@ -1,4 +1,5 @@
 import { Period } from './Period';
+import Utbetalingsgrad from './Utbetalingsgrad';
 
 export interface Uttaksperiodeelement {
     utfall: 'INNVILGET' | 'AVSLÅTT';
@@ -6,13 +7,7 @@ export interface Uttaksperiodeelement {
     årsak: 'FULL_DEKNING'[];
     kildeBehandlingUUID: string;
     knekkpunktTyper: string[];
-    utbetalingsgrader: {
-        arbeidsforhold: {
-            type: 'arbeidsgiver';
-            organisasjonsnummer: string;
-        };
-        utbetalingsgrad: number;
-    }[];
+    utbetalingsgrader: Utbetalingsgrad[];
 }
 
 export interface Uttaksperiode extends Uttaksperiodeelement {

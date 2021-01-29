@@ -9,6 +9,8 @@ interface UttaksperiodeListeProps {
     uttaksperioder: Uttaksperiode[];
 }
 
+const headers = ['Uttaksperiode', 'Inngangsvilkår', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
+
 const UttaksperiodeListe = (props: UttaksperiodeListeProps) => {
     const [valgtPeriodeIndex, velgPeriodeIndex] = React.useState<number>();
     const { uttaksperioder } = props;
@@ -20,7 +22,6 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps) => {
             velgPeriodeIndex(index);
         }
     };
-    const headers = ['Uttaksperiode', 'Inngangsvilkår', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
     return (
         <div style={{ maxWidth: '961px' }}>
             <Table

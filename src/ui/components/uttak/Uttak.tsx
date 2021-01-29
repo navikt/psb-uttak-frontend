@@ -1,9 +1,10 @@
 import classNames from 'classnames/bind';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import * as React from 'react';
 import { Collapse } from 'react-collapse';
 import Parter from '../../../constants/Parter';
 import Utfall from '../../../constants/Utfall';
+import { Period } from '../../../types/Period';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import { prettifyDate } from '../../../util/dateUtils';
 import Vilkårsliste from '../../../vilkårsliste/Vilkårsliste';
@@ -14,8 +15,8 @@ import RedCrossIconFilled from '../icons/RedCrossIconFilled';
 import FullWidthRow from '../table/FullWidthRow';
 import TableColumn from '../table/TableColumn';
 import TableRow from '../table/TableRow';
+import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 import styles from './uttak.less';
-import { Period } from '../../../types/Period';
 
 const cx = classNames.bind(styles);
 
@@ -83,16 +84,9 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
             <FullWidthRow>
                 <Collapse isOpened={erValgt}>
                     <div className={styles.expanded}>
-                        <div className={styles.expanded__column}>
-                            <Vilkårsliste vilkårsliste={vilkårsliste} />
-                        </div>
-                        <div className={styles.expanded__column}>
-                            <Element className={styles.expanded__heading}>Avkorting mot arbeid</Element>
-                            <div className={styles.expanded__content}>
-                                <p>Arbeidsgiver 1: jobber 27 %</p>
-                                <p>Arbeidsgiver 2: jobber 30 %</p>
-                                <p>100 % - 57 % arbeid = 43 % pleiepenger</p>
-                            </div>
+                        <Vilkårsliste vilkårsliste={vilkårsliste} />
+                        <div style={{ marginTop: '3rem' }}>
+                            <UttakDetaljer uttak={uttak} />
                         </div>
                     </div>
                 </Collapse>
