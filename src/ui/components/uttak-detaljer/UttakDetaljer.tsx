@@ -43,7 +43,7 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
         <div className={styles.uttakDetaljer}>
             {getAvslagsetiketter(uttaksgrad)}
             <div className={styles.uttakDetaljer__grid}>
-                <UttakUtregning heading="Gradering mot tilsyn">
+                <UttakUtregning heading="Gradering mot tilsyn" highlight>
                     <p>Data her...</p>
                 </UttakUtregning>
                 <UttakUtregning heading="Avkorting mot arbeid">

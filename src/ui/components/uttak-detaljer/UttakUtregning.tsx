@@ -1,18 +1,31 @@
+import classNames from 'classnames/bind';
 import { Element } from 'nav-frontend-typografi';
 import * as React from 'react';
+import GreenCheckIcon from '../icons/GreenCheckIcon';
 import styles from './uttakUtregning.less';
+
+const cx = classNames.bind(styles);
 
 interface UttakUtregningProps {
     heading: string;
     children: React.ReactNode;
+    highlight?: boolean;
 }
 
-const UttakUtregning = ({ heading, children }: UttakUtregningProps): JSX.Element => (
-    <div className={styles.uttakUtregning}>
-        <Element>{heading}</Element>
-        <hr />
-        {children}
-    </div>
-);
+const UttakUtregning = ({ heading, children, highlight }: UttakUtregningProps): JSX.Element => {
+    const uttakUtregningCls = cx('uttakUtregning', {
+        'uttakUtregning--highlighted': highlight,
+    });
+    return (
+        <div className={uttakUtregningCls}>
+            <Element className={styles.uttakUtregning__heading}>
+                {highlight && <GreenCheckIcon size={19} />}
+                {heading}
+            </Element>
+            <hr />
+            {children}
+        </div>
+    );
+};
 
 export default UttakUtregning;
