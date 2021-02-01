@@ -2,37 +2,57 @@ import UttaksperioderResponse from '../types/UttaksperioderResponse';
 
 const uttaksperioderResponse: UttaksperioderResponse = {
     perioder: {
-        '2024-01-01/2024-01-31': {
+        '2020-01-01/2020-01-04': {
             utfall: 'INNVILGET',
             uttaksgrad: 100,
             utbetalingsgrader: [
                 {
                     arbeidsforhold: {
                         type: 'arbeidsgiver',
-                        organisasjonsnummer: 'HER_ER_ORGNUMMERET',
+                        organisasjonsnummer: '123456789',
+                        aktørId: null,
+                        arbeidsforholdId: null,
                     },
+                    normalArbeidstid: 'PT7H30M',
+                    faktiskArbeidstid: 'PT0S',
                     utbetalingsgrad: 100,
                 },
             ],
             årsak: ['FULL_DEKNING'],
+            graderingMotTilsyn: {
+                pleiebehov: 100,
+                etablertTilsyn: 0,
+                andreSøkeresTilsyn: 0,
+                tilgjengeligForSøker: 100,
+            },
             knekkpunktTyper: [],
-            kildeBehandlingUUID: 'HER_ER_BEHANDLINGSIDEN',
+            kildeBehandlingUUID: 'BEHANDLINGSID HER',
         },
-        '2024-06-01/2024-06-15': {
+        '2020-01-05/2020-01-15': {
             utfall: 'INNVILGET',
-            uttaksgrad: 50,
+            uttaksgrad: 100,
             utbetalingsgrader: [
                 {
                     arbeidsforhold: {
                         type: 'arbeidsgiver',
-                        organisasjonsnummer: 'HER_ER_ORGNUMMERET',
+                        organisasjonsnummer: '123456789',
+                        aktørId: null,
+                        arbeidsforholdId: null,
                     },
+                    normalArbeidstid: 'PT7H30M',
+                    faktiskArbeidstid: 'PT0S',
                     utbetalingsgrad: 100,
                 },
             ],
             årsak: ['FULL_DEKNING'],
+            graderingMotTilsyn: {
+                pleiebehov: 100,
+                etablertTilsyn: 0,
+                andreSøkeresTilsyn: 0,
+                tilgjengeligForSøker: 100,
+            },
             knekkpunktTyper: [],
-            kildeBehandlingUUID: 'HER_ER_BEHANDLINGSIDEN',
+            kildeBehandlingUUID: 'BEHANDLINGSID HER',
         },
     },
 };
