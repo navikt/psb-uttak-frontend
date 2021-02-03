@@ -17,7 +17,7 @@ const formatUtbetalingsgrader = (utbetalingsgrader: Utbetalingsgrad[]) =>
 
 const getAvslagsetiketter = (uttaksgrad: number) => {
     const harUtilstrekkeligUttak = uttaksgrad < 20;
-    const harUtilstrekkeligTaptArbeidstid = 1 < 20; // TODO
+    const harUtilstrekkeligTaptArbeidstid = 100 < 20; // TODO
 
     return (
         <>

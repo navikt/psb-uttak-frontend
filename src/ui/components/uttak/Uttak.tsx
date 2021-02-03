@@ -84,10 +84,8 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
             <FullWidthRow>
                 <Collapse isOpened={erValgt}>
                     <div className={styles.expanded}>
-                        <Vilkårsliste vilkårsliste={vilkårsliste} />
-                        <div style={{ marginTop: '3rem' }}>
-                            <UttakDetaljer uttak={uttak} />
-                        </div>
+                        {utfall === Utfall.AVSLÅTT && <Vilkårsliste vilkårsliste={vilkårsliste} />}
+                        {utfall === Utfall.INNVILGET && <UttakDetaljer uttak={uttak} />}
                     </div>
                 </Collapse>
             </FullWidthRow>

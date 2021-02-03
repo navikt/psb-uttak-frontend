@@ -29,7 +29,7 @@ const uttaksperioderResponse: UttaksperioderResponse = {
             kildeBehandlingUUID: 'BEHANDLINGSID HER',
         },
         '2020-01-05/2020-01-15': {
-            utfall: 'INNVILGET',
+            utfall: 'AVSLÅTT',
             uttaksgrad: 100,
             utbetalingsgrader: [
                 {
