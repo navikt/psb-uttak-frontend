@@ -1,17 +1,17 @@
 import { EtikettAdvarsel } from 'nav-frontend-etiketter';
+import { Element } from 'nav-frontend-typografi';
 import * as React from 'react';
+import GraderingMotTilsyn from '../../../types/GraderingMotTilsyn';
+import Utbetalingsgrad from '../../../types/Utbetalingsgrad';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
+import { beregnDagerTimer } from '../../../util/dateUtils';
 import styles from './uttakDetaljer.less';
 import UttakUtregning from './UttakUtregning';
-import Utbetalingsgrad from '../../../types/Utbetalingsgrad';
-import GraderingMotTilsyn from '../../../types/GraderingMotTilsyn';
-import { Element } from 'nav-frontend-typografi';
-import { beregnDagerTimer } from '../../../util/dateUtils';
 
 const formatUtbetalingsgrader = (utbetalingsgrader: Utbetalingsgrad[]) =>
-    utbetalingsgrader.map((utbetalingsgrad) => (
-        <p key={utbetalingsgrad.arbeidsforhold.organisasjonsnummer}>
-            {`${utbetalingsgrad.arbeidsforhold.type}: ${utbetalingsgrad.utbetalingsgrad} %`}
+    utbetalingsgrader.map((utbetalingsgrad, index) => (
+        <p className={styles.uttakDetaljer__data} key={utbetalingsgrad.arbeidsforhold.organisasjonsnummer}>
+            {`Arbeidsgiver ${index + 1}: ${utbetalingsgrad.utbetalingsgrad} %`}
         </p>
     ));
 
@@ -39,11 +39,11 @@ const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn) => {
     const { pleiebehov, etablertTilsyn, andreSøkeresTilsyn, tilgjengeligForSøker } = graderingMotTilsyn;
     return (
         <div className={styles.uttakDetaljer__graderingMotTilsyn}>
-            <p className={styles.uttakDetaljer__data}>{`Pleiebehov: ${pleiebehov}%`}</p>
-            <p className={styles.uttakDetaljer__data}>{`- Etablert tilsyn: ${etablertTilsyn}%`}</p>
-            <p className={styles.uttakDetaljer__data}>{`- Andre søkeres tilsyn: ${andreSøkeresTilsyn}%`}</p>
-            <hr />
-            <p>{`= ${tilgjengeligForSøker}% tilgjengelig for søker`}</p>
+            <p className={styles.uttakDetaljer__data}>{`Pleiebehov: ${pleiebehov} %`}</p>
+            <p className={styles.uttakDetaljer__data}>{`- Etablert tilsyn: ${etablertTilsyn} %`}</p>
+            <p className={styles.uttakDetaljer__data}>{`- Andre søkeres tilsyn: ${andreSøkeresTilsyn} %`}</p>
+            <hr className={styles.uttakDetaljer__separator} />
+            <p className={styles.uttakDetaljer__sum}>{`= ${tilgjengeligForSøker} % tilgjengelig for søker`}</p>
         </div>
     );
 };
@@ -54,7 +54,7 @@ const formatAvkortingMotArbeid = (utbetalingsgrader: Utbetalingsgrad[]) => {
             {utbetalingsgrader.map((utbetalingsgrad, index) => (
                 <div>
                     <Element className={styles.uttakDetaljer__avkortingMotArbeid__heading}>
-                        {`Arbeidsgiver ${index + 1}`}
+                        {`Arbeidsgiver ${index + 1}:`}
                     </Element>
                     <p className={styles.uttakDetaljer__data}>
                         {`Normal arbeidstid: ${beregnDagerTimer(utbetalingsgrad.normalArbeidstid)} timer`}
@@ -62,10 +62,19 @@ const formatAvkortingMotArbeid = (utbetalingsgrader: Utbetalingsgrad[]) => {
                     <p className={styles.uttakDetaljer__data}>
                         {`Faktisk arbeidstid: ${beregnDagerTimer(utbetalingsgrad.faktiskArbeidstid)} timer`}
                     </p>
-                    <p className={styles.uttakDetaljer__avkortingMotArbeid__inntektstap}>Søker inntektstap: 50%</p>
+                    <p className={styles.uttakDetaljer__sum}>Søker inntektstap: 50 %</p>
                 </div>
             ))}
         </div>
+    );
+};
+
+const formatOppsummering = (søkerBerOmMaksimalt: number, uttaksgrad: number) => {
+    return (
+        <>
+            <p className={styles.uttakDetaljer__data}>{`Søker ber om maksimalt: ${søkerBerOmMaksimalt} %`}</p>
+            <p className={styles.uttakDetaljer__data}>{`Søker får: ${uttaksgrad} %`}</p>
+        </>
     );
 };
 
@@ -74,7 +83,7 @@ interface UttakDetaljerProps {
 }
 
 const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
-    const { utbetalingsgrader, uttaksgrad, graderingMotTilsyn } = uttak;
+    const { utbetalingsgrader, uttaksgrad, graderingMotTilsyn, søkerBerOmMaksimalt } = uttak;
 
     return (
         <div className={styles.uttakDetaljer}>
@@ -88,7 +97,7 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
                 </UttakUtregning>
                 <UttakUtregning heading="Utbetalingsgrad">{formatUtbetalingsgrader(utbetalingsgrader)}</UttakUtregning>
                 <UttakUtregning heading="Oppsummering">
-                    <p>Data her...</p>
+                    {formatOppsummering(søkerBerOmMaksimalt, uttaksgrad)}
                 </UttakUtregning>
             </div>
         </div>

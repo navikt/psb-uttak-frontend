@@ -1,6 +1,6 @@
 enum Utfall {
-    INNVILGET = 'INNVILGET',
-    AVSLÅTT = 'AVSLÅTT',
+    OPPFYLT = 'OPPFYLT',
+    IKKE_OPPFYLT = 'IKKE_OPPFYLT',
 }
 
 export default Utfall;

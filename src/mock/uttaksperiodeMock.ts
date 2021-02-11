@@ -1,9 +1,11 @@
 import UttaksperioderResponse from '../types/UttaksperioderResponse';
+import Utfall from '../constants/Utfall';
+import AnnenPart from '../constants/AnnenPart';
 
 const uttaksperioderResponse: UttaksperioderResponse = {
     perioder: {
         '2020-01-01/2020-01-04': {
-            utfall: 'INNVILGET',
+            utfall: Utfall.OPPFYLT,
             uttaksgrad: 100,
             utbetalingsgrader: [
                 {
@@ -18,7 +20,14 @@ const uttaksperioderResponse: UttaksperioderResponse = {
                     utbetalingsgrad: 100,
                 },
             ],
+            søkerBerOmMaksimalt: 100,
             årsak: ['FULL_DEKNING'],
+            inngangsvilkår: [
+                {
+                    inngangsvilkårkode: '123',
+                    utfall: Utfall.OPPFYLT,
+                },
+            ],
             graderingMotTilsyn: {
                 pleiebehov: 100,
                 etablertTilsyn: 0,
@@ -26,11 +35,12 @@ const uttaksperioderResponse: UttaksperioderResponse = {
                 tilgjengeligForSøker: 100,
             },
             knekkpunktTyper: [],
-            kildeBehandlingUUID: 'BEHANDLINGSID HER',
+            kildeBehandlingUUID: '8994463a-c3df-4ce5-a0f1-ee733e20b50e',
+            annenPart: AnnenPart.ALENE,
         },
         '2020-01-05/2020-01-15': {
-            utfall: 'AVSLÅTT',
-            uttaksgrad: 100,
+            utfall: Utfall.IKKE_OPPFYLT,
+            uttaksgrad: 0,
             utbetalingsgrader: [
                 {
                     arbeidsforhold: {
@@ -44,7 +54,14 @@ const uttaksperioderResponse: UttaksperioderResponse = {
                     utbetalingsgrad: 100,
                 },
             ],
+            søkerBerOmMaksimalt: 100,
             årsak: ['FULL_DEKNING'],
+            inngangsvilkår: [
+                {
+                    inngangsvilkårkode: '123',
+                    utfall: Utfall.OPPFYLT,
+                },
+            ],
             graderingMotTilsyn: {
                 pleiebehov: 100,
                 etablertTilsyn: 0,
@@ -52,7 +69,8 @@ const uttaksperioderResponse: UttaksperioderResponse = {
                 tilgjengeligForSøker: 100,
             },
             knekkpunktTyper: [],
-            kildeBehandlingUUID: 'BEHANDLINGSID HER',
+            kildeBehandlingUUID: 'a378b91c-37ab-4264-bad8-66eadddad1a8',
+            annenPart: AnnenPart.MED_ANDRE,
         },
     },
 };
