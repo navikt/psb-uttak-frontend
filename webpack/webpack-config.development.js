@@ -3,8 +3,8 @@ const path = require('path');
 const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackDevServer = require('webpack-dev-server');
-const commonWebpackConfig = require('./webpack.common.js');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const commonWebpackConfig = require('./webpack.common.js');
 
 const webpackConfig = merge(commonWebpackConfig, {
     mode: 'development',
