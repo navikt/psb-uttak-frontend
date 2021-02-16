@@ -19,7 +19,11 @@
         <div id="app"></div>
         <script type="text/javascript">
             setTimeout(() => {
-                window.renderUttakApp('app');
+                window.renderUttakApp('app', {
+                    endpoints: {
+                        hentUttaksperioder: 'http://localhost:8082/mock/uttaksperioder'
+                    }
+                });
             }, 300);
         </script>
     </body>

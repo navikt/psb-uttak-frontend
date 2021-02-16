@@ -1,12 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
-import NewMainComponent from '../ui/NewMainComponent';
+import MainComponent from '../ui/MainComponent';
+import ContainerContract from '../types/ContainerContract';
 
-const renderAppInSuccessfulState = (appId: string) =>
-    render(
-        <NewMainComponent aktivBehandlingUuid="blabla" uttaksperioderUrl="blabla" />,
-        document.getElementById(appId)
-    );
+const renderAppInSuccessfulState = (appId: string, data: ContainerContract) =>
+    render(<MainComponent containerData={data} />, document.getElementById(appId));
 
 export default {
     renderAppInSuccessfulState,

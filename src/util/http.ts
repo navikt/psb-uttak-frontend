@@ -1,11 +1,11 @@
-import axios, { CancelToken } from 'axios';
-import uttaksperiodeMock from '../mock/uttaksperiodeMock';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-export const hentUttaksperioder = (url: string, cancelToken: CancelToken) => {
-    // return axios.get(url, { cancelToken });
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve({ data: uttaksperiodeMock });
-        }, 1000);
-    });
-};
+export async function get<T>(url: string, requestConfig?: AxiosRequestConfig): Promise<T> {
+    try {
+        const response: AxiosResponse<T> = await axios.get(url, requestConfig);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw new Error(error);
+    }
+}

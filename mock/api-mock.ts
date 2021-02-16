@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import uttaksperioderResponse from './mocked-data/uttaksperiodeMock';
 
 const app = express();
 
@@ -10,6 +11,10 @@ app.use(
         origin: 'http://localhost:8081',
     })
 );
+
+app.use('/mock/uttaksperioder', (req, res) => {
+    res.send(uttaksperioderResponse);
+});
 
 const port = 8082;
 app.listen(port, (error) => {

@@ -1,6 +1,6 @@
-import UttaksperioderResponse from '../types/UttaksperioderResponse';
-import Utfall from '../constants/Utfall';
-import AnnenPart from '../constants/AnnenPart';
+import UttaksperioderResponse from '../../src/types/UttaksperioderResponse';
+import Utfall from '../../src/constants/Utfall';
+import AnnenPart from '../../src/constants/AnnenPart';
 
 const uttaksperioderResponse: UttaksperioderResponse = {
     perioder: {

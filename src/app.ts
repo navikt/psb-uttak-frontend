@@ -1,6 +1,7 @@
 import renderers from './util/renderers';
+import ContainerContract from './types/ContainerContract';
 
-(window as any).renderUttakApp = async (appId, data) => {
+(window as any).renderUttakApp = async (appId: string, data: ContainerContract) => {
     const { renderAppInSuccessfulState } = renderers;
-    renderAppInSuccessfulState(appId);
+    renderAppInSuccessfulState(appId, data);
 };

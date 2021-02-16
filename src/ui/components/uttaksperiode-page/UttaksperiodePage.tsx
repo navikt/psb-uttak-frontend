@@ -5,7 +5,7 @@ import { Uttaksperiode } from '../../../types/Uttaksperiode';
 
 interface UttaksperiodePageProps {
     uttaksperioder: Uttaksperiode[];
-    aktivBehandlingUuid: string;
+    aktivBehandlingUuid?: string;
 }
 
 const tabs = [{ label: 'Denne behandlingen' }, { label: 'Alle perioder' }];
