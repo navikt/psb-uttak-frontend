@@ -1,12 +1,9 @@
 {
-    "app": "pleiepenger-barn-uttak-frontend",
+    "app": "psb-uttak-frontend",
     "cluster": "dev-fss",
     "namespace": "pleiepenger",
     "team": "pleiepenger",
     "minReplicas": "1",
     "maxReplicas": "2",
-    "ingresses": [
-        "https://pleiepenger-barn-uttak-frontend.dev.adeo.no",
-        "https://pleiepenger-barn-uttak-frontend.intern.dev.adeo.no"
-    ]
+    "ingresses": ["https://psb-uttak-frontend.dev.adeo.no", "https://psb-uttak-frontend.intern.dev.adeo.no"]
 }
