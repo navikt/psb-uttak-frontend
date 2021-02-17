@@ -10,7 +10,7 @@ import UttakUtregning from './UttakUtregning';
 
 const formatUtbetalingsgrader = (utbetalingsgrader: Utbetalingsgrad[]) =>
     utbetalingsgrader.map((utbetalingsgrad, index) => (
-        <p className={styles.uttakDetaljer__data} key={utbetalingsgrad.arbeidsforhold.organisasjonsnummer}>
+        <p className={styles.uttakDetaljer__data} key={index}>
             {`Arbeidsgiver ${index + 1}: ${utbetalingsgrad.utbetalingsgrad} %`}
         </p>
     ));
@@ -52,7 +52,7 @@ const formatAvkortingMotArbeid = (utbetalingsgrader: Utbetalingsgrad[]) => {
     return (
         <div className={styles.uttakDetaljer__avkortingMotArbeid}>
             {utbetalingsgrader.map((utbetalingsgrad, index) => (
-                <div>
+                <div key={index}>
                     <Element className={styles.uttakDetaljer__avkortingMotArbeid__heading}>
                         {`Arbeidsgiver ${index + 1}:`}
                     </Element>

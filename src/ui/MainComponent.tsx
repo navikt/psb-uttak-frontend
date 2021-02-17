@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios';
 import React from 'react';
 import ContainerContract from '../types/ContainerContract';
 import UttaksperioderResponse from '../types/UttaksperioderResponse';
-import { get } from '../util/http';
+import { get } from '../util/httpUtils';
 import lagUttaksperiodeliste from '../util/uttaksperioder';
 import PageContainer from './components/page-container/PageContainer';
 import UttaksperiodePage from './components/uttaksperiode-page/UttaksperiodePage';
@@ -18,6 +18,7 @@ const NewMainComponent = ({ containerData }: NewMainComponentProps) => {
     const [uttaksperioder, setUttaksperioder] = React.useState([]);
     const {
         endpoints: { hentUttaksperioder },
+        httpErrorHandler,
     } = containerData;
 
     const responseHandler = (data: UttaksperioderResponse) => {
@@ -35,7 +36,10 @@ const NewMainComponent = ({ containerData }: NewMainComponentProps) => {
         setIsLoading(false);
         setErrorMessage(null);
 
-        get(`${hentUttaksperioder}`, { cancelToken: httpCanceler.token }).then(responseHandler, errorHandler);
+        get(`${hentUttaksperioder}`, httpErrorHandler, { cancelToken: httpCanceler.token }).then(
+            responseHandler,
+            errorHandler
+        );
 
         return function cleanup() {
             httpCanceler.cancel();

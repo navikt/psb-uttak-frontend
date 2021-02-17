@@ -22,7 +22,8 @@
                 window.renderUttakApp('app', {
                     endpoints: {
                         hentUttaksperioder: 'http://localhost:8082/mock/uttaksperioder'
-                    }
+                    },
+                    httpErrorHandler: () => console.log('håndterer feilen her')
                 });
             }, 300);
         </script>
