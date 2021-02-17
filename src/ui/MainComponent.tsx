@@ -17,7 +17,7 @@ const NewMainComponent = ({ containerData }: NewMainComponentProps) => {
     const [errorMessage, setErrorMessage] = React.useState('');
     const [uttaksperioder, setUttaksperioder] = React.useState([]);
     const {
-        endpoints: { hentUttaksperioder },
+        endpoints: { uttaksplan },
         httpErrorHandler,
     } = containerData;
 
@@ -36,10 +36,7 @@ const NewMainComponent = ({ containerData }: NewMainComponentProps) => {
         setIsLoading(false);
         setErrorMessage(null);
 
-        get(`${hentUttaksperioder}`, httpErrorHandler, { cancelToken: httpCanceler.token }).then(
-            responseHandler,
-            errorHandler
-        );
+        get(`${uttaksplan}`, httpErrorHandler, { cancelToken: httpCanceler.token }).then(responseHandler, errorHandler);
 
         return function cleanup() {
             httpCanceler.cancel();

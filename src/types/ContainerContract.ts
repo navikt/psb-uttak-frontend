@@ -2,7 +2,7 @@ import { HttpErrorHandler } from './HttpErrorHandler';
 
 interface ContainerContract {
     endpoints: {
-        hentUttaksperioder: string;
+        uttaksplan: string;
     };
     httpErrorHandler: HttpErrorHandler;
 }
