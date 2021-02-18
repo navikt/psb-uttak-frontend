@@ -1,8 +1,8 @@
-import UttaksperioderResponse from '../types/UttaksperioderResponse';
-import { Uttaksperiode } from '../types/Uttaksperiode';
 import { Period } from '../types/Period';
+import { Uttaksperiode } from '../types/Uttaksperiode';
+import Uttaksperioder from '../types/Uttaksperioder';
 
-const lagUttaksperiodeliste = ({ perioder }: UttaksperioderResponse): Uttaksperiode[] => {
+const lagUttaksperiodeliste = ({ perioder }: Uttaksperioder): Uttaksperiode[] => {
     return Object.keys(perioder).map((periodenøkkel) => {
         const uttaksperiode = new Period(periodenøkkel);
         const andreUttaksperiodeData = perioder[periodenøkkel];

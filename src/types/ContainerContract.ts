@@ -1,10 +1,8 @@
-import { HttpErrorHandler } from './HttpErrorHandler';
+import Uttaksperioder from './Uttaksperioder';
 
 interface ContainerContract {
-    endpoints: {
-        uttaksplan: string;
-    };
-    httpErrorHandler: HttpErrorHandler;
+    uttaksperioder: Uttaksperioder;
+    aktivBehandlingUuid: string;
 }
 
 export default ContainerContract;
