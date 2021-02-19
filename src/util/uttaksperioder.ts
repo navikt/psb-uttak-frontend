@@ -1,11 +1,11 @@
-import UttaksperioderResponse from '../types/UttaksperioderResponse';
-import { Uttaksperiode } from '../types/Uttaksperiode';
 import { Period } from '../types/Period';
+import { Uttaksperiode } from '../types/Uttaksperiode';
+import Uttaksperioder from '../types/Uttaksperioder';
 
-const lagUttaksperiodeliste = ({ perioder }: UttaksperioderResponse): Uttaksperiode[] => {
-    return Object.keys(perioder).map((periodenøkkel) => {
+const lagUttaksperiodeliste = (uttaksperioder: Uttaksperioder): Uttaksperiode[] => {
+    return Object.keys(uttaksperioder).map((periodenøkkel) => {
         const uttaksperiode = new Period(periodenøkkel);
-        const andreUttaksperiodeData = perioder[periodenøkkel];
+        const andreUttaksperiodeData = uttaksperioder[periodenøkkel];
         return {
             periode: uttaksperiode,
             ...andreUttaksperiodeData,
