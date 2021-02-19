@@ -7,8 +7,11 @@ interface MainComponentProps {
     containerData: ContainerContract;
 }
 
-const MainComponent = ({ containerData: { uttaksperioder } }: MainComponentProps): JSX.Element => (
-    <UttaksperiodePage uttaksperioder={lagUttaksperiodeliste(uttaksperioder)} />
+const MainComponent = ({ containerData: { uttaksperioder, aktivBehandlingUuid } }: MainComponentProps): JSX.Element => (
+    <UttaksperiodePage
+        uttaksperioder={lagUttaksperiodeliste(uttaksperioder)}
+        aktivBehandlingUuid={aktivBehandlingUuid}
+    />
 );
 
 export default MainComponent;
