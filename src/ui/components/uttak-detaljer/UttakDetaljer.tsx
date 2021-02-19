@@ -72,7 +72,9 @@ const formatAvkortingMotArbeid = (utbetalingsgrader: Utbetalingsgrad[]) => {
 const formatOppsummering = (søkerBerOmMaksimalt: number, uttaksgrad: number) => {
     return (
         <>
-            <p className={styles.uttakDetaljer__data}>{`Søker ber om maksimalt: ${søkerBerOmMaksimalt} %`}</p>
+            {søkerBerOmMaksimalt && (
+                <p className={styles.uttakDetaljer__data}>{`Søker ber om maksimalt: ${søkerBerOmMaksimalt} %`}</p>
+            )}
             <p className={styles.uttakDetaljer__data}>{`Søker får: ${uttaksgrad} %`}</p>
         </>
     );

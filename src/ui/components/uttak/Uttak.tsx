@@ -32,7 +32,7 @@ interface UttakProps {
 }
 
 const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
-    const { periode, uttaksgrad, utfall, graderingMotTilsyn } = uttak;
+    const { periode, uttaksgrad, utfall, graderingMotTilsyn, inngangsvilkår } = uttak;
     const pleiebehov = graderingMotTilsyn && graderingMotTilsyn.pleiebehov;
     const harPleiebehov = pleiebehov && pleiebehov > 0;
 
@@ -40,13 +40,11 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
         uttak__avslått: uttaksgrad === 0,
         uttak__innvilget: uttaksgrad > 0,
     });
-    const vilkårsliste = [
-        { vilkår: 'Søknadsfrist', erOppfylt: true },
-        { vilkår: 'Søkers alder', erOppfylt: true },
-        { vilkår: 'Omsorgen for', erOppfylt: false },
-        { vilkår: 'Barnets alder', erOppfylt: true },
-        { vilkår: 'Sykdom', erOppfylt: true },
-    ];
+
+    const harOppfyltAlleInngangsvilkår = Object.keys(inngangsvilkår).every((key) => {
+        return inngangsvilkår[key] === Utfall.OPPFYLT;
+    });
+
     return (
         <>
             <TableRow className={erValgt ? styles.uttak__expandedRow : ''}>
@@ -86,8 +84,11 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
             <FullWidthRow>
                 <Collapse isOpened={erValgt}>
                     <div className={styles.expanded}>
-                        {utfall === Utfall.IKKE_OPPFYLT && <Vilkårsliste vilkårsliste={vilkårsliste} />}
-                        {utfall === Utfall.OPPFYLT && <UttakDetaljer uttak={uttak} />}
+                        {harOppfyltAlleInngangsvilkår ? (
+                            <UttakDetaljer uttak={uttak} />
+                        ) : (
+                            <Vilkårsliste inngangsvilkår={inngangsvilkår} />
+                        )}
                     </div>
                 </Collapse>
             </FullWidthRow>

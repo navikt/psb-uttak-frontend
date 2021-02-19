@@ -8,9 +8,9 @@ import AnnenPart from '../constants/AnnenPart';
 export interface Uttaksperiodeelement {
     utfall: Utfall;
     uttaksgrad: number;
-    søkerBerOmMaksimalt: number;
-    årsak: 'FULL_DEKNING'[];
-    inngangsvilkår: Inngangsvilkår[];
+    søkerBerOmMaksimalt?: number;
+    årsaker: 'FULL_DEKNING'[];
+    inngangsvilkår: Inngangsvilkår;
     kildeBehandlingUUID: string;
     knekkpunktTyper: string[];
     utbetalingsgrader: Utbetalingsgrad[];
