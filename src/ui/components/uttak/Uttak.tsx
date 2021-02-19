@@ -32,13 +32,9 @@ interface UttakProps {
 }
 
 const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
-    const {
-        periode,
-        uttaksgrad,
-        utfall,
-        graderingMotTilsyn: { pleiebehov },
-    } = uttak;
-    const harPleiebehov = pleiebehov > 0;
+    const { periode, uttaksgrad, utfall, graderingMotTilsyn } = uttak;
+    const pleiebehov = graderingMotTilsyn && graderingMotTilsyn.pleiebehov;
+    const harPleiebehov = pleiebehov && pleiebehov > 0;
 
     const uttakCls = cx({
         uttak__avslått: uttaksgrad === 0,
@@ -65,7 +61,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                     <div className={styles.uttak__iconContainer}>
                         {harPleiebehov ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
                     </div>
-                    {`${pleiebehov} %`}
+                    {harPleiebehov && `${pleiebehov} %`}
                 </TableColumn>
                 <TableColumn>
                     {uttak.annenPart === AnnenPart.ALENE && <OnePersonIconBlue />}
