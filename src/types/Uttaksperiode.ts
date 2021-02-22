@@ -4,12 +4,13 @@ import GraderingMotTilsyn from './GraderingMotTilsyn';
 import Utfall from '../constants/Utfall';
 import Inngangsvilkår from './Inngangsvilkår';
 import AnnenPart from '../constants/AnnenPart';
+import Årsaker from '../constants/Årsaker';
 
 export interface Uttaksperiodeelement {
     utfall: Utfall;
     uttaksgrad: number;
     søkerBerOmMaksimalt?: number;
-    årsaker: 'FULL_DEKNING'[];
+    årsaker: Årsaker[];
     inngangsvilkår: Inngangsvilkår;
     kildeBehandlingUUID: string;
     knekkpunktTyper: string[];

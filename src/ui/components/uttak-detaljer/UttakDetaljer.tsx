@@ -1,6 +1,7 @@
 import { EtikettAdvarsel } from 'nav-frontend-etiketter';
 import { Element } from 'nav-frontend-typografi';
 import * as React from 'react';
+import Årsaker from '../../../constants/Årsaker';
 import GraderingMotTilsyn from '../../../types/GraderingMotTilsyn';
 import Utbetalingsgrad from '../../../types/Utbetalingsgrad';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
@@ -69,7 +70,7 @@ const formatAvkortingMotArbeid = (utbetalingsgrader: Utbetalingsgrad[]) => {
     );
 };
 
-const formatOppsummering = (søkerBerOmMaksimalt: number, uttaksgrad: number) => {
+const formatOppsummering = (uttaksgrad: number, søkerBerOmMaksimalt?: number) => {
     return (
         <>
             {søkerBerOmMaksimalt && (
@@ -85,21 +86,26 @@ interface UttakDetaljerProps {
 }
 
 const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
-    const { utbetalingsgrader, uttaksgrad, graderingMotTilsyn, søkerBerOmMaksimalt } = uttak;
+    const { utbetalingsgrader, uttaksgrad, graderingMotTilsyn, søkerBerOmMaksimalt, årsaker } = uttak;
+
+    const shouldHighlight = (aktuellÅrsak: Årsaker) => årsaker.some((årsak) => årsak === aktuellÅrsak);
 
     return (
         <div className={styles.uttakDetaljer}>
             {getAvslagsetiketter(uttaksgrad)}
             <div className={styles.uttakDetaljer__grid}>
-                <UttakUtregning heading="Gradering mot tilsyn" highlight>
+                <UttakUtregning heading="Gradering mot tilsyn" highlight={shouldHighlight(Årsaker.GRADERT_MOT_TILSYN)}>
                     {formatGraderingMotTilsyn(graderingMotTilsyn)}
                 </UttakUtregning>
-                <UttakUtregning heading="Avkorting mot arbeid">
+                <UttakUtregning
+                    heading="Avkorting mot arbeid"
+                    highlight={shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT)}
+                >
                     {formatAvkortingMotArbeid(utbetalingsgrader)}
                 </UttakUtregning>
                 <UttakUtregning heading="Utbetalingsgrad">{formatUtbetalingsgrader(utbetalingsgrader)}</UttakUtregning>
                 <UttakUtregning heading="Oppsummering">
-                    {formatOppsummering(søkerBerOmMaksimalt, uttaksgrad)}
+                    {formatOppsummering(uttaksgrad, søkerBerOmMaksimalt)}
                 </UttakUtregning>
             </div>
         </div>

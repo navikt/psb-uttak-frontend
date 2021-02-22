@@ -41,9 +41,9 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
         uttak__innvilget: uttaksgrad > 0,
     });
 
-    const harOppfyltAlleInngangsvilkår = Object.keys(inngangsvilkår).every((key) => {
-        return inngangsvilkår[key] === Utfall.OPPFYLT;
-    });
+    const harOppfyltAlleInngangsvilkår = Object.keys(inngangsvilkår).every(
+        (key) => inngangsvilkår[key] === Utfall.OPPFYLT
+    );
 
     return (
         <>
