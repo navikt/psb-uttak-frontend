@@ -15,9 +15,9 @@ const erVilkårOppfylt = (vilkårKey: string, inngangsvilkår: Inngangsvilkår) 
 };
 
 const Vilkårsliste = ({ inngangsvilkår }: VilkårslisteProps): JSX.Element => (
-    <>
+    <div className={styles.vilkårsliste}>
         <Element>Vilkår</Element>
-        <ul className={styles.vilkårsliste}>
+        <ul>
             {Vilkår.map((vilkår) => (
                 <VilkårslisteItem
                     key={vilkår.key}
@@ -26,7 +26,7 @@ const Vilkårsliste = ({ inngangsvilkår }: VilkårslisteProps): JSX.Element => 
                 />
             ))}
         </ul>
-    </>
+    </div>
 );
 
 export default Vilkårsliste;

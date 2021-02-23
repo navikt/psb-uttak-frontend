@@ -1,3 +1,4 @@
+import classNames from 'classnames/bind';
 import { EtikettAdvarsel } from 'nav-frontend-etiketter';
 import { Element } from 'nav-frontend-typografi';
 import * as React from 'react';
@@ -6,15 +7,14 @@ import GraderingMotTilsyn from '../../../types/GraderingMotTilsyn';
 import Utbetalingsgrad from '../../../types/Utbetalingsgrad';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import { beregnDagerTimer } from '../../../util/dateUtils';
+import Box, { Margin } from '../box/Box';
+import GreenCheckIcon from '../icons/GreenCheckIcon';
+import OnePersonIconBlue from '../icons/OnePersonIconBlue';
+import OnePersonOutline from '../icons/OnePersonOutline';
 import styles from './uttakDetaljer.less';
 import UttakUtregning from './UttakUtregning';
 
-const formatUtbetalingsgrader = (utbetalingsgrader: Utbetalingsgrad[]) =>
-    utbetalingsgrader.map((utbetalingsgrad, index) => (
-        <p className={styles.uttakDetaljer__data} key={index}>
-            {`Arbeidsgiver ${index + 1}: ${utbetalingsgrad.utbetalingsgrad} %`}
-        </p>
-    ));
+const cx = classNames.bind(styles);
 
 const getAvslagsetiketter = (uttaksgrad: number) => {
     const harUtilstrekkeligUttak = uttaksgrad < 20;
@@ -63,6 +63,9 @@ const formatAvkortingMotArbeid = (utbetalingsgrader: Utbetalingsgrad[]) => {
                     <p className={styles.uttakDetaljer__data}>
                         {`Faktisk arbeidstid: ${beregnDagerTimer(utbetalingsgrad.faktiskArbeidstid)} timer`}
                     </p>
+                    <p className={styles.uttakDetaljer__data}>
+                        {`Utbetalingsgrad: ${utbetalingsgrad.utbetalingsgrad} %`}
+                    </p>
                     <p className={styles.uttakDetaljer__sum}>Søker inntektstap: 50 %</p>
                 </div>
             ))}
@@ -70,14 +73,28 @@ const formatAvkortingMotArbeid = (utbetalingsgrader: Utbetalingsgrad[]) => {
     );
 };
 
-const formatOppsummering = (uttaksgrad: number, søkerBerOmMaksimalt?: number) => {
+const shouldHighlight = (aktuellÅrsak: Årsaker, årsaker: Årsaker[]) => årsaker.some((årsak) => årsak === aktuellÅrsak);
+
+const getSøkerBerOmMaksimalt = (søkerBerOmMaksimalt: number, årsaker: Årsaker[]) => {
+    const highlightSøkerBerOmMaksimalt =
+        søkerBerOmMaksimalt && shouldHighlight(Årsaker.AVKORTET_MOT_SØKERS_ØNSKE, årsaker);
+
+    const containerCls = cx('uttakDetaljer__oppsummering__container', {
+        'uttakDetaljer__oppsummering__container--highlighted': highlightSøkerBerOmMaksimalt,
+    });
+
     return (
-        <>
-            {søkerBerOmMaksimalt && (
-                <p className={styles.uttakDetaljer__data}>{`Søker ber om maksimalt: ${søkerBerOmMaksimalt} %`}</p>
+        <div className={containerCls}>
+            {highlightSøkerBerOmMaksimalt && (
+                <div className={styles.uttakDetaljer__oppsummering__checkIcon}>
+                    <GreenCheckIcon size={19} />
+                </div>
             )}
-            <p className={styles.uttakDetaljer__data}>{`Søker får: ${uttaksgrad} %`}</p>
-        </>
+            <OnePersonIconBlue />
+            <p className={styles.uttakDetaljer__oppsummering__tekst}>
+                {`Søker ber om maksimalt ${søkerBerOmMaksimalt} %`}
+            </p>
+        </div>
     );
 };
 
@@ -88,26 +105,38 @@ interface UttakDetaljerProps {
 const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
     const { utbetalingsgrader, uttaksgrad, graderingMotTilsyn, søkerBerOmMaksimalt, årsaker } = uttak;
 
-    const shouldHighlight = (aktuellÅrsak: Årsaker) => årsaker.some((årsak) => årsak === aktuellÅrsak);
+    const tilgjengeligForAndreSøkere = graderingMotTilsyn.tilgjengeligForSøker - uttaksgrad;
 
     return (
         <div className={styles.uttakDetaljer}>
             {getAvslagsetiketter(uttaksgrad)}
-            <div className={styles.uttakDetaljer__grid}>
-                <UttakUtregning heading="Gradering mot tilsyn" highlight={shouldHighlight(Årsaker.GRADERT_MOT_TILSYN)}>
-                    {formatGraderingMotTilsyn(graderingMotTilsyn)}
-                </UttakUtregning>
-                <UttakUtregning
-                    heading="Avkorting mot arbeid"
-                    highlight={shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT)}
-                >
-                    {formatAvkortingMotArbeid(utbetalingsgrader)}
-                </UttakUtregning>
-                <UttakUtregning heading="Utbetalingsgrad">{formatUtbetalingsgrader(utbetalingsgrader)}</UttakUtregning>
-                <UttakUtregning heading="Oppsummering">
-                    {formatOppsummering(uttaksgrad, søkerBerOmMaksimalt)}
-                </UttakUtregning>
-            </div>
+            <Box marginTop={Margin.small}>
+                <div className={styles.uttakDetaljer__oppsummering}>
+                    {søkerBerOmMaksimalt && getSøkerBerOmMaksimalt(søkerBerOmMaksimalt, årsaker)}
+                    <div className={styles.uttakDetaljer__oppsummering__container}>
+                        <OnePersonOutline />
+                        <p className={styles.uttakDetaljer__oppsummering__tekst}>
+                            {`Tilgjengelig for andre søkere ${tilgjengeligForAndreSøkere} %`}
+                        </p>
+                    </div>
+                </div>
+            </Box>
+            <Box marginTop={Margin.medium}>
+                <div className={styles.uttakDetaljer__grid}>
+                    <UttakUtregning
+                        heading="Gradering mot tilsyn"
+                        highlight={shouldHighlight(Årsaker.GRADERT_MOT_TILSYN, årsaker)}
+                    >
+                        {formatGraderingMotTilsyn(graderingMotTilsyn)}
+                    </UttakUtregning>
+                    <UttakUtregning
+                        heading="Avkorting mot arbeid"
+                        highlight={shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT, årsaker)}
+                    >
+                        {formatAvkortingMotArbeid(utbetalingsgrader)}
+                    </UttakUtregning>
+                </div>
+            </Box>
         </div>
     );
 };
