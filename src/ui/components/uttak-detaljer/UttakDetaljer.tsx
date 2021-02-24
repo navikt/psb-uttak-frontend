@@ -112,7 +112,9 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
         søkersTapteArbeidstid,
     } = uttak;
 
-    const tilgjengeligForAndreSøkere = graderingMotTilsyn.tilgjengeligForSøker - uttaksgrad;
+    const tilgjengeligForAndreSøkere = graderingMotTilsyn?.tilgjengeligForSøker
+        ? graderingMotTilsyn.tilgjengeligForSøker - uttaksgrad
+        : 0;
 
     return (
         <div className={styles.uttakDetaljer}>
@@ -130,12 +132,14 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
             </Box>
             <Box marginTop={Margin.medium}>
                 <div className={styles.uttakDetaljer__grid}>
-                    <UttakUtregning
-                        heading="Gradering mot tilsyn"
-                        highlight={shouldHighlight(Årsaker.GRADERT_MOT_TILSYN, årsaker)}
-                    >
-                        {formatGraderingMotTilsyn(graderingMotTilsyn)}
-                    </UttakUtregning>
+                    {graderingMotTilsyn && (
+                        <UttakUtregning
+                            heading="Gradering mot tilsyn"
+                            highlight={shouldHighlight(Årsaker.GRADERT_MOT_TILSYN, årsaker)}
+                        >
+                            {formatGraderingMotTilsyn(graderingMotTilsyn)}
+                        </UttakUtregning>
+                    )}
                     <UttakUtregning
                         heading="Avkorting mot arbeid"
                         highlight={shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT, årsaker)}
