@@ -16,9 +16,9 @@ import UttakUtregning from './UttakUtregning';
 
 const cx = classNames.bind(styles);
 
-const getAvslagsetiketter = (uttaksgrad: number) => {
+const getAvslagsetiketter = (uttaksgrad: number, søkersTapteArbeidstid: number) => {
     const harUtilstrekkeligUttak = uttaksgrad < 20;
-    const harUtilstrekkeligTaptArbeidstid = 100 < 20; // TODO
+    const harUtilstrekkeligTaptArbeidstid = søkersTapteArbeidstid < 20;
 
     return (
         <>
@@ -49,7 +49,7 @@ const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn) => {
     );
 };
 
-const formatAvkortingMotArbeid = (utbetalingsgrader: Utbetalingsgrad[]) => {
+const formatAvkortingMotArbeid = (utbetalingsgrader: Utbetalingsgrad[], søkersTapteArbeidstid: number) => {
     return (
         <div className={styles.uttakDetaljer__avkortingMotArbeid}>
             {utbetalingsgrader.map((utbetalingsgrad, index) => (
@@ -66,7 +66,7 @@ const formatAvkortingMotArbeid = (utbetalingsgrader: Utbetalingsgrad[]) => {
                     <p className={styles.uttakDetaljer__data}>
                         {`Utbetalingsgrad: ${utbetalingsgrad.utbetalingsgrad} %`}
                     </p>
-                    <p className={styles.uttakDetaljer__sum}>Søker inntektstap: 50 %</p>
+                    <p className={styles.uttakDetaljer__sum}>{`Søkers inntektstap: ${søkersTapteArbeidstid} %`}</p>
                 </div>
             ))}
         </div>
@@ -103,13 +103,20 @@ interface UttakDetaljerProps {
 }
 
 const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
-    const { utbetalingsgrader, uttaksgrad, graderingMotTilsyn, søkerBerOmMaksimalt, årsaker } = uttak;
+    const {
+        utbetalingsgrader,
+        uttaksgrad,
+        graderingMotTilsyn,
+        søkerBerOmMaksimalt,
+        årsaker,
+        søkersTapteArbeidstid,
+    } = uttak;
 
     const tilgjengeligForAndreSøkere = graderingMotTilsyn.tilgjengeligForSøker - uttaksgrad;
 
     return (
         <div className={styles.uttakDetaljer}>
-            {getAvslagsetiketter(uttaksgrad)}
+            {getAvslagsetiketter(uttaksgrad, søkersTapteArbeidstid)}
             <Box marginTop={Margin.small}>
                 <div className={styles.uttakDetaljer__oppsummering}>
                     {søkerBerOmMaksimalt && getSøkerBerOmMaksimalt(søkerBerOmMaksimalt, årsaker)}
@@ -133,7 +140,7 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
                         heading="Avkorting mot arbeid"
                         highlight={shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT, årsaker)}
                     >
-                        {formatAvkortingMotArbeid(utbetalingsgrader)}
+                        {formatAvkortingMotArbeid(utbetalingsgrader, søkersTapteArbeidstid)}
                     </UttakUtregning>
                 </div>
             </Box>

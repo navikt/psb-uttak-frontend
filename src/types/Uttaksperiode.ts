@@ -17,6 +17,7 @@ export interface Uttaksperiodeelement {
     utbetalingsgrader: Utbetalingsgrad[];
     graderingMotTilsyn: GraderingMotTilsyn;
     annenPart: AnnenPart;
+    søkersTapteArbeidstid: number;
 }
 
 export interface Uttaksperiode extends Uttaksperiodeelement {

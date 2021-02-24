@@ -3,28 +3,31 @@ import { Element } from 'nav-frontend-typografi';
 import VilkårslisteItem from './VilkårslisteItem';
 import styles from './vilkårsliste.less';
 import Inngangsvilkår from '../types/Inngangsvilkår';
-import Vilkår from './Vilkår';
+import vilkår from './Vilkår';
 import Utfall from '../constants/Utfall';
 
 interface VilkårslisteProps {
     inngangsvilkår: Inngangsvilkår;
 }
 
-const erVilkårOppfylt = (vilkårKey: string, inngangsvilkår: Inngangsvilkår) => {
-    return inngangsvilkår[vilkårKey] === Utfall.OPPFYLT;
+const erVilkårOppfylt = (vilkårkode: string, inngangsvilkår: Inngangsvilkår) => {
+    return inngangsvilkår[vilkårkode] === Utfall.OPPFYLT;
 };
 
 const Vilkårsliste = ({ inngangsvilkår }: VilkårslisteProps): JSX.Element => (
     <div className={styles.vilkårsliste}>
         <Element>Vilkår</Element>
         <ul>
-            {Vilkår.map((vilkår) => (
-                <VilkårslisteItem
-                    key={vilkår.key}
-                    vilkår={vilkår.name}
-                    erOppfylt={erVilkårOppfylt(vilkår.key, inngangsvilkår)}
-                />
-            ))}
+            {vilkår.map(
+                (v) =>
+                    inngangsvilkår[v.kode] && (
+                        <VilkårslisteItem
+                            key={v.kode}
+                            vilkår={v.name}
+                            erOppfylt={erVilkårOppfylt(v.kode, inngangsvilkår)}
+                        />
+                    )
+            )}
         </ul>
     </div>
 );
