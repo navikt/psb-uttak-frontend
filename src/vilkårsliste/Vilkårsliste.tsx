@@ -10,21 +10,24 @@ interface VilkårslisteProps {
     inngangsvilkår: Inngangsvilkår;
 }
 
-const erVilkårOppfylt = (vilkårKey: string, inngangsvilkår: Inngangsvilkår) => {
-    return inngangsvilkår[vilkårKey] === Utfall.OPPFYLT;
+const erVilkårOppfylt = (vilkårkode: string, inngangsvilkår: Inngangsvilkår) => {
+    return inngangsvilkår[vilkårkode] === Utfall.OPPFYLT;
 };
 
 const Vilkårsliste = ({ inngangsvilkår }: VilkårslisteProps): JSX.Element => (
     <div className={styles.vilkårsliste}>
         <Element>Vilkår</Element>
         <ul>
-            {Vilkår.map((vilkår) => (
-                <VilkårslisteItem
-                    key={vilkår.key}
-                    vilkår={vilkår.name}
-                    erOppfylt={erVilkårOppfylt(vilkår.key, inngangsvilkår)}
-                />
-            ))}
+            {Vilkår.map(
+                (vilkår) =>
+                    inngangsvilkår[vilkår.kode] && (
+                        <VilkårslisteItem
+                            key={vilkår.kode}
+                            vilkår={vilkår.name}
+                            erOppfylt={erVilkårOppfylt(vilkår.kode, inngangsvilkår)}
+                        />
+                    )
+            )}
         </ul>
     </div>
 );

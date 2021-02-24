@@ -1,23 +1,23 @@
 const Vilkår = [
     {
         name: 'Søknadsfrist',
-        key: 'FP_VK_3',
+        kode: 'FP_VK_3',
     },
     {
         name: 'Søkers alder',
-        key: 'K9_VK_3',
+        kode: 'K9_VK_3',
     },
     {
         name: 'Omsorgen for',
-        key: 'K9_VK_1',
-    },
-    {
-        name: 'Barnets alder',
-        key: 'K9_VK_2_a',
+        kode: 'K9_VK_1',
     },
     {
         name: 'Sykdom',
-        key: '', // TOOD
+        kode: 'K9_VK_2_a', // medisinske vilkår for barn under 18 år
+    },
+    {
+        name: 'Sykdom',
+        kode: 'K9_VK_2_b', // medisinske vilkår for barn over 18 år
     },
 ];
 
