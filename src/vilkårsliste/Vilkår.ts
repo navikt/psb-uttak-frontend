@@ -1,4 +1,4 @@
-const Vilkår = [
+const vilkår = [
     {
         name: 'Søknadsfrist',
         kode: 'FP_VK_3',
@@ -21,4 +21,4 @@ const Vilkår = [
     },
 ];
 
-export default Vilkår;
+export default vilkår;

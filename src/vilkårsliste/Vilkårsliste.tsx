@@ -3,7 +3,7 @@ import { Element } from 'nav-frontend-typografi';
 import VilkårslisteItem from './VilkårslisteItem';
 import styles from './vilkårsliste.less';
 import Inngangsvilkår from '../types/Inngangsvilkår';
-import Vilkår from './Vilkår';
+import vilkår from './Vilkår';
 import Utfall from '../constants/Utfall';
 
 interface VilkårslisteProps {
@@ -18,13 +18,13 @@ const Vilkårsliste = ({ inngangsvilkår }: VilkårslisteProps): JSX.Element => 
     <div className={styles.vilkårsliste}>
         <Element>Vilkår</Element>
         <ul>
-            {Vilkår.map(
-                (vilkår) =>
-                    inngangsvilkår[vilkår.kode] && (
+            {vilkår.map(
+                (v) =>
+                    inngangsvilkår[v.kode] && (
                         <VilkårslisteItem
-                            key={vilkår.kode}
-                            vilkår={vilkår.name}
-                            erOppfylt={erVilkårOppfylt(vilkår.kode, inngangsvilkår)}
+                            key={v.kode}
+                            vilkår={v.name}
+                            erOppfylt={erVilkårOppfylt(v.kode, inngangsvilkår)}
                         />
                     )
             )}
