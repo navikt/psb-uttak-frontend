@@ -52,8 +52,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                     <Normaltekst>{periodevisning(periode)}</Normaltekst>
                 </TableColumn>
                 <TableColumn>
-                    {utfall === Utfall.OPPFYLT && <GreenCheckIconFilled />}
-                    {utfall === Utfall.IKKE_OPPFYLT && <RedCrossIconFilled />}
+                    {harOppfyltAlleInngangsvilkår ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
                 </TableColumn>
                 <TableColumn>
                     <div className={styles.uttak__iconContainer}>
