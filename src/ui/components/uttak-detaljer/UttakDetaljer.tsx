@@ -36,8 +36,8 @@ const getAvslagsetiketter = (uttaksgrad: number, søkersTapteArbeidstid: number)
     );
 };
 
-const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn) => {
-    const { pleiebehov, etablertTilsyn, andreSøkeresTilsyn, tilgjengeligForSøker } = graderingMotTilsyn;
+const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn, pleiebehov: number) => {
+    const { etablertTilsyn, andreSøkeresTilsyn, tilgjengeligForSøker } = graderingMotTilsyn;
     return (
         <div className={styles.uttakDetaljer__graderingMotTilsyn}>
             <p className={styles.uttakDetaljer__data}>{`Pleiebehov: ${pleiebehov} %`}</p>
@@ -110,6 +110,7 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
         søkerBerOmMaksimalt,
         årsaker,
         søkersTapteArbeidstid,
+        pleiebehov,
     } = uttak;
 
     const tilgjengeligForAndreSøkere = graderingMotTilsyn?.tilgjengeligForSøker
@@ -137,7 +138,7 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
                             heading="Gradering mot tilsyn"
                             highlight={shouldHighlight(Årsaker.GRADERT_MOT_TILSYN, årsaker)}
                         >
-                            {formatGraderingMotTilsyn(graderingMotTilsyn)}
+                            {formatGraderingMotTilsyn(graderingMotTilsyn, pleiebehov)}
                         </UttakUtregning>
                     )}
                     <UttakUtregning

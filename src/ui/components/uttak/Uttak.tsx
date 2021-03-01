@@ -32,8 +32,7 @@ interface UttakProps {
 }
 
 const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
-    const { periode, uttaksgrad, utfall, graderingMotTilsyn, inngangsvilkår } = uttak;
-    const pleiebehov = graderingMotTilsyn && graderingMotTilsyn.pleiebehov;
+    const { periode, uttaksgrad, inngangsvilkår, pleiebehov } = uttak;
     const harPleiebehov = pleiebehov && pleiebehov > 0;
 
     const uttakCls = cx({
