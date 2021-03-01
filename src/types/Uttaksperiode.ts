@@ -18,6 +18,7 @@ export interface Uttaksperiodeelement {
     graderingMotTilsyn: GraderingMotTilsyn;
     annenPart: AnnenPart;
     søkersTapteArbeidstid: number;
+    pleiebehov: number;
 }
 
 export interface Uttaksperiode extends Uttaksperiodeelement {
