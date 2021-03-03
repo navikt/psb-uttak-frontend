@@ -3,7 +3,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import * as React from 'react';
 import { Collapse } from 'react-collapse';
 import AnnenPart from '../../../constants/AnnenPart';
-import Utfall from '../../../constants/Utfall';
+import Årsaker from '../../../constants/Årsaker';
 import { Period } from '../../../types/Period';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import { prettifyDate } from '../../../util/dateUtils';
@@ -32,17 +32,16 @@ interface UttakProps {
 }
 
 const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
-    const { periode, uttaksgrad, inngangsvilkår, pleiebehov } = uttak;
-    const harPleiebehov = pleiebehov && pleiebehov > 0;
+    const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker } = uttak;
+    const harUtenomPleiebehovÅrsak = årsaker.includes(Årsaker.UTENOM_PLEIEBEHOV);
+    const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
 
     const uttakCls = cx({
         uttak__avslått: uttaksgrad === 0,
         uttak__innvilget: uttaksgrad > 0,
     });
 
-    const harOppfyltAlleInngangsvilkår = Object.keys(inngangsvilkår).every(
-        (key) => inngangsvilkår[key] === Utfall.OPPFYLT
-    );
+    const harOppfyltAlleInngangsvilkår = !årsaker.includes(Årsaker.INNGANGSVILKÅR_IKKE_OPPFYLT);
 
     return (
         <>

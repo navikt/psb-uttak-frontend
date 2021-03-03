@@ -7,7 +7,6 @@ import GraderingMotTilsyn from '../../../types/GraderingMotTilsyn';
 import Utbetalingsgrad from '../../../types/Utbetalingsgrad';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import { beregnDagerTimer } from '../../../util/dateUtils';
-import Box, { Margin } from '../box/Box';
 import GreenCheckIcon from '../icons/GreenCheckIcon';
 import OnePersonIconBlue from '../icons/OnePersonIconBlue';
 import OnePersonOutline from '../icons/OnePersonOutline';
@@ -16,25 +15,25 @@ import UttakUtregning from './UttakUtregning';
 
 const cx = classNames.bind(styles);
 
-const getAvslagsetiketter = (uttaksgrad: number, søkersTapteArbeidstid: number) => {
-    const harUtilstrekkeligUttak = uttaksgrad < 20;
-    const harUtilstrekkeligTaptArbeidstid = søkersTapteArbeidstid < 20;
-
-    return (
-        <>
-            {harUtilstrekkeligUttak && (
-                <EtikettAdvarsel className={styles.uttakDetaljer__etikett}>
-                    Årsak for avslag: Søker må ha minst 20 % tilgjengelig uttak.
-                </EtikettAdvarsel>
-            )}
-            {harUtilstrekkeligTaptArbeidstid && (
-                <EtikettAdvarsel className={styles.uttakDetaljer__etikett}>
-                    Årsak for avslag: Søker må ha minst 20 % tapt arbeidstid.
-                </EtikettAdvarsel>
-            )}
-        </>
-    );
-};
+const getÅrsaksetiketter = (årsaker: Årsaker[]) => (
+    <>
+        {årsaker.includes(Årsaker.LOVBESTEMT_FERIE) && (
+            <EtikettAdvarsel className={styles.uttakDetaljer__etikett}>
+                Årsak for 0 % uttak: Søker avvikler lovbestemt ferie
+            </EtikettAdvarsel>
+        )}
+        {årsaker.includes(Årsaker.AVKORTET_MOT_INNTEKT) && (
+            <EtikettAdvarsel className={styles.uttakDetaljer__etikett}>
+                Årsak for 0 % uttaksgrad: Søker må ha minst 20 % tapt arbeidstid
+            </EtikettAdvarsel>
+        )}
+        {årsaker.includes(Årsaker.FOR_HØY_TILSYNSGRAD) && (
+            <EtikettAdvarsel className={styles.uttakDetaljer__etikett}>
+                Årsak for 0 % uttaksgrad: Barnet har tilsyn av andre mer enn 80 % av tiden
+            </EtikettAdvarsel>
+        )}
+    </>
+);
 
 const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn, pleiebehov: number) => {
     const { etablertTilsyn, andreSøkeresTilsyn, tilgjengeligForSøker } = graderingMotTilsyn;
@@ -119,36 +118,32 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
 
     return (
         <div className={styles.uttakDetaljer}>
-            {getAvslagsetiketter(uttaksgrad, søkersTapteArbeidstid)}
-            <Box marginTop={Margin.small}>
-                <div className={styles.uttakDetaljer__oppsummering}>
-                    {søkerBerOmMaksimalt && getSøkerBerOmMaksimalt(søkerBerOmMaksimalt, årsaker)}
-                    <div className={styles.uttakDetaljer__oppsummering__container}>
-                        <OnePersonOutline />
-                        <p className={styles.uttakDetaljer__oppsummering__tekst}>
-                            {`Tilgjengelig for andre søkere ${tilgjengeligForAndreSøkere} %`}
-                        </p>
-                    </div>
+            {getÅrsaksetiketter(årsaker)}
+            <div className={styles.uttakDetaljer__oppsummering}>
+                {søkerBerOmMaksimalt && getSøkerBerOmMaksimalt(søkerBerOmMaksimalt, årsaker)}
+                <div className={styles.uttakDetaljer__oppsummering__container}>
+                    <OnePersonOutline />
+                    <p className={styles.uttakDetaljer__oppsummering__tekst}>
+                        {`Tilgjengelig for andre søkere ${tilgjengeligForAndreSøkere} %`}
+                    </p>
                 </div>
-            </Box>
-            <Box marginTop={Margin.medium}>
-                <div className={styles.uttakDetaljer__grid}>
-                    {graderingMotTilsyn && (
-                        <UttakUtregning
-                            heading="Gradering mot tilsyn"
-                            highlight={shouldHighlight(Årsaker.GRADERT_MOT_TILSYN, årsaker)}
-                        >
-                            {formatGraderingMotTilsyn(graderingMotTilsyn, pleiebehov)}
-                        </UttakUtregning>
-                    )}
+            </div>
+            <div className={styles.uttakDetaljer__grid}>
+                {graderingMotTilsyn && (
                     <UttakUtregning
-                        heading="Avkorting mot arbeid"
-                        highlight={shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT, årsaker)}
+                        heading="Gradering mot tilsyn"
+                        highlight={shouldHighlight(Årsaker.GRADERT_MOT_TILSYN, årsaker)}
                     >
-                        {formatAvkortingMotArbeid(utbetalingsgrader, søkersTapteArbeidstid)}
+                        {formatGraderingMotTilsyn(graderingMotTilsyn, pleiebehov)}
                     </UttakUtregning>
-                </div>
-            </Box>
+                )}
+                <UttakUtregning
+                    heading="Avkorting mot arbeid"
+                    highlight={shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT, årsaker)}
+                >
+                    {formatAvkortingMotArbeid(utbetalingsgrader, søkersTapteArbeidstid)}
+                </UttakUtregning>
+            </div>
         </div>
     );
 };
