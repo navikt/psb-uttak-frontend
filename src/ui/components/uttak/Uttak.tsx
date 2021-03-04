@@ -7,6 +7,7 @@ import Årsaker from '../../../constants/Årsaker';
 import { Period } from '../../../types/Period';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import { prettifyDate } from '../../../util/dateUtils';
+import { harÅrsak } from '../../../util/årsakUtils';
 import Vilkårsliste from '../../../vilkårsliste/Vilkårsliste';
 import ChevronIcon from '../icons/ChevronIcon';
 import GreenCheckIconFilled from '../icons/GreenCheckIconFilled';
@@ -33,7 +34,7 @@ interface UttakProps {
 
 const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
     const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker } = uttak;
-    const harUtenomPleiebehovÅrsak = årsaker.includes(Årsaker.UTENOM_PLEIEBEHOV);
+    const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, Årsaker.UTENOM_PLEIEBEHOV);
     const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
 
     const uttakCls = cx({
@@ -41,7 +42,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
         uttak__innvilget: uttaksgrad > 0,
     });
 
-    const harOppfyltAlleInngangsvilkår = !årsaker.includes(Årsaker.INNGANGSVILKÅR_IKKE_OPPFYLT);
+    const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, Årsaker.INNGANGSVILKÅR_IKKE_OPPFYLT);
 
     return (
         <>

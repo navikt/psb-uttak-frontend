@@ -7,6 +7,7 @@ import GraderingMotTilsyn from '../../../types/GraderingMotTilsyn';
 import Utbetalingsgrad from '../../../types/Utbetalingsgrad';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import { beregnDagerTimer } from '../../../util/dateUtils';
+import { harÅrsak } from '../../../util/årsakUtils';
 import GreenCheckIcon from '../icons/GreenCheckIcon';
 import OnePersonIconBlue from '../icons/OnePersonIconBlue';
 import OnePersonOutline from '../icons/OnePersonOutline';
@@ -17,17 +18,17 @@ const cx = classNames.bind(styles);
 
 const getÅrsaksetiketter = (årsaker: Årsaker[]) => (
     <>
-        {årsaker.includes(Årsaker.LOVBESTEMT_FERIE) && (
+        {harÅrsak(årsaker, Årsaker.LOVBESTEMT_FERIE) && (
             <EtikettAdvarsel className={styles.uttakDetaljer__etikett}>
                 Årsak for 0 % uttak: Søker avvikler lovbestemt ferie
             </EtikettAdvarsel>
         )}
-        {årsaker.includes(Årsaker.AVKORTET_MOT_INNTEKT) && (
+        {harÅrsak(årsaker, Årsaker.FOR_LAV_GRAD) && (
             <EtikettAdvarsel className={styles.uttakDetaljer__etikett}>
-                Årsak for 0 % uttaksgrad: Søker må ha minst 20 % tapt arbeidstid
+                Årsak for 0 % uttaksgrad: Uttaksgrad må være minst 20 %
             </EtikettAdvarsel>
         )}
-        {årsaker.includes(Årsaker.FOR_HØY_TILSYNSGRAD) && (
+        {harÅrsak(årsaker, Årsaker.FOR_HØY_TILSYNSGRAD) && (
             <EtikettAdvarsel className={styles.uttakDetaljer__etikett}>
                 Årsak for 0 % uttaksgrad: Barnet har tilsyn av andre mer enn 80 % av tiden
             </EtikettAdvarsel>
