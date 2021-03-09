@@ -11,7 +11,7 @@ interface UttaksperiodeListeProps {
 
 const headers = ['Uttaksperiode', 'Inngangsvilkår', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
 
-const UttaksperiodeListe = (props: UttaksperiodeListeProps) => {
+const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
     const [valgtPeriodeIndex, velgPeriodeIndex] = React.useState<number>();
     const { uttaksperioder } = props;
 

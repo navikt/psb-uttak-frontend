@@ -8,6 +8,7 @@ interface OwnProps {
     isHeader?: boolean;
     children: ReactNode | ReactNode[];
     className?: string;
+    onClick?: () => void;
 }
 
 /**
@@ -15,13 +16,14 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Tabellrad som brukes av komponenten Table.
  */
-const TableRow: FunctionComponent<OwnProps> = ({ isHeader = false, children, className }) => {
+const TableRow: FunctionComponent<OwnProps> = ({ isHeader = false, children, className, onClick }) => {
     return (
         <tr
             className={classNames(className, {
                 rowHeader: isHeader,
                 rowContent: !isHeader,
             })}
+            onClick={onClick}
         >
             {children}
         </tr>

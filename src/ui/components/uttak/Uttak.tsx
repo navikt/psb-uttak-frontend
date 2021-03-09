@@ -19,6 +19,7 @@ import TableColumn from '../table/TableColumn';
 import TableRow from '../table/TableRow';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 import styles from './uttak.less';
+import ContentWithTooltip from '../content-with-tooltip/ContentWithTooltip';
 
 const cx = classNames.bind(styles);
 
@@ -46,7 +47,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
 
     return (
         <>
-            <TableRow className={erValgt ? styles.uttak__expandedRow : ''}>
+            <TableRow className={erValgt ? styles.uttak__expandedRow : ''} onClick={velgPeriode}>
                 <TableColumn>
                     <Normaltekst>{periodevisning(periode)}</Normaltekst>
                 </TableColumn>
@@ -60,8 +61,16 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                     {harPleiebehov ? `${pleiebehov} %` : null}
                 </TableColumn>
                 <TableColumn>
-                    {uttak.annenPart === AnnenPart.ALENE && <OnePersonIconBlue />}
-                    {uttak.annenPart === AnnenPart.MED_ANDRE && <TwoPersonsWithOneHighlightedIconBlue />}
+                    {uttak.annenPart === AnnenPart.ALENE && (
+                        <ContentWithTooltip tooltipText="Søker">
+                            <OnePersonIconBlue />
+                        </ContentWithTooltip>
+                    )}
+                    {uttak.annenPart === AnnenPart.MED_ANDRE && (
+                        <ContentWithTooltip tooltipText="Søker/Annen part">
+                            <TwoPersonsWithOneHighlightedIconBlue />
+                        </ContentWithTooltip>
+                    )}
                 </TableColumn>
 
                 <TableColumn className={uttakCls}>{`${uttaksgrad} % uttaksgrad`}</TableColumn>

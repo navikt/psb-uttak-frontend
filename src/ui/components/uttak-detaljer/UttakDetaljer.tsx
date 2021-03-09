@@ -13,6 +13,7 @@ import OnePersonIconBlue from '../icons/OnePersonIconBlue';
 import OnePersonOutline from '../icons/OnePersonOutline';
 import styles from './uttakDetaljer.less';
 import UttakUtregning from './UttakUtregning';
+import ContentWithTooltip from '../content-with-tooltip/ContentWithTooltip';
 
 const cx = classNames.bind(styles);
 
@@ -90,9 +91,11 @@ const getSøkerBerOmMaksimalt = (søkerBerOmMaksimalt: number, årsaker: Årsake
                     <GreenCheckIcon size={19} />
                 </div>
             )}
-            <OnePersonIconBlue />
+            <ContentWithTooltip tooltipText="Søker">
+                <OnePersonIconBlue />
+            </ContentWithTooltip>
             <p className={styles.uttakDetaljer__oppsummering__tekst}>
-                {`Søker ber om maksimalt ${søkerBerOmMaksimalt} %`}
+                {`Søker ber om maksimalt: ${søkerBerOmMaksimalt} %`}
             </p>
         </div>
     );
@@ -123,9 +126,11 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
             <div className={styles.uttakDetaljer__oppsummering}>
                 {søkerBerOmMaksimalt && getSøkerBerOmMaksimalt(søkerBerOmMaksimalt, årsaker)}
                 <div className={styles.uttakDetaljer__oppsummering__container}>
-                    <OnePersonOutline />
+                    <ContentWithTooltip tooltipText="Annen part">
+                        <OnePersonOutline />
+                    </ContentWithTooltip>
                     <p className={styles.uttakDetaljer__oppsummering__tekst}>
-                        {`Tilgjengelig for andre søkere ${tilgjengeligForAndreSøkere} %`}
+                        {`Tilgjengelig for andre søkere: ${tilgjengeligForAndreSøkere} %`}
                     </p>
                 </div>
             </div>
