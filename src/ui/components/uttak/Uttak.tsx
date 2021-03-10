@@ -9,7 +9,10 @@ import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import { prettifyDate } from '../../../util/dateUtils';
 import { harÅrsak } from '../../../util/årsakUtils';
 import Vilkårsliste from '../../../vilkårsliste/Vilkårsliste';
+import ContainerContext from '../../context/ContainerContext';
+import ContentWithTooltip from '../content-with-tooltip/ContentWithTooltip';
 import ChevronIcon from '../icons/ChevronIcon';
+import EditedBySaksbehandlerIcon from '../icons/EditedBySaksbehandlerIcon';
 import GreenCheckIconFilled from '../icons/GreenCheckIconFilled';
 import OnePersonIconBlue from '../icons/OnePersonIconBlue';
 import RedCrossIconFilled from '../icons/RedCrossIconFilled';
@@ -19,7 +22,6 @@ import TableColumn from '../table/TableColumn';
 import TableRow from '../table/TableRow';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 import styles from './uttak.less';
-import ContentWithTooltip from '../content-with-tooltip/ContentWithTooltip';
 
 const cx = classNames.bind(styles);
 
@@ -34,7 +36,8 @@ interface UttakProps {
 }
 
 const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
-    const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker } = uttak;
+    const { aktivBehandlingUuid } = React.useContext(ContainerContext);
+    const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, kildeBehandlingUUID } = uttak;
     const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, Årsaker.UTENOM_PLEIEBEHOV);
     const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
 
@@ -44,6 +47,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
     });
 
     const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, Årsaker.INNGANGSVILKÅR_IKKE_OPPFYLT);
+    const erNyEllerEndretIAktivBehandling = aktivBehandlingUuid === kildeBehandlingUUID;
 
     return (
         <>
@@ -75,17 +79,26 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
 
                 <TableColumn className={uttakCls}>{`${uttaksgrad} % uttaksgrad`}</TableColumn>
                 <TableColumn>
-                    <button
-                        onClick={velgPeriode}
-                        type="button"
-                        className={`${styles.uttak__expandButton} ${
-                            erValgt && styles['uttak__expandButton--expanded']
-                        }`}
-                        aria-label={erValgt ? 'Lukk' : 'Åpne'}
-                        aria-expanded={erValgt}
-                    >
-                        <ChevronIcon />
-                    </button>
+                    <div className={styles.uttak__lastColumn}>
+                        {erNyEllerEndretIAktivBehandling && (
+                            <div className={styles.uttak__behandlerIcon}>
+                                <ContentWithTooltip tooltipText="Ny/endret denne behandlingen">
+                                    <EditedBySaksbehandlerIcon />
+                                </ContentWithTooltip>
+                            </div>
+                        )}
+                        <button
+                            onClick={velgPeriode}
+                            type="button"
+                            className={`${styles.uttak__expandButton} ${
+                                erValgt && styles['uttak__expandButton--expanded']
+                            }`}
+                            aria-label={erValgt ? 'Lukk' : 'Åpne'}
+                            aria-expanded={erValgt}
+                        >
+                            <ChevronIcon />
+                        </button>
+                    </div>
                 </TableColumn>
             </TableRow>
             <FullWidthRow>

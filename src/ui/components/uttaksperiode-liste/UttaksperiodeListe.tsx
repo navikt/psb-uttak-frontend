@@ -27,12 +27,15 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
             <Table
                 suppliedHeaders={
                     <>
-                        {headers.map((header) => (
-                            <TableColumn key={header} className={styles.headerColumn}>
+                        {headers.map((header, index) => (
+                            <TableColumn
+                                key={header}
+                                className={styles.headerColumn}
+                                colSpan={headers.length - 1 === index ? 2 : 1}
+                            >
                                 {header}
                             </TableColumn>
                         ))}
-                        <TableColumn className={styles.headerColumn} />
                     </>
                 }
             >
