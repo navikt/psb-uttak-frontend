@@ -15,14 +15,40 @@
             transform: rotate(180deg);
         }
     }
-    &__avslått {
-        background: #f1d8d4;
-        padding: 0.5rem 1.125rem;
+    &__indikator {
+        height: 0.75rem;
+        border-radius: 0.3125rem 0.3125rem 0 0;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+
+        &__avslått {
+            background: #f1d8d4;
+            border: 1px solid #a13a28;
+
+            &--delvis {
+                background: repeating-linear-gradient(-45deg, #e3b0a8, #e3b0a8 10px, #fff 10px, #fff 20px);
+            }
+        }
+
+        &__innvilget {
+            background: #cde7d8;
+            border: 1px solid #06893a;
+
+            &--delvis {
+                background: repeating-linear-gradient(-45deg, #9bd0b0, #9bd0b0 10px, #fff 10px, #fff 20px);
+            }
+        }
     }
 
-    &__innvilget {
-        background: #cde7d8;
-        padding: 0.5rem 1.125rem;
+    &__uttaksgrad {
+        position: relative;
+        padding-top: 0.125rem;
+        width: 9rem;
+
+        &__tekst {
+            margin: 0;
+        }
     }
 
     &__iconContainer {

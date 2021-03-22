@@ -41,9 +41,11 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
     const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, Årsaker.UTENOM_PLEIEBEHOV);
     const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
 
-    const uttakCls = cx({
-        uttak__avslått: uttaksgrad === 0,
-        uttak__innvilget: uttaksgrad > 0,
+    const uttakGradIndikatorCls = cx('uttak__indikator', {
+        uttak__indikator__avslått: uttaksgrad === 0,
+        // 'uttak__indikator__avslått--delvis': uttaksgrad === 0,
+        uttak__indikator__innvilget: uttaksgrad > 0,
+        // 'uttak__indikator__innvilget--delvis': uttaksgrad > 0,
     });
 
     const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, Årsaker.INNGANGSVILKÅR_IKKE_OPPFYLT);
@@ -77,7 +79,10 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                     )}
                 </TableColumn>
 
-                <TableColumn className={uttakCls}>{`${uttaksgrad} % uttaksgrad`}</TableColumn>
+                <TableColumn className={styles.uttak__uttaksgrad}>
+                    <p className={styles.uttak__uttaksgrad__tekst}>{`${uttaksgrad} %`}</p>
+                    <div className={uttakGradIndikatorCls} />
+                </TableColumn>
                 <TableColumn>
                     <div className={styles.uttak__lastColumn}>
                         {erNyEllerEndretIAktivBehandling && (
