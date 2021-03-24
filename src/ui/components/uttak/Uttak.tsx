@@ -13,7 +13,7 @@ import ContainerContext from '../../context/ContainerContext';
 import ContentWithTooltip from '../content-with-tooltip/ContentWithTooltip';
 import ChevronIcon from '../icons/ChevronIcon';
 import GreenCheckIconFilled from '../icons/GreenCheckIconFilled';
-import NyIcon from '../icons/NyIcon';
+import NewIcon from '../icons/NewIcon';
 import OnePersonIconBlue from '../icons/OnePersonIconBlue';
 import RedCrossIconFilled from '../icons/RedCrossIconFilled';
 import TwoPersonsWithOneHighlightedIconBlue from '../icons/TwoPersonsWithOneHighlightedIconBlue';
@@ -88,7 +88,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                         {erNyEllerEndretIAktivBehandling && (
                             <div className={styles.uttak__behandlerIcon}>
                                 <ContentWithTooltip tooltipText="Ny/endret denne behandlingen">
-                                    <NyIcon />
+                                    <NewIcon />
                                 </ContentWithTooltip>
                             </div>
                         )}

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const NyIcon = () => (
+const NewIcon = () => (
     <div
         style={{
             width: '1.75rem',
@@ -17,4 +17,4 @@ const NyIcon = () => (
     </div>
 );
 
-export default NyIcon;
+export default NewIcon;

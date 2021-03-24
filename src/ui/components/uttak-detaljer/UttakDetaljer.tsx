@@ -1,5 +1,7 @@
 import classNames from 'classnames/bind';
 import { EtikettAdvarsel } from 'nav-frontend-etiketter';
+import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import { PopoverOrientering } from 'nav-frontend-popover';
 import { Element } from 'nav-frontend-typografi';
 import * as React from 'react';
 import Årsaker from '../../../constants/Årsaker';
@@ -8,12 +10,12 @@ import Utbetalingsgrad from '../../../types/Utbetalingsgrad';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import { beregnDagerTimer } from '../../../util/dateUtils';
 import { harÅrsak } from '../../../util/årsakUtils';
+import ContentWithTooltip from '../content-with-tooltip/ContentWithTooltip';
 import GreenCheckIcon from '../icons/GreenCheckIcon';
 import OnePersonIconBlue from '../icons/OnePersonIconBlue';
 import OnePersonOutline from '../icons/OnePersonOutline';
 import styles from './uttakDetaljer.less';
 import UttakUtregning from './UttakUtregning';
-import ContentWithTooltip from '../content-with-tooltip/ContentWithTooltip';
 
 const cx = classNames.bind(styles);
 
@@ -39,10 +41,29 @@ const getÅrsaksetiketter = (årsaker: Årsaker[]) => (
 
 const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn, pleiebehov: number) => {
     const { etablertTilsyn, andreSøkeresTilsyn, tilgjengeligForSøker } = graderingMotTilsyn;
+    const nulletUt = false; // TODO
+    const utnullingPåGrunnAvBeredskap = false; // TODO
     return (
         <div className={styles.uttakDetaljer__graderingMotTilsyn}>
             <p className={styles.uttakDetaljer__data}>{`Pleiebehov: ${pleiebehov} %`}</p>
-            <p className={styles.uttakDetaljer__data}>{`- Etablert tilsyn: ${etablertTilsyn} %`}</p>
+            <p className={styles.uttakDetaljer__data}>
+                {`- Etablert tilsyn: `}
+                {nulletUt ? (
+                    <>
+                        <span className={styles['uttakDetaljer__data--utnullet']}>{etablertTilsyn}%</span>
+                        <Hjelpetekst
+                            className={styles.uttakDetaljer__data__questionMark}
+                            type={PopoverOrientering.Hoyre}
+                        >
+                            {utnullingPåGrunnAvBeredskap
+                                ? 'Etablert tilsyn blir ikke medregnet på grunn av nattevåk/beredskap.'
+                                : 'Etablert tilsyn under 10 % blir ikke medregnet.'}
+                        </Hjelpetekst>
+                    </>
+                ) : (
+                    `${etablertTilsyn}%`
+                )}
+            </p>
             <p className={styles.uttakDetaljer__data}>{`- Andre søkeres tilsyn: ${andreSøkeresTilsyn} %`}</p>
             <hr className={styles.uttakDetaljer__separator} />
             <p className={styles.uttakDetaljer__sum}>{`= ${tilgjengeligForSøker} % tilgjengelig for søker`}</p>
