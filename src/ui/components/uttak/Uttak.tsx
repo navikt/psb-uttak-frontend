@@ -14,9 +14,9 @@ import ContentWithTooltip from '../content-with-tooltip/ContentWithTooltip';
 import ChevronIcon from '../icons/ChevronIcon';
 import GreenCheckIconFilled from '../icons/GreenCheckIconFilled';
 import NewIcon from '../icons/NewIcon';
-import OnePersonIconBlue from '../icons/OnePersonIconBlue';
+import OnePersonIconGray from '../icons/OnePersonIconGray';
 import RedCrossIconFilled from '../icons/RedCrossIconFilled';
-import TwoPersonsWithOneHighlightedIconBlue from '../icons/TwoPersonsWithOneHighlightedIconBlue';
+import TwoPersonsWithOneHighlightedIconGray from '../icons/TwoPersonsWithOneHighlightedIconGray';
 import FullWidthRow from '../table/FullWidthRow';
 import TableColumn from '../table/TableColumn';
 import TableRow from '../table/TableRow';
@@ -69,12 +69,14 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                 <TableColumn>
                     {uttak.annenPart === AnnenPart.ALENE && (
                         <ContentWithTooltip tooltipText="Søker">
-                            <OnePersonIconBlue />
+                            <OnePersonIconGray />
                         </ContentWithTooltip>
                     )}
                     {uttak.annenPart === AnnenPart.MED_ANDRE && (
                         <ContentWithTooltip tooltipText="Søker/Annen part">
-                            <TwoPersonsWithOneHighlightedIconBlue />
+                            <div className={styles['uttak__icon--wide']}>
+                                <TwoPersonsWithOneHighlightedIconGray />
+                            </div>
                         </ContentWithTooltip>
                     )}
                 </TableColumn>
