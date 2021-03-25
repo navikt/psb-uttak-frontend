@@ -14,7 +14,7 @@ export const prettifyDate = (date: string) => {
 };
 
 export const beregnDagerTimer = (dur: string) => {
-    return dayjs.duration(dur).asHours();
+    return Math.round(dayjs.duration(dur).asHours() * 100) / 100;
 };
 
 export function dateFromString(dateString: string) {
