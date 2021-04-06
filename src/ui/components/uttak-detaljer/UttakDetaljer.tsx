@@ -4,7 +4,7 @@ import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import { Element } from 'nav-frontend-typografi';
 import * as React from 'react';
-import OverseEtablertTilsynÅrsaker from '../../../constants/OverseEtablertTilsynÅrsaker';
+import OverseEtablertTilsynÅrsak from '../../../constants/OverseEtablertTilsynÅrsak';
 import Årsaker from '../../../constants/Årsaker';
 import GraderingMotTilsyn from '../../../types/GraderingMotTilsyn';
 import Utbetalingsgrad from '../../../types/Utbetalingsgrad';
@@ -40,20 +40,20 @@ const getÅrsaksetiketter = (årsaker: Årsaker[]) => (
     </>
 );
 
-const harBeredskapEllerNattevåkÅrsak = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsaker) => {
+const harBeredskapEllerNattevåkÅrsak = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsak) => {
     const beredskapEllerNattevåkÅrsaker = [
-        OverseEtablertTilsynÅrsaker.BEREDSKAP,
-        OverseEtablertTilsynÅrsaker.NATTEVÅK,
-        OverseEtablertTilsynÅrsaker.NATTEVÅK_OG_BEREDSKAP,
+        OverseEtablertTilsynÅrsak.BEREDSKAP,
+        OverseEtablertTilsynÅrsak.NATTEVÅK,
+        OverseEtablertTilsynÅrsak.NATTEVÅK_OG_BEREDSKAP,
     ];
     return beredskapEllerNattevåkÅrsaker.some((årsak) => årsak === overseEtablertTilsynÅrsak);
 };
 
-const hentÅrsakstekst = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsaker) => {
-    if (overseEtablertTilsynÅrsak === OverseEtablertTilsynÅrsaker.BEREDSKAP) {
+const hentÅrsakstekst = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsak) => {
+    if (overseEtablertTilsynÅrsak === OverseEtablertTilsynÅrsak.BEREDSKAP) {
         return 'Etablert tilsyn blir ikke medregnet på grunn av beredskap.';
     }
-    if (overseEtablertTilsynÅrsak === OverseEtablertTilsynÅrsaker.NATTEVÅK) {
+    if (overseEtablertTilsynÅrsak === OverseEtablertTilsynÅrsak.NATTEVÅK) {
         return 'Etablert tilsyn blir ikke medregnet på grunn av nattevåk.';
     }
     return 'Etablert tilsyn blir ikke medregnet på grunn av nattevåk og beredskap.';
