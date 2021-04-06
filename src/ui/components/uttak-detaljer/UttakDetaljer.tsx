@@ -4,6 +4,7 @@ import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import { Element } from 'nav-frontend-typografi';
 import * as React from 'react';
+import OverseEtablertTilsynÅrsaker from '../../../constants/OverseEtablertTilsynÅrsaker';
 import Årsaker from '../../../constants/Årsaker';
 import GraderingMotTilsyn from '../../../types/GraderingMotTilsyn';
 import Utbetalingsgrad from '../../../types/Utbetalingsgrad';
@@ -39,24 +40,48 @@ const getÅrsaksetiketter = (årsaker: Årsaker[]) => (
     </>
 );
 
+const harBeredskapEllerNattevåkÅrsak = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsaker) => {
+    const beredskapEllerNattevåkÅrsaker = [
+        OverseEtablertTilsynÅrsaker.BEREDSKAP,
+        OverseEtablertTilsynÅrsaker.NATTEVÅK,
+        OverseEtablertTilsynÅrsaker.NATTEVÅK_OG_BEREDSKAP,
+    ];
+    return beredskapEllerNattevåkÅrsaker.some((årsak) => årsak === overseEtablertTilsynÅrsak);
+};
+
+const hentÅrsakstekst = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsaker) => {
+    if (overseEtablertTilsynÅrsak === OverseEtablertTilsynÅrsaker.BEREDSKAP) {
+        return 'Etablert tilsyn blir ikke medregnet på grunn av beredskap.';
+    }
+    if (overseEtablertTilsynÅrsak === OverseEtablertTilsynÅrsaker.NATTEVÅK) {
+        return 'Etablert tilsyn blir ikke medregnet på grunn av nattevåk.';
+    }
+    return 'Etablert tilsyn blir ikke medregnet på grunn av nattevåk og beredskap.';
+};
+
 const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn, pleiebehov: number) => {
-    const { etablertTilsyn, andreSøkeresTilsyn, tilgjengeligForSøker } = graderingMotTilsyn;
-    const nulletUt = false; // TODO
-    const utnullingPåGrunnAvBeredskap = false; // TODO
+    const { etablertTilsyn, andreSøkeresTilsyn, tilgjengeligForSøker, overseEtablertTilsynÅrsak } = graderingMotTilsyn;
+
+    const utnullingPåGrunnAvBeredskapEllerNattevåk =
+        overseEtablertTilsynÅrsak && harBeredskapEllerNattevåkÅrsak(overseEtablertTilsynÅrsak);
+    const beredskapEllerNattevåkÅrsakTekst = utnullingPåGrunnAvBeredskapEllerNattevåk
+        ? hentÅrsakstekst(overseEtablertTilsynÅrsak)
+        : '';
+
     return (
         <div className={styles.uttakDetaljer__graderingMotTilsyn}>
             <p className={styles.uttakDetaljer__data}>{`Pleiebehov: ${pleiebehov} %`}</p>
             <p className={styles.uttakDetaljer__data}>
                 {`- Etablert tilsyn: `}
-                {nulletUt ? (
+                {overseEtablertTilsynÅrsak ? (
                     <>
                         <span className={styles['uttakDetaljer__data--utnullet']}>{etablertTilsyn}%</span>
                         <Hjelpetekst
                             className={styles.uttakDetaljer__data__questionMark}
                             type={PopoverOrientering.Hoyre}
                         >
-                            {utnullingPåGrunnAvBeredskap
-                                ? 'Etablert tilsyn blir ikke medregnet på grunn av nattevåk/beredskap.'
+                            {utnullingPåGrunnAvBeredskapEllerNattevåk
+                                ? beredskapEllerNattevåkÅrsakTekst
                                 : 'Etablert tilsyn under 10 % blir ikke medregnet.'}
                         </Hjelpetekst>
                     </>

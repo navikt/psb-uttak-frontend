@@ -43,9 +43,8 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
 
     const uttakGradIndikatorCls = cx('uttak__indikator', {
         uttak__indikator__avslått: uttaksgrad === 0,
-        // 'uttak__indikator__avslått--delvis': uttaksgrad === 0,
         uttak__indikator__innvilget: uttaksgrad > 0,
-        // 'uttak__indikator__innvilget--delvis': uttaksgrad > 0,
+        'uttak__indikator__innvilget--delvis': årsaker.some((årsak) => årsak === Årsaker.GRADERT_MOT_TILSYN),
     });
 
     const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, Årsaker.INNGANGSVILKÅR_IKKE_OPPFYLT);
