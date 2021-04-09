@@ -4,6 +4,7 @@ import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import { Element } from 'nav-frontend-typografi';
 import * as React from 'react';
+import IkkeOppfylteÅrsakerMedTekst from '../../../constants/IkkeOppfylteÅrsakerMedTekst';
 import OverseEtablertTilsynÅrsak from '../../../constants/OverseEtablertTilsynÅrsak';
 import Årsaker from '../../../constants/Årsaker';
 import GraderingMotTilsyn from '../../../types/GraderingMotTilsyn';
@@ -20,25 +21,14 @@ import UttakUtregning from './UttakUtregning';
 
 const cx = classNames.bind(styles);
 
-const getÅrsaksetiketter = (årsaker: Årsaker[]) => (
-    <>
-        {harÅrsak(årsaker, Årsaker.LOVBESTEMT_FERIE) && (
-            <EtikettAdvarsel className={styles.uttakDetaljer__etikett}>
-                Årsak for 0 % uttak: Søker avvikler lovbestemt ferie
-            </EtikettAdvarsel>
-        )}
-        {harÅrsak(årsaker, Årsaker.FOR_LAV_GRAD) && (
-            <EtikettAdvarsel className={styles.uttakDetaljer__etikett}>
-                Årsak for 0 % uttaksgrad: Uttaksgrad må være minst 20 %
-            </EtikettAdvarsel>
-        )}
-        {harÅrsak(årsaker, Årsaker.FOR_HØY_TILSYNSGRAD) && (
-            <EtikettAdvarsel className={styles.uttakDetaljer__etikett}>
-                Årsak for 0 % uttaksgrad: Barnet har tilsyn av andre mer enn 80 % av tiden
-            </EtikettAdvarsel>
-        )}
-    </>
-);
+const getÅrsaksetiketter = (årsaker: Årsaker[]) => {
+    const funnedeÅrsaker = IkkeOppfylteÅrsakerMedTekst.filter((årsak) => harÅrsak(årsaker, årsak.årsak));
+    return funnedeÅrsaker.map((årsak) => (
+        <EtikettAdvarsel key={årsak.årsak} className={styles.uttakDetaljer__etikett}>
+            {årsak.tekst}
+        </EtikettAdvarsel>
+    ));
+};
 
 const harBeredskapEllerNattevåkÅrsak = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsak) => {
     const beredskapEllerNattevåkÅrsaker = [
