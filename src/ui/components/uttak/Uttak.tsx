@@ -73,9 +73,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                     )}
                     {uttak.annenPart === AnnenPart.MED_ANDRE && (
                         <ContentWithTooltip tooltipText="Søker/Annen part">
-                            <div className={styles['uttak__icon--wide']}>
-                                <TwoPersonsWithOneHighlightedIconGray />
-                            </div>
+                            <TwoPersonsWithOneHighlightedIconGray />
                         </ContentWithTooltip>
                     )}
                 </TableColumn>
