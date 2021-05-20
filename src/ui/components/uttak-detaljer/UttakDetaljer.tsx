@@ -100,7 +100,9 @@ const formatAvkortingMotArbeid = (
             const arbeidsgivernavn = alleArbeidsforhold[orgnr]?.navn || 'Arbeidsgiver';
             return (
                 <div key={index}>
-                    <Element className={styles.uttakDetaljer__avkortingMotArbeid__heading}>{arbeidsgivernavn}</Element>
+                    <Element
+                        className={styles.uttakDetaljer__avkortingMotArbeid__heading}
+                    >{`${arbeidsgivernavn}:`}</Element>
                     <p className={styles.uttakDetaljer__data}>
                         {`Normal arbeidstid: ${beregnDagerTimer(normalArbeidstid)} timer`}
                     </p>
