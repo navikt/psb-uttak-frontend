@@ -18,6 +18,8 @@ import OnePersonIconBlue from '../icons/OnePersonIconBlue';
 import OnePersonOutline from '../icons/OnePersonOutline';
 import styles from './uttakDetaljer.less';
 import UttakUtregning from './UttakUtregning';
+import ContainerContext from '../../context/ContainerContext';
+import ArbeidsgiverOpplysninger from '../../../types/ArbeidsgiverOpplysninger';
 
 const cx = classNames.bind(styles);
 
@@ -86,29 +88,32 @@ const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn, pleieb
     );
 };
 
-const formatAvkortingMotArbeid = (utbetalingsgrader: Utbetalingsgrad[], søkersTapteArbeidstid: number) => {
-    return (
-        <div className={styles.uttakDetaljer__avkortingMotArbeid}>
-            {utbetalingsgrader.map((utbetalingsgrad, index) => (
+const formatAvkortingMotArbeid = (
+    utbetalingsgrader: Utbetalingsgrad[],
+    søkersTapteArbeidstid: number,
+    alleArbeidsforhold: Record<string, ArbeidsgiverOpplysninger>
+) => (
+    <div className={styles.uttakDetaljer__avkortingMotArbeid}>
+        {utbetalingsgrader.map((utbetalingsgradItem, index) => {
+            const { normalArbeidstid, faktiskArbeidstid, utbetalingsgrad, arbeidsforhold } = utbetalingsgradItem;
+            const orgnr = arbeidsforhold?.organisasjonsnummer;
+            const arbeidsgivernavn = alleArbeidsforhold[orgnr]?.navn || 'Arbeidsgiver';
+            return (
                 <div key={index}>
-                    <Element className={styles.uttakDetaljer__avkortingMotArbeid__heading}>
-                        {`Arbeidsgiver ${index + 1}:`}
-                    </Element>
+                    <Element className={styles.uttakDetaljer__avkortingMotArbeid__heading}>{arbeidsgivernavn}</Element>
                     <p className={styles.uttakDetaljer__data}>
-                        {`Normal arbeidstid: ${beregnDagerTimer(utbetalingsgrad.normalArbeidstid)} timer`}
+                        {`Normal arbeidstid: ${beregnDagerTimer(normalArbeidstid)} timer`}
                     </p>
                     <p className={styles.uttakDetaljer__data}>
-                        {`Faktisk arbeidstid: ${beregnDagerTimer(utbetalingsgrad.faktiskArbeidstid)} timer`}
+                        {`Faktisk arbeidstid: ${beregnDagerTimer(faktiskArbeidstid)} timer`}
                     </p>
-                    <p className={styles.uttakDetaljer__data}>
-                        {`Utbetalingsgrad: ${utbetalingsgrad.utbetalingsgrad} %`}
-                    </p>
+                    <p className={styles.uttakDetaljer__data}>{`Utbetalingsgrad: ${utbetalingsgrad} %`}</p>
                     <p className={styles.uttakDetaljer__sum}>{`Søkers inntektstap: ${søkersTapteArbeidstid} %`}</p>
                 </div>
-            ))}
-        </div>
-    );
-};
+            );
+        })}
+    </div>
+);
 
 const shouldHighlight = (aktuellÅrsak: Årsaker, årsaker: Årsaker[]) => årsaker.some((årsak) => årsak === aktuellÅrsak);
 
@@ -142,6 +147,7 @@ interface UttakDetaljerProps {
 }
 
 const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
+    const { arbeidsforhold } = React.useContext(ContainerContext);
     const {
         utbetalingsgrader,
         uttaksgrad,
@@ -183,7 +189,7 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
                     heading="Avkorting mot arbeid"
                     highlight={shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT, årsaker)}
                 >
-                    {formatAvkortingMotArbeid(utbetalingsgrader, søkersTapteArbeidstid)}
+                    {formatAvkortingMotArbeid(utbetalingsgrader, søkersTapteArbeidstid, arbeidsforhold)}
                 </UttakUtregning>
             </div>
         </div>
