@@ -41,14 +41,14 @@ const harBeredskapEllerNattevåkÅrsak = (overseEtablertTilsynÅrsak: OverseEtab
     return beredskapEllerNattevåkÅrsaker.some((årsak) => årsak === overseEtablertTilsynÅrsak);
 };
 
-const hentÅrsakstekst = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsak) => {
+const hentÅrsakstekst = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsak, etablertTilsyn: number) => {
     if (overseEtablertTilsynÅrsak === OverseEtablertTilsynÅrsak.BEREDSKAP) {
-        return 'Etablert tilsyn blir ikke medregnet på grunn av beredskap.';
+        return `Etablert tilsyn på ${etablertTilsyn} % blir ikke medregnet på grunn av beredskap.`;
     }
     if (overseEtablertTilsynÅrsak === OverseEtablertTilsynÅrsak.NATTEVÅK) {
-        return 'Etablert tilsyn blir ikke medregnet på grunn av nattevåk.';
+        return `Etablert tilsyn på ${etablertTilsyn} % blir ikke medregnet på grunn av nattevåk.`;
     }
-    return 'Etablert tilsyn blir ikke medregnet på grunn av nattevåk og beredskap.';
+    return `Etablert tilsyn på ${etablertTilsyn} % blir ikke medregnet på grunn av nattevåk og beredskap.`;
 };
 
 const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn, pleiebehov: number) => {
@@ -57,7 +57,7 @@ const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn, pleieb
     const utnullingPåGrunnAvBeredskapEllerNattevåk =
         overseEtablertTilsynÅrsak && harBeredskapEllerNattevåkÅrsak(overseEtablertTilsynÅrsak);
     const beredskapEllerNattevåkÅrsakTekst = utnullingPåGrunnAvBeredskapEllerNattevåk
-        ? hentÅrsakstekst(overseEtablertTilsynÅrsak)
+        ? hentÅrsakstekst(overseEtablertTilsynÅrsak, etablertTilsyn)
         : '';
 
     return (
@@ -67,7 +67,7 @@ const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn, pleieb
                 {`- Etablert tilsyn: `}
                 {overseEtablertTilsynÅrsak ? (
                     <>
-                        <span className={styles['uttakDetaljer__data--utnullet']}>{etablertTilsyn}%</span>
+                        <span className={styles['uttakDetaljer__data--utnullet']}>{etablertTilsyn} %</span>
                         <Hjelpetekst
                             className={styles.uttakDetaljer__data__questionMark}
                             type={PopoverOrientering.Hoyre}
@@ -78,7 +78,7 @@ const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn, pleieb
                         </Hjelpetekst>
                     </>
                 ) : (
-                    `${etablertTilsyn}%`
+                    `${etablertTilsyn} %`
                 )}
             </p>
             <p className={styles.uttakDetaljer__data}>{`- Andre søkeres tilsyn: ${andreSøkeresTilsyn} %`}</p>
