@@ -1,9 +1,9 @@
 {
     "name": "psb-uttak-frontend",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "main": "index.js",
     "scripts": {
-        "test": "jest",
+        "test": "jest --passWithNoTests",
         "test-watch": "jest --watch",
         "start": "node ./server.js",
         "build": "webpack --config webpack/webpack-config.production.js",
