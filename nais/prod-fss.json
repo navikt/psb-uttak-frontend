@@ -1,0 +1,9 @@
+{
+    "app": "psb-uttak-frontend",
+    "cluster": "prod-fss",
+    "namespace": "pleiepenger",
+    "team": "pleiepenger",
+    "minReplicas": "1",
+    "maxReplicas": "2",
+    "ingresses": ["https://psb-uttak-frontend.intern.nav.no"]
+}
