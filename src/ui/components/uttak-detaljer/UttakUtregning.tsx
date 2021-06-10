@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import { Element } from 'nav-frontend-typografi';
 import * as React from 'react';
-import GreenCheckIcon from '../icons/GreenCheckIcon';
+import { GreenCheckIcon } from '@navikt/k9-react-components';
 import styles from './uttakUtregning.less';
 
 const cx = classNames.bind(styles);

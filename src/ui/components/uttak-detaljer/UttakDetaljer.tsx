@@ -1,3 +1,4 @@
+import { ContentWithTooltip, GreenCheckIcon, OnePersonIconBlue, OnePersonOutline } from '@navikt/k9-react-components';
 import classNames from 'classnames/bind';
 import { EtikettAdvarsel } from 'nav-frontend-etiketter';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
@@ -7,19 +8,15 @@ import * as React from 'react';
 import IkkeOppfylteÅrsakerMedTekst from '../../../constants/IkkeOppfylteÅrsakerMedTekst';
 import OverseEtablertTilsynÅrsak from '../../../constants/OverseEtablertTilsynÅrsak';
 import Årsaker from '../../../constants/Årsaker';
+import ArbeidsgiverOpplysninger from '../../../types/ArbeidsgiverOpplysninger';
 import GraderingMotTilsyn from '../../../types/GraderingMotTilsyn';
 import Utbetalingsgrad from '../../../types/Utbetalingsgrad';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import { beregnDagerTimer } from '../../../util/dateUtils';
 import { harÅrsak } from '../../../util/årsakUtils';
-import ContentWithTooltip from '../content-with-tooltip/ContentWithTooltip';
-import GreenCheckIcon from '../icons/GreenCheckIcon';
-import OnePersonIconBlue from '../icons/OnePersonIconBlue';
-import OnePersonOutline from '../icons/OnePersonOutline';
+import ContainerContext from '../../context/ContainerContext';
 import styles from './uttakDetaljer.less';
 import UttakUtregning from './UttakUtregning';
-import ContainerContext from '../../context/ContainerContext';
-import ArbeidsgiverOpplysninger from '../../../types/ArbeidsgiverOpplysninger';
 
 const cx = classNames.bind(styles);
 

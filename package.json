@@ -54,6 +54,8 @@
         "webpack-merge": "^5.7.3"
     },
     "dependencies": {
+        "@navikt/k9-react-components": "^0.0.17",
+        "@popperjs/core": "^2.9.2",
         "@types/react": "^17.0.3",
         "@types/react-dom": "^17.0.3",
         "classnames": "^2.3.1",
@@ -63,13 +65,18 @@
         "lodash.throttle": "^4.1.1",
         "nav-frontend-alertstriper": "^3.0.51",
         "nav-frontend-alertstriper-style": "^2.0.38",
+        "nav-frontend-chevron": "^1.0.30",
+        "nav-frontend-chevron-style": "^1.0.4",
         "nav-frontend-core": "^5.0.11",
         "nav-frontend-etiketter": "^2.0.32",
         "nav-frontend-etiketter-style": "^1.0.19",
         "nav-frontend-hjelpetekst": "^2.0.57",
         "nav-frontend-hjelpetekst-style": "^2.0.42",
         "nav-frontend-ikoner-assets": "^2.0.10",
+        "nav-frontend-ikonknapper": "^1.0.32",
         "nav-frontend-js-utils": "^1.0.17",
+        "nav-frontend-knapper": "^3.0.1",
+        "nav-frontend-knapper-style": "^2.0.1",
         "nav-frontend-paneler": "^2.0.32",
         "nav-frontend-paneler-style": "^1.0.2",
         "nav-frontend-popover": "^1.0.4",
@@ -83,6 +90,7 @@
         "prop-types": "^15.7.2",
         "react": "^17.0.2",
         "react-collapse": "^5.1.0",
-        "react-dom": "^17.0.2"
+        "react-dom": "^17.0.2",
+        "react-popper": "^2.2.5"
     }
 }

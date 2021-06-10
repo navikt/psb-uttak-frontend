@@ -1,3 +1,11 @@
+import {
+    ChevronIconBlack,
+    ContentWithTooltip,
+    GreenCheckIconFilled,
+    OnePersonIconGray,
+    RedCrossIconFilled,
+    TwoPersonsWithOneHighlightedIconGray,
+} from '@navikt/k9-react-components';
 import classNames from 'classnames/bind';
 import { Normaltekst } from 'nav-frontend-typografi';
 import * as React from 'react';
@@ -10,13 +18,7 @@ import { prettifyDate } from '../../../util/dateUtils';
 import { harÅrsak } from '../../../util/årsakUtils';
 import Vilkårsliste from '../../../vilkårsliste/Vilkårsliste';
 import ContainerContext from '../../context/ContainerContext';
-import ContentWithTooltip from '../content-with-tooltip/ContentWithTooltip';
-import ChevronIcon from '../icons/ChevronIcon';
-import GreenCheckIconFilled from '../icons/GreenCheckIconFilled';
 import NewIcon from '../icons/NewIcon';
-import OnePersonIconGray from '../icons/OnePersonIconGray';
-import RedCrossIconFilled from '../icons/RedCrossIconFilled';
-import TwoPersonsWithOneHighlightedIconGray from '../icons/TwoPersonsWithOneHighlightedIconGray';
 import FullWidthRow from '../table/FullWidthRow';
 import TableColumn from '../table/TableColumn';
 import TableRow from '../table/TableRow';
@@ -100,7 +102,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                             aria-label={erValgt ? 'Lukk' : 'Åpne'}
                             aria-expanded={erValgt}
                         >
-                            <ChevronIcon />
+                            <ChevronIconBlack />
                         </button>
                     </div>
                 </TableColumn>

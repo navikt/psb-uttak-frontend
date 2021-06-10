@@ -1,6 +1,5 @@
 import * as React from 'react';
-import GreenCheckIconFilled from '../ui/components/icons/GreenCheckIconFilled';
-import RedCrossIconFilled from '../ui/components/icons/RedCrossIconFilled';
+import { GreenCheckIconFilled, RedCrossIconFilled } from '@navikt/k9-react-components';
 import styles from './vilkårslisteItem.less';
 
 interface VilkårslisteItemProps {
