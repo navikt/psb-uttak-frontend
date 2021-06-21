@@ -157,10 +157,6 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
         pleiebehov,
     } = uttak;
 
-    const tilgjengeligForAndreSøkere = graderingMotTilsyn?.tilgjengeligForSøker
-        ? graderingMotTilsyn.tilgjengeligForSøker - uttaksgrad
-        : 0;
-
     return (
         <div className={styles.uttakDetaljer}>
             {getÅrsaksetiketter(årsaker)}
