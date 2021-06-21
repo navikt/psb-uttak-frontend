@@ -170,9 +170,6 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
                     <ContentWithTooltip tooltipText="Annen part">
                         <OnePersonOutline />
                     </ContentWithTooltip>
-                    <p className={styles.uttakDetaljer__oppsummering__tekst}>
-                        {`Tilgjengelig for andre søkere: ${tilgjengeligForAndreSøkere} %`}
-                    </p>
                 </div>
             </div>
             <div className={styles.uttakDetaljer__grid}>
