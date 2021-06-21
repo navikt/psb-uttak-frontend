@@ -1,4 +1,4 @@
-import { ContentWithTooltip, GreenCheckIcon, OnePersonIconBlue, OnePersonOutline } from '@navikt/k9-react-components';
+import { ContentWithTooltip, GreenCheckIcon, OnePersonIconBlue } from '@navikt/k9-react-components';
 import classNames from 'classnames/bind';
 import { EtikettAdvarsel } from 'nav-frontend-etiketter';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
@@ -162,11 +162,6 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
             {getÅrsaksetiketter(årsaker)}
             <div className={styles.uttakDetaljer__oppsummering}>
                 {søkerBerOmMaksimalt && getSøkerBerOmMaksimalt(søkerBerOmMaksimalt, årsaker)}
-                <div className={styles.uttakDetaljer__oppsummering__container}>
-                    <ContentWithTooltip tooltipText="Annen part">
-                        <OnePersonOutline />
-                    </ContentWithTooltip>
-                </div>
             </div>
             <div className={styles.uttakDetaljer__grid}>
                 {graderingMotTilsyn && (
