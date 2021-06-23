@@ -90,28 +90,31 @@ const formatAvkortingMotArbeid = (
     søkersTapteArbeidstid: number,
     alleArbeidsforhold: Record<string, ArbeidsgiverOpplysninger>
 ) => (
-    <div className={styles.uttakDetaljer__avkortingMotArbeid}>
-        {utbetalingsgrader.map((utbetalingsgradItem, index) => {
-            const { normalArbeidstid, faktiskArbeidstid, utbetalingsgrad, arbeidsforhold } = utbetalingsgradItem;
-            const orgnr = arbeidsforhold?.organisasjonsnummer;
-            const arbeidsgivernavn = alleArbeidsforhold[orgnr]?.navn || 'Arbeidsgiver';
-            return (
-                <div key={index}>
-                    <Element
-                        className={styles.uttakDetaljer__avkortingMotArbeid__heading}
-                    >{`${arbeidsgivernavn}:`}</Element>
-                    <p className={styles.uttakDetaljer__data}>
-                        {`Normal arbeidstid: ${beregnDagerTimer(normalArbeidstid)} timer`}
-                    </p>
-                    <p className={styles.uttakDetaljer__data}>
-                        {`Faktisk arbeidstid: ${beregnDagerTimer(faktiskArbeidstid)} timer`}
-                    </p>
-                    <p className={styles.uttakDetaljer__data}>{`Utbetalingsgrad: ${utbetalingsgrad} %`}</p>
-                    <p className={styles.uttakDetaljer__sum}>{`Søkers inntektstap: ${søkersTapteArbeidstid} %`}</p>
-                </div>
-            );
-        })}
-    </div>
+    <>
+        <div className={styles.uttakDetaljer__avkortingMotArbeid}>
+            {utbetalingsgrader.map((utbetalingsgradItem, index) => {
+                const { normalArbeidstid, faktiskArbeidstid, utbetalingsgrad, arbeidsforhold } = utbetalingsgradItem;
+                const orgnr = arbeidsforhold?.organisasjonsnummer;
+                const arbeidsgivernavn = alleArbeidsforhold[orgnr]?.navn || 'Arbeidsgiver';
+                return (
+                    <div key={index}>
+                        <Element
+                            className={styles.uttakDetaljer__avkortingMotArbeid__heading}
+                        >{`${arbeidsgivernavn}:`}</Element>
+                        <p className={styles.uttakDetaljer__data}>
+                            {`Normal arbeidstid: ${beregnDagerTimer(normalArbeidstid)} timer`}
+                        </p>
+                        <p className={styles.uttakDetaljer__data}>
+                            {`Faktisk arbeidstid: ${beregnDagerTimer(faktiskArbeidstid)} timer`}
+                        </p>
+                        <p className={styles.uttakDetaljer__data}>{`Utbetalingsgrad: ${utbetalingsgrad} %`}</p>
+                    </div>
+                );
+            })}
+        </div>
+        <hr />
+        <p className={styles.uttakDetaljer__sum}>{`= ${søkersTapteArbeidstid} % totalt inntektstap`}</p>
+    </>
 );
 
 const shouldHighlight = (aktuellÅrsak: Årsaker, årsaker: Årsaker[]) => årsaker.some((årsak) => årsak === aktuellÅrsak);
