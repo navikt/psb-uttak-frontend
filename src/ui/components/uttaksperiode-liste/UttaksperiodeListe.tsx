@@ -39,16 +39,14 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
                     </>
                 }
             >
-                {uttaksperioder.map((uttak, index) => {
-                    return (
-                        <Uttak
-                            key={index}
-                            uttak={uttak}
-                            erValgt={valgtPeriodeIndex === index}
-                            velgPeriode={() => velgPeriode(index)}
-                        />
-                    );
-                })}
+                {uttaksperioder.map((uttak, index) => (
+                    <Uttak
+                        key={uttak.periode.prettifyPeriod()}
+                        uttak={uttak}
+                        erValgt={valgtPeriodeIndex === index}
+                        velgPeriode={() => velgPeriode(index)}
+                    />
+                ))}
             </Table>
         </div>
     );

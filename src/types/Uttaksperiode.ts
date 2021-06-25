@@ -1,4 +1,4 @@
-import { Period } from './Period';
+import Period from './Period';
 import Utbetalingsgrad from './Utbetalingsgrad';
 import GraderingMotTilsyn from './GraderingMotTilsyn';
 import Utfall from '../constants/Utfall';

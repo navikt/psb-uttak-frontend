@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const NewIcon = () => (
+const NewIcon = (): JSX.Element => (
     <div
         style={{
             width: '1.75rem',

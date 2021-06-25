@@ -12,9 +12,7 @@ import * as React from 'react';
 import { Collapse } from 'react-collapse';
 import AnnenPart from '../../../constants/AnnenPart';
 import Årsaker from '../../../constants/Årsaker';
-import { Period } from '../../../types/Period';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
-import { prettifyDate } from '../../../util/dateUtils';
 import { harÅrsak } from '../../../util/årsakUtils';
 import Vilkårsliste from '../../../vilkårsliste/Vilkårsliste';
 import ContainerContext from '../../context/ContainerContext';
@@ -26,10 +24,6 @@ import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 import styles from './uttak.less';
 
 const cx = classNames.bind(styles);
-
-const periodevisning = (periode: Period): string => {
-    return `${prettifyDate(periode.fom)} - ${prettifyDate(periode.tom)}`;
-};
 
 interface UttakProps {
     uttak: Uttaksperiode;
@@ -56,7 +50,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
         <>
             <TableRow className={erValgt ? styles.uttak__expandedRow : ''} onClick={velgPeriode}>
                 <TableColumn>
-                    <Normaltekst>{periodevisning(periode)}</Normaltekst>
+                    <Normaltekst>{periode.prettifyPeriod()}</Normaltekst>
                 </TableColumn>
                 <TableColumn>
                     {harOppfyltAlleInngangsvilkår ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}

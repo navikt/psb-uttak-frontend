@@ -16,18 +16,16 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Tabellrad som brukes av komponenten Table.
  */
-const TableRow: FunctionComponent<OwnProps> = ({ isHeader = false, children, className, onClick }) => {
-    return (
-        <tr
-            className={classNames(className, {
-                rowHeader: isHeader,
-                rowContent: !isHeader,
-            })}
-            onClick={onClick}
-        >
-            {children}
-        </tr>
-    );
-};
+const TableRow: FunctionComponent<OwnProps> = ({ isHeader = false, children, className, onClick }) => (
+    <tr
+        className={classNames(className, {
+            rowHeader: isHeader,
+            rowContent: !isHeader,
+        })}
+        onClick={onClick}
+    >
+        {children}
+    </tr>
+);
 
 export default TableRow;

@@ -97,6 +97,7 @@ const formatAvkortingMotArbeid = (
                 const orgnr = arbeidsforhold?.organisasjonsnummer;
                 const arbeidsgivernavn = alleArbeidsforhold[orgnr]?.navn || 'Arbeidsgiver';
                 return (
+                    // eslint-disable-next-line react/no-array-index-key
                     <div key={index}>
                         <Element
                             className={styles.uttakDetaljer__avkortingMotArbeid__heading}
@@ -150,15 +151,8 @@ interface UttakDetaljerProps {
 
 const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
     const { arbeidsforhold } = React.useContext(ContainerContext);
-    const {
-        utbetalingsgrader,
-        uttaksgrad,
-        graderingMotTilsyn,
-        søkerBerOmMaksimalt,
-        årsaker,
-        søkersTapteArbeidstid,
-        pleiebehov,
-    } = uttak;
+    const { utbetalingsgrader, graderingMotTilsyn, søkerBerOmMaksimalt, årsaker, søkersTapteArbeidstid, pleiebehov } =
+        uttak;
 
     return (
         <div className={styles.uttakDetaljer}>
