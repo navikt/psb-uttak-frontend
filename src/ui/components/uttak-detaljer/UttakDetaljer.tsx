@@ -5,6 +5,7 @@ import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import { Element } from 'nav-frontend-typografi';
 import * as React from 'react';
+import BarnetsDødsfallÅrsakerMedTekst from '../../../constants/BarnetsDødsfallÅrsakerMedTekst';
 import IkkeOppfylteÅrsakerMedTekst from '../../../constants/IkkeOppfylteÅrsakerMedTekst';
 import OverseEtablertTilsynÅrsak from '../../../constants/OverseEtablertTilsynÅrsak';
 import Årsaker from '../../../constants/Årsaker';
@@ -29,6 +30,15 @@ const getÅrsaksetiketter = (årsaker: Årsaker[]) => {
     ));
 };
 
+const getTekstVedBarnetsDødsfall = (årsaker: Årsaker[]) => {
+    const funnedeÅrsaker = BarnetsDødsfallÅrsakerMedTekst.filter((årsak) => harÅrsak(årsaker, årsak.årsak));
+    return funnedeÅrsaker.map((årsak) => (
+        <div key={årsak.årsak} className={styles.uttakDetaljer__etikettBarnetsDødsfall}>
+            {årsak.tekst}
+        </div>
+    ));
+};
+
 const harBeredskapEllerNattevåkÅrsak = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsak) => {
     const beredskapEllerNattevåkÅrsaker = [
         OverseEtablertTilsynÅrsak.BEREDSKAP,
@@ -38,7 +48,7 @@ const harBeredskapEllerNattevåkÅrsak = (overseEtablertTilsynÅrsak: OverseEtab
     return beredskapEllerNattevåkÅrsaker.some((årsak) => årsak === overseEtablertTilsynÅrsak);
 };
 
-const hentÅrsakstekst = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsak, etablertTilsyn: number) => {
+const getÅrsakstekst = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsak, etablertTilsyn: number) => {
     if (overseEtablertTilsynÅrsak === OverseEtablertTilsynÅrsak.BEREDSKAP) {
         return `Etablert tilsyn på ${etablertTilsyn} % blir ikke medregnet på grunn av beredskap.`;
     }
@@ -54,7 +64,7 @@ const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn, pleieb
     const utnullingPåGrunnAvBeredskapEllerNattevåk =
         overseEtablertTilsynÅrsak && harBeredskapEllerNattevåkÅrsak(overseEtablertTilsynÅrsak);
     const beredskapEllerNattevåkÅrsakTekst = utnullingPåGrunnAvBeredskapEllerNattevåk
-        ? hentÅrsakstekst(overseEtablertTilsynÅrsak, etablertTilsyn)
+        ? getÅrsakstekst(overseEtablertTilsynÅrsak, etablertTilsyn)
         : '';
 
     return (
@@ -119,6 +129,8 @@ const formatAvkortingMotArbeid = (
 );
 
 const shouldHighlight = (aktuellÅrsak: Årsaker, årsaker: Årsaker[]) => årsaker.some((årsak) => årsak === aktuellÅrsak);
+const harBarnetsDødsfallÅrsak = (årsaker: Årsaker[]) =>
+    BarnetsDødsfallÅrsakerMedTekst.some((barnetsDødsfallÅrsak) => harÅrsak(årsaker, barnetsDødsfallÅrsak.årsak));
 
 const getSøkerBerOmMaksimalt = (søkerBerOmMaksimalt: number, årsaker: Årsaker[]) => {
     const highlightSøkerBerOmMaksimalt =
@@ -157,6 +169,7 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
     return (
         <div className={styles.uttakDetaljer}>
             {getÅrsaksetiketter(årsaker)}
+            {getTekstVedBarnetsDødsfall(årsaker)}
             <div className={styles.uttakDetaljer__oppsummering}>
                 {søkerBerOmMaksimalt && getSøkerBerOmMaksimalt(søkerBerOmMaksimalt, årsaker)}
             </div>
@@ -165,6 +178,16 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
                     <UttakUtregning
                         heading="Gradering mot tilsyn"
                         highlight={shouldHighlight(Årsaker.GRADERT_MOT_TILSYN, årsaker)}
+                        headingPostContent={() =>
+                            harBarnetsDødsfallÅrsak(årsaker) && (
+                                <Hjelpetekst
+                                    className={styles.uttakDetaljer__data__questionMark}
+                                    type={PopoverOrientering.Hoyre}
+                                >
+                                    Gradering mot tilsyn blir ikke medregnet på grunn av barnets dødsfall.
+                                </Hjelpetekst>
+                            )
+                        }
                     >
                         {formatGraderingMotTilsyn(graderingMotTilsyn, pleiebehov)}
                     </UttakUtregning>
