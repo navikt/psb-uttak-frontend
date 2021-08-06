@@ -1,29 +1,29 @@
 import * as React from 'react';
 import { Element } from 'nav-frontend-typografi';
-import VilkårslisteItem from './VilkårslisteItem';
-import styles from './vilkårsliste.less';
+import VilkårListItem from './VilkårListItem';
+import styles from './vilkårList.less';
 import Inngangsvilkår from '../types/Inngangsvilkår';
 import vilkår from './Vilkår';
 import Utfall from '../constants/Utfall';
 
-interface VilkårslisteProps {
+interface VilkårListProps {
     inngangsvilkår: Inngangsvilkår;
 }
 
-const erVilkårOppfylt = (vilkårkode: string, inngangsvilkår: Inngangsvilkår) =>
+const isVilkårOppfylt = (vilkårkode: string, inngangsvilkår: Inngangsvilkår) =>
     inngangsvilkår[vilkårkode] === Utfall.OPPFYLT;
 
-const Vilkårsliste = ({ inngangsvilkår }: VilkårslisteProps): JSX.Element => (
+const VilkårList = ({ inngangsvilkår }: VilkårListProps): JSX.Element => (
     <div className={styles.vilkårsliste}>
         <Element>Vilkår</Element>
         <ul>
             {vilkår.map(
                 (v) =>
                     inngangsvilkår[v.kode] && (
-                        <VilkårslisteItem
+                        <VilkårListItem
                             key={v.kode}
                             vilkår={v.name}
-                            erOppfylt={erVilkårOppfylt(v.kode, inngangsvilkår)}
+                            erOppfylt={isVilkårOppfylt(v.kode, inngangsvilkår)}
                         />
                     )
             )}
@@ -31,4 +31,4 @@ const Vilkårsliste = ({ inngangsvilkår }: VilkårslisteProps): JSX.Element => 
     </div>
 );
 
-export default Vilkårsliste;
+export default VilkårList;

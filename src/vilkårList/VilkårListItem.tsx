@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { GreenCheckIconFilled, RedCrossIconFilled } from '@navikt/k9-react-components';
-import styles from './vilkårslisteItem.less';
+import styles from './vilkårListItem.less';
 
-interface VilkårslisteItemProps {
+interface VilkårListItemProps {
     vilkår: string;
     erOppfylt: boolean;
 }
 
-const VilkårslisteItem = ({ vilkår, erOppfylt }: VilkårslisteItemProps): JSX.Element => (
+const VilkårListItem = ({ vilkår, erOppfylt }: VilkårListItemProps): JSX.Element => (
     <li className={styles.item}>
         <div className={styles.item__text}>{`${vilkår}:`}</div>
         <div>
@@ -26,4 +26,4 @@ const VilkårslisteItem = ({ vilkår, erOppfylt }: VilkårslisteItemProps): JSX.
     </li>
 );
 
-export default VilkårslisteItem;
+export default VilkårListItem;

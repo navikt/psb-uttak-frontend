@@ -3,7 +3,7 @@ import { Uttaksperiode } from '../types/Uttaksperiode';
 import Uttaksperioder from '../types/Uttaksperioder';
 import { sortPeriodsByNewest } from './periodUtils';
 
-const lagUttaksperiodeliste = (uttaksperioder: Uttaksperioder): Uttaksperiode[] => {
+const getUttaksperiodeList = (uttaksperioder: Uttaksperioder): Uttaksperiode[] => {
     const perioder = Object.keys(uttaksperioder).map((periodenøkkel) => {
         const uttaksperiode = new Period(periodenøkkel);
         const andreUttaksperiodeData = uttaksperioder[periodenøkkel];
@@ -16,4 +16,4 @@ const lagUttaksperiodeliste = (uttaksperioder: Uttaksperioder): Uttaksperiode[] 
     return sortertePerioder;
 };
 
-export default lagUttaksperiodeliste;
+export default getUttaksperiodeList;

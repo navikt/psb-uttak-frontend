@@ -2,24 +2,24 @@ import React from 'react';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import Table from '../table/Table';
 import TableColumn from '../table/TableColumn';
-import styles from './uttaksperiodeListe.less';
+import styles from './uttaksperiodeList.less';
 import Uttak from '../uttak/Uttak';
 
-interface UttaksperiodeListeProps {
+interface UttaksperiodeListProps {
     uttaksperioder: Uttaksperiode[];
 }
 
 const headers = ['Uttaksperiode', 'Inngangsvilkår', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
 
-const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
-    const [valgtPeriodeIndex, velgPeriodeIndex] = React.useState<number>();
+const UttaksperiodeList = (props: UttaksperiodeListProps): JSX.Element => {
+    const [currentPeriodIndex, selectPeriodIndex] = React.useState<number>();
     const { uttaksperioder } = props;
 
-    const velgPeriode = (index: number) => {
-        if (valgtPeriodeIndex === index) {
-            velgPeriodeIndex(null);
+    const selectPeriod = (index: number) => {
+        if (currentPeriodIndex === index) {
+            selectPeriodIndex(null);
         } else {
-            velgPeriodeIndex(index);
+            selectPeriodIndex(index);
         }
     };
     return (
@@ -43,8 +43,8 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
                     <Uttak
                         key={uttak.periode.prettifyPeriod()}
                         uttak={uttak}
-                        erValgt={valgtPeriodeIndex === index}
-                        velgPeriode={() => velgPeriode(index)}
+                        isSelected={currentPeriodIndex === index}
+                        selectPeriod={() => selectPeriod(index)}
                     />
                 ))}
             </Table>
@@ -52,4 +52,4 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
     );
 };
 
-export default UttaksperiodeListe;
+export default UttaksperiodeList;

@@ -1,7 +1,7 @@
 import React from 'react';
 import ContainerContract from '../types/ContainerContract';
-import lagUttaksperiodeliste from '../util/uttaksperioder';
-import UttaksperiodeListe from './components/uttaksperiode-liste/UttaksperiodeListe';
+import getUttaksperiodeList from '../util/uttaksperioder';
+import UttaksperiodeList from './components/uttaksperiode-list/UttaksperiodeList';
 import ContainerContext from './context/ContainerContext';
 
 interface MainComponentProps {
@@ -12,7 +12,7 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
     const { uttaksperioder } = containerData;
     return (
         <ContainerContext.Provider value={containerData}>
-            <UttaksperiodeListe uttaksperioder={lagUttaksperiodeliste(uttaksperioder)} />
+            <UttaksperiodeList uttaksperioder={getUttaksperiodeList(uttaksperioder)} />
         </ContainerContext.Provider>
     );
 };

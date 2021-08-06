@@ -13,16 +13,16 @@ import ArbeidsgiverOpplysninger from '../../../types/ArbeidsgiverOpplysninger';
 import GraderingMotTilsyn from '../../../types/GraderingMotTilsyn';
 import Utbetalingsgrad from '../../../types/Utbetalingsgrad';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
-import { beregnDagerTimer } from '../../../util/dateUtils';
-import { harÅrsak } from '../../../util/årsakUtils';
+import { calculateDaysHours } from '../../../util/dateUtils';
+import { hasÅrsak } from '../../../util/årsakUtils';
 import ContainerContext from '../../context/ContainerContext';
-import styles from './uttakDetaljer.less';
+import styles from './uttakDetails.less';
 import UttakUtregning from './UttakUtregning';
 
 const cx = classNames.bind(styles);
 
 const getÅrsaksetiketter = (årsaker: Årsaker[]) => {
-    const funnedeÅrsaker = IkkeOppfylteÅrsakerMedTekst.filter((årsak) => harÅrsak(årsaker, årsak.årsak));
+    const funnedeÅrsaker = IkkeOppfylteÅrsakerMedTekst.filter((årsak) => hasÅrsak(årsaker, årsak.årsak));
     return funnedeÅrsaker.map((årsak) => (
         <EtikettAdvarsel key={årsak.årsak} className={styles.uttakDetaljer__etikett}>
             {årsak.tekst}
@@ -31,7 +31,7 @@ const getÅrsaksetiketter = (årsaker: Årsaker[]) => {
 };
 
 const getTekstVedBarnetsDødsfall = (årsaker: Årsaker[]) => {
-    const funnedeÅrsaker = BarnetsDødsfallÅrsakerMedTekst.filter((årsak) => harÅrsak(årsaker, årsak.årsak));
+    const funnedeÅrsaker = BarnetsDødsfallÅrsakerMedTekst.filter((årsak) => hasÅrsak(årsaker, årsak.årsak));
     return funnedeÅrsaker.map((årsak) => (
         <div key={årsak.årsak} className={styles.uttakDetaljer__etikettBarnetsDødsfall}>
             {årsak.tekst}
@@ -39,7 +39,7 @@ const getTekstVedBarnetsDødsfall = (årsaker: Årsaker[]) => {
     ));
 };
 
-const harBeredskapEllerNattevåkÅrsak = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsak) => {
+const hasBeredskapEllerNattevåkÅrsak = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsak) => {
     const beredskapEllerNattevåkÅrsaker = [
         OverseEtablertTilsynÅrsak.BEREDSKAP,
         OverseEtablertTilsynÅrsak.NATTEVÅK,
@@ -62,7 +62,7 @@ const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn, pleieb
     const { etablertTilsyn, andreSøkeresTilsyn, tilgjengeligForSøker, overseEtablertTilsynÅrsak } = graderingMotTilsyn;
 
     const utnullingPåGrunnAvBeredskapEllerNattevåk =
-        overseEtablertTilsynÅrsak && harBeredskapEllerNattevåkÅrsak(overseEtablertTilsynÅrsak);
+        overseEtablertTilsynÅrsak && hasBeredskapEllerNattevåkÅrsak(overseEtablertTilsynÅrsak);
     const beredskapEllerNattevåkÅrsakTekst = utnullingPåGrunnAvBeredskapEllerNattevåk
         ? getÅrsakstekst(overseEtablertTilsynÅrsak, etablertTilsyn)
         : '';
@@ -113,10 +113,10 @@ const formatAvkortingMotArbeid = (
                             className={styles.uttakDetaljer__avkortingMotArbeid__heading}
                         >{`${arbeidsgivernavn}:`}</Element>
                         <p className={styles.uttakDetaljer__data}>
-                            {`Normal arbeidstid: ${beregnDagerTimer(normalArbeidstid)} timer`}
+                            {`Normal arbeidstid: ${calculateDaysHours(normalArbeidstid)} timer`}
                         </p>
                         <p className={styles.uttakDetaljer__data}>
-                            {`Faktisk arbeidstid: ${beregnDagerTimer(faktiskArbeidstid)} timer`}
+                            {`Faktisk arbeidstid: ${calculateDaysHours(faktiskArbeidstid)} timer`}
                         </p>
                         <p className={styles.uttakDetaljer__data}>{`Utbetalingsgrad: ${utbetalingsgrad} %`}</p>
                     </div>
@@ -129,8 +129,8 @@ const formatAvkortingMotArbeid = (
 );
 
 const shouldHighlight = (aktuellÅrsak: Årsaker, årsaker: Årsaker[]) => årsaker.some((årsak) => årsak === aktuellÅrsak);
-const harBarnetsDødsfallÅrsak = (årsaker: Årsaker[]) =>
-    BarnetsDødsfallÅrsakerMedTekst.some((barnetsDødsfallÅrsak) => harÅrsak(årsaker, barnetsDødsfallÅrsak.årsak));
+const hasBarnetsDødsfallÅrsak = (årsaker: Årsaker[]) =>
+    BarnetsDødsfallÅrsakerMedTekst.some((barnetsDødsfallÅrsak) => hasÅrsak(årsaker, barnetsDødsfallÅrsak.årsak));
 
 const getSøkerBerOmMaksimalt = (søkerBerOmMaksimalt: number, årsaker: Årsaker[]) => {
     const highlightSøkerBerOmMaksimalt =
@@ -161,7 +161,7 @@ interface UttakDetaljerProps {
     uttak: Uttaksperiode;
 }
 
-const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
+const UttakDetails = ({ uttak }: UttakDetaljerProps): JSX.Element => {
     const { arbeidsforhold } = React.useContext(ContainerContext);
     const { utbetalingsgrader, graderingMotTilsyn, søkerBerOmMaksimalt, årsaker, søkersTapteArbeidstid, pleiebehov } =
         uttak;
@@ -179,7 +179,7 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
                         heading="Gradering mot tilsyn"
                         highlight={shouldHighlight(Årsaker.GRADERT_MOT_TILSYN, årsaker)}
                         headingPostContent={() =>
-                            harBarnetsDødsfallÅrsak(årsaker) && (
+                            hasBarnetsDødsfallÅrsak(årsaker) && (
                                 <Hjelpetekst
                                     className={styles.uttakDetaljer__data__questionMark}
                                     type={PopoverOrientering.Hoyre}
@@ -202,4 +202,4 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
         </div>
     );
 };
-export default UttakDetaljer;
+export default UttakDetails;

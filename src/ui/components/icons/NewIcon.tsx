@@ -12,7 +12,7 @@ const NewIcon = (): JSX.Element => (
             textAlign: 'center',
             fontSize: '0.875rem',
             fontWeight: 'bolder',
-            border: '2px solid #5690A2',
+            border: '0.125rem solid #5690A2',
         }}
     >
         Ny
