@@ -5,6 +5,7 @@ import Utfall from '../constants/Utfall';
 import Inngangsvilkår from './Inngangsvilkår';
 import AnnenPart from '../constants/AnnenPart';
 import Årsaker from '../constants/Årsaker';
+import Endringsstatus from './Endringsstatus';
 
 export interface Uttaksperiodeelement {
     utfall: Utfall;
@@ -19,6 +20,7 @@ export interface Uttaksperiodeelement {
     annenPart: AnnenPart;
     søkersTapteArbeidstid: number;
     pleiebehov: number;
+    endringsstatus?: Endringsstatus;
 }
 
 export interface Uttaksperiode extends Uttaksperiodeelement {
