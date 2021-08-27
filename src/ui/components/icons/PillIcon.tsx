@@ -12,8 +12,6 @@ const PillIcon = ({ text, type }: PillIconProps): JSX.Element => {
         warning: styles['PillIcon--warning'],
         info: styles['PillIcon--info'],
     };
-    console.log(type)
-    console.log(style[type])
 
     return <div className={style[type]}>{text}</div>;
 };
