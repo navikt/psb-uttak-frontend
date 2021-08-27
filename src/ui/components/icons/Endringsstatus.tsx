@@ -3,7 +3,7 @@ import { ContentWithTooltip } from '@navikt/k9-react-components';
 import PillIcon from './PillIcon';
 import EndringsstatusType from '../../../types/Endringsstatus';
 
-function Endringsstatus({status}: {status: EndringsstatusType}): JSX.Element | null {
+function Endringsstatus({ status }: { status: EndringsstatusType }): JSX.Element | null {
     if (status === 'NY') {
         return (
             <ContentWithTooltip tooltipText="Ny denne behandlingen">
