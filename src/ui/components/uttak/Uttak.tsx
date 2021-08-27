@@ -45,6 +45,17 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
 
     const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, Årsaker.INNGANGSVILKÅR_IKKE_OPPFYLT);
     const erNyEllerEndretIAktivBehandling = aktivBehandlingUuid === kildeBehandlingUUID;
+    const getPleiebehovColumnContent = () => {
+        if (!harOppfyltAlleInngangsvilkår) {
+            return <Normaltekst>Ikke vurdert</Normaltekst>;
+        }
+
+        if (!harPleiebehov) {
+            return <RedCrossIconFilled />;
+        }
+
+        return <GreenCheckIconFilled />;
+    };
 
     return (
         <>
@@ -56,9 +67,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                     {harOppfyltAlleInngangsvilkår ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
                 </TableColumn>
                 <TableColumn>
-                    <div className={styles.uttak__iconContainer}>
-                        {harPleiebehov ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
-                    </div>
+                    <div className={styles.uttak__iconContainer}>{getPleiebehovColumnContent()}</div>
                     {harPleiebehov ? `${pleiebehov} %` : null}
                 </TableColumn>
                 <TableColumn>
