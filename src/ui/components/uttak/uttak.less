@@ -10,6 +10,7 @@
         background: none;
         cursor: pointer;
         display: flex;
+        float: right;
 
         svg {
             width: 1.125rem;
@@ -73,9 +74,10 @@
     }
 
     &__lastColumn {
-        display: flex;
+        display: grid;
+        grid-template-columns: 6rem 30px;
+        grid-column-gap: 1.75rem;
         align-items: center;
-        width: 6.5rem;
     }
 }
 

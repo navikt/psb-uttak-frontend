@@ -15,8 +15,7 @@ import Årsaker from '../../../constants/Årsaker';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import { harÅrsak } from '../../../util/årsakUtils';
 import Vilkårsliste from '../../../vilkårsliste/Vilkårsliste';
-import ContainerContext from '../../context/ContainerContext';
-import NewIcon from '../icons/NewIcon';
+import Endringsstatus from '../icons/Endringsstatus';
 import FullWidthRow from '../table/FullWidthRow';
 import TableColumn from '../table/TableColumn';
 import TableRow from '../table/TableRow';
@@ -32,8 +31,7 @@ interface UttakProps {
 }
 
 const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
-    const { aktivBehandlingUuid } = React.useContext(ContainerContext);
-    const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, kildeBehandlingUUID } = uttak;
+    const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, endringsstatus } = uttak;
     const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, Årsaker.UTENOM_PLEIEBEHOV);
     const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
 
@@ -44,7 +42,6 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
     });
 
     const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, Årsaker.INNGANGSVILKÅR_IKKE_OPPFYLT);
-    const erNyEllerEndretIAktivBehandling = aktivBehandlingUuid === kildeBehandlingUUID;
 
     return (
         <>
@@ -80,13 +77,9 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                 </TableColumn>
                 <TableColumn>
                     <div className={styles.uttak__lastColumn}>
-                        {erNyEllerEndretIAktivBehandling && (
-                            <div className={styles.uttak__behandlerIcon}>
-                                <ContentWithTooltip tooltipText="Ny/endret denne behandlingen">
-                                    <NewIcon />
-                                </ContentWithTooltip>
-                            </div>
-                        )}
+                        <div className={styles.uttak__behandlerIcon}>
+                            <Endringsstatus status={endringsstatus} />
+                        </div>
                         <button
                             onClick={velgPeriode}
                             type="button"
