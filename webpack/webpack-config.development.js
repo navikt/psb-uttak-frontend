@@ -3,8 +3,8 @@ const path = require('path');
 const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackDevServer = require('webpack-dev-server');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const commonWebpackConfig = require('./webpack.common.js');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const webpackConfig = merge(commonWebpackConfig, {
     mode: 'development',
@@ -42,8 +42,7 @@ compiler.close(() => console.info('Compiler closed'));
 devServer.startCallback((error) => {
     if (error) {
         console.error(error);
-    }
-    else {
+    } else {
         console.log(`Listening at port ${port}`);
     }
 });
