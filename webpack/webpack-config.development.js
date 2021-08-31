@@ -22,7 +22,6 @@ const webpackConfig = merge(commonWebpackConfig, {
                 mode: 'write-references',
             },
         }),
-        new webpack.HotModuleReplacementPlugin()
     ],
 });
 
@@ -32,7 +31,7 @@ const devServerOptions = {
     headers: {
         'Access-Control-Allow-Origin': 'http://localhost:9000',
     },
-    port
+    port,
 };
 
 const compiler = webpack(webpackConfig);
