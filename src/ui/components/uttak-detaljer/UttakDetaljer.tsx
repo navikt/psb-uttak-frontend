@@ -5,6 +5,7 @@ import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import { Element } from 'nav-frontend-typografi';
 import * as React from 'react';
+import { arbeidstypeTilVisning } from '../../../constants/Arbeidstype';
 import BarnetsDødsfallÅrsakerMedTekst from '../../../constants/BarnetsDødsfallÅrsakerMedTekst';
 import IkkeOppfylteÅrsakerMedTekst from '../../../constants/IkkeOppfylteÅrsakerMedTekst';
 import OverseEtablertTilsynÅrsak from '../../../constants/OverseEtablertTilsynÅrsak';
@@ -105,13 +106,15 @@ const formatAvkortingMotArbeid = (
             {utbetalingsgrader.map((utbetalingsgradItem, index) => {
                 const { normalArbeidstid, faktiskArbeidstid, utbetalingsgrad, arbeidsforhold } = utbetalingsgradItem;
                 const orgnr = arbeidsforhold?.organisasjonsnummer;
-                const arbeidsgivernavn = alleArbeidsforhold[orgnr]?.navn || 'Arbeidsgiver';
+                const arbeidsgivernavn = alleArbeidsforhold[orgnr]?.navn;
+                const arbeidstype = arbeidstypeTilVisning[arbeidsforhold?.type];
+                const arbeidsforholdTittel = `${arbeidsgivernavn || arbeidstype}${orgnr ? ` (${orgnr})` : ''}:`;
                 return (
                     // eslint-disable-next-line react/no-array-index-key
                     <div key={index}>
-                        <Element
-                            className={styles.uttakDetaljer__avkortingMotArbeid__heading}
-                        >{`${arbeidsgivernavn}:`}</Element>
+                        <Element className={styles.uttakDetaljer__avkortingMotArbeid__heading}>
+                            {arbeidsforholdTittel}
+                        </Element>
                         <p className={styles.uttakDetaljer__data}>
                             {`Normal arbeidstid: ${beregnDagerTimer(normalArbeidstid)} timer`}
                         </p>
