@@ -108,12 +108,14 @@ const formatAvkortingMotArbeid = (
                 const orgnr = arbeidsforhold?.organisasjonsnummer;
                 const arbeidsgivernavn = alleArbeidsforhold[orgnr]?.navn;
                 const arbeidstype = arbeidstypeTilVisning[arbeidsforhold?.type];
-                const arbeidsforholdTittel = `${arbeidsgivernavn || arbeidstype}${orgnr ? ` (${orgnr})` : ''}:`;
+                const arbeidsgiverOgOrgnr = arbeidsgivernavn ? `${arbeidsgivernavn} (${orgnr})` : '';
+
                 return (
                     // eslint-disable-next-line react/no-array-index-key
                     <div key={index}>
                         <Element className={styles.uttakDetaljer__avkortingMotArbeid__heading}>
-                            {arbeidsforholdTittel}
+                            <div>{arbeidstype}</div>
+                            <div>{arbeidsgiverOgOrgnr || orgnr}</div>
                         </Element>
                         <p className={styles.uttakDetaljer__data}>
                             {`Normal arbeidstid: ${beregnDagerTimer(normalArbeidstid)} timer`}
