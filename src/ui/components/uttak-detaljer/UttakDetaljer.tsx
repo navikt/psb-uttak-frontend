@@ -109,7 +109,13 @@ const formatAvkortingMotArbeid = (
                 const arbeidsgivernavn = alleArbeidsforhold[orgnr]?.navn;
                 const arbeidstype = arbeidstypeTilVisning[arbeidsforhold?.type];
                 const arbeidsgiverOgOrgnr = arbeidsgivernavn ? `${arbeidsgivernavn} (${orgnr})` : '';
+                const beregnetNormalArbeidstid = beregnDagerTimer(normalArbeidstid);
 
+                // viser normal arbeidstid dersom faktisk arbeidstid er høyest av de to
+                const beregnetFaktiskArbeidstid =
+                    beregnetNormalArbeidstid < beregnDagerTimer(faktiskArbeidstid)
+                        ? beregnetNormalArbeidstid
+                        : beregnDagerTimer(faktiskArbeidstid);
                 return (
                     // eslint-disable-next-line react/no-array-index-key
                     <div key={index}>
@@ -118,10 +124,10 @@ const formatAvkortingMotArbeid = (
                             <div>{arbeidsgiverOgOrgnr || orgnr}</div>
                         </Element>
                         <p className={styles.uttakDetaljer__data}>
-                            {`Normal arbeidstid: ${beregnDagerTimer(normalArbeidstid)} timer`}
+                            {`Normal arbeidstid: ${beregnetNormalArbeidstid} timer`}
                         </p>
                         <p className={styles.uttakDetaljer__data}>
-                            {`Faktisk arbeidstid: ${beregnDagerTimer(faktiskArbeidstid)} timer`}
+                            {`Faktisk arbeidstid: ${beregnetFaktiskArbeidstid} timer`}
                         </p>
                         <p className={styles.uttakDetaljer__data}>{`Utbetalingsgrad: ${utbetalingsgrad} %`}</p>
                     </div>
