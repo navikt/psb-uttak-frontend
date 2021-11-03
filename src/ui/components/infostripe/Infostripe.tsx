@@ -1,15 +1,12 @@
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import React from 'react';
-import ContainerContext from '../../context/ContainerContext';
 import styles from './infostripe.less';
 
-const Infostripe: React.FC = () => {
-    const { aksjonspunktkoder } = React.useContext(ContainerContext);
-    const aksjonspunktkodeVentAnnenPSBSak = '9290';
-    const harVentAnnenPSBSakAksjonspunkt = aksjonspunktkoder?.some(
-        (aksjonspunktkode) => aksjonspunktkode === aksjonspunktkodeVentAnnenPSBSak
-    );
+interface InfostripeProps {
+    harVentAnnenPSBSakAksjonspunkt: boolean;
+}
 
+const Infostripe: React.FC<InfostripeProps> = ({ harVentAnnenPSBSakAksjonspunkt }) => {
     if (!harVentAnnenPSBSakAksjonspunkt) {
         return null;
     }
@@ -17,8 +14,14 @@ const Infostripe: React.FC = () => {
     return (
         <div className={styles.infostripe}>
             <AlertStripeAdvarsel>
-                Det er ikke mulig å behandle denne saken videre før andre saker, på samme barn og med åpen behandling,
-                har kommet frem til uttaksteget og/eller har blitt besluttet.
+                Det er nødvendig med mer informasjon fra andre saker før dette steget kan fullføres.
+                <ol className={styles.infostripe__punktliste}>
+                    <li>Åpne alle behandlinger tilknyttet barnet og behandle de til uttakssteget.</li>
+                    <li>
+                        Oppdater siden (Ctrl+R). Gå til saken som nå har kommet forbi uttak, behandle videre og beslutt,
+                        før neste sak behandles.
+                    </li>
+                </ol>
             </AlertStripeAdvarsel>
         </div>
     );

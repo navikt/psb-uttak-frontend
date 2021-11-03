@@ -10,11 +10,17 @@ interface MainComponentProps {
 }
 
 const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
-    const { uttaksperioder } = containerData;
+    const { uttaksperioder, aksjonspunktkoder } = containerData;
+    const aksjonspunktkodeVentAnnenPSBSak = '9290';
+    const harVentAnnenPSBSakAksjonspunkt = aksjonspunktkoder?.some(
+        (aksjonspunktkode) => aksjonspunktkode === aksjonspunktkodeVentAnnenPSBSak
+    );
     return (
         <ContainerContext.Provider value={containerData}>
-            <Infostripe />
-            <UttaksperiodeListe uttaksperioder={lagUttaksperiodeliste(uttaksperioder)} />
+            <Infostripe harVentAnnenPSBSakAksjonspunkt={harVentAnnenPSBSakAksjonspunkt} />
+            {!harVentAnnenPSBSakAksjonspunkt && (
+                <UttaksperiodeListe uttaksperioder={lagUttaksperiodeliste(uttaksperioder)} />
+            )}
         </ContainerContext.Provider>
     );
 };
