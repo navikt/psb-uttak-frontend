@@ -1,6 +1,6 @@
 const vilkår = [
     {
-        name: 'Søknadsfrist',
+        name: 'Søknadsfristolini',
         kode: 'FP_VK_3',
     },
     {
