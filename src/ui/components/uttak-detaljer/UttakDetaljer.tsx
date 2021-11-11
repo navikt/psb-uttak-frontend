@@ -134,7 +134,7 @@ const formatAvkortingMotArbeid = (
                             >
                                 {beregnetFaktiskArbeidstid}
                             </span>
-                            <span>timer</span>
+                            <span>{`${faktiskOverstigerNormal ? beregnetNormalArbeidstid : ''} timer`}</span>
                             {faktiskOverstigerNormal && (
                                 <Hjelpetekst
                                     className={styles.uttakDetaljer__data__questionMark}
