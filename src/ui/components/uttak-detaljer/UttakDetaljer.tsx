@@ -124,12 +124,17 @@ const formatAvkortingMotArbeid = (
                         <p className={styles.uttakDetaljer__data}>
                             {`Normal arbeidstid: ${beregnetNormalArbeidstid} timer`}
                         </p>
-                        <span
-                            className={cx(styles.uttakDetaljer__data, {
-                                'uttakDetaljer__data--utnullet': faktiskOverstigerNormal,
-                            })}
-                        >
-                            <span>{`Faktisk arbeidstid: ${beregnetFaktiskArbeidstid} timer`}</span>
+                        <span className={styles.uttakDetaljer__data}>
+                            <span>Faktisk arbeidstid:</span>
+                            <span
+                                className={cx({
+                                    'uttakDetaljer__data--utnullet': faktiskOverstigerNormal,
+                                    'uttakDetaljer__data--margin-left-right': true,
+                                })}
+                            >
+                                {beregnetFaktiskArbeidstid}
+                            </span>
+                            <span>timer</span>
                             {faktiskOverstigerNormal && (
                                 <Hjelpetekst
                                     className={styles.uttakDetaljer__data__questionMark}
