@@ -1,11 +1,15 @@
 const vilkår = [
     {
+        name: 'Medlemskap',
+        kode: 'FP_VK_2', // Medlemskapsvilkåret
+    },
+    {
         name: 'Søknadsfrist',
         kode: 'FP_VK_3',
     },
     {
-        name: 'Søkers alder',
-        kode: 'K9_VK_3',
+        name: 'Opptjening',
+        kode: 'FP_VK_23', // Opptjeningsvilkåret
     },
     {
         name: 'Omsorgen for',
@@ -18,6 +22,10 @@ const vilkår = [
     {
         name: 'Sykdom',
         kode: 'K9_VK_2_b', // medisinske vilkår for barn over 18 år
+    },
+    {
+        name: 'Søkers alder',
+        kode: 'K9_VK_3', // Aldersvilkåret
     },
 ];
 
