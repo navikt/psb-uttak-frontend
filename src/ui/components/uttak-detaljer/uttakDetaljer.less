@@ -53,12 +53,19 @@
 
         &--utnullet {
             text-decoration: line-through;
-            margin-left: 0.25rem;
         }
 
         &__questionMark {
             margin-left: 0.75rem;
             margin-top: -0.125rem;
+        }
+
+        &--margin-left {
+            margin-left: 0.25rem;
+        }
+
+        &--margin-left-right {
+            margin: 0 4px;
         }
     }
 
@@ -75,11 +82,13 @@
 
     &__avkortingMotArbeid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
         column-gap: 2rem;
 
         &__heading {
             margin: 0.5rem 0;
+            span {
+                display: block;
+            }
         }
     }
 

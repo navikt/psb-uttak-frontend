@@ -71,11 +71,13 @@ const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn, pleieb
     return (
         <div className={styles.uttakDetaljer__graderingMotTilsyn}>
             <p className={styles.uttakDetaljer__data}>{`Pleiebehov: ${pleiebehov} %`}</p>
-            <p className={styles.uttakDetaljer__data}>
+            <span className={styles.uttakDetaljer__data}>
                 {`- Etablert tilsyn: `}
                 {overseEtablertTilsynÅrsak ? (
                     <>
-                        <span className={styles['uttakDetaljer__data--utnullet']}>{etablertTilsyn} %</span>
+                        <span className={cx('uttakDetaljer__data--utnullet', 'uttakDetaljer__data--margin-left')}>
+                            {etablertTilsyn} %
+                        </span>
                         <Hjelpetekst
                             className={styles.uttakDetaljer__data__questionMark}
                             type={PopoverOrientering.Hoyre}
@@ -88,7 +90,7 @@ const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn, pleieb
                 ) : (
                     `${etablertTilsyn} %`
                 )}
-            </p>
+            </span>
             <p className={styles.uttakDetaljer__data}>{`- Andre søkeres tilsyn: ${andreSøkeresTilsyn} %`}</p>
             <hr className={styles.uttakDetaljer__separator} />
             <p className={styles.uttakDetaljer__sum}>{`= ${tilgjengeligForSøker} % tilgjengelig for søker`}</p>
@@ -109,20 +111,40 @@ const formatAvkortingMotArbeid = (
                 const arbeidsgivernavn = alleArbeidsforhold[orgnr]?.navn;
                 const arbeidstype = arbeidstypeTilVisning[arbeidsforhold?.type];
                 const arbeidsgiverOgOrgnr = arbeidsgivernavn ? `${arbeidsgivernavn} (${orgnr})` : '';
-
+                const beregnetNormalArbeidstid = beregnDagerTimer(normalArbeidstid);
+                const beregnetFaktiskArbeidstid = beregnDagerTimer(faktiskArbeidstid);
+                const faktiskOverstigerNormal = beregnetNormalArbeidstid < beregnetFaktiskArbeidstid;
                 return (
                     // eslint-disable-next-line react/no-array-index-key
                     <div key={index}>
                         <Element className={styles.uttakDetaljer__avkortingMotArbeid__heading}>
-                            <div>{arbeidstype}</div>
-                            <div>{arbeidsgiverOgOrgnr || orgnr}</div>
+                            <span>{arbeidstype}</span>
+                            <span>{arbeidsgiverOgOrgnr || orgnr}</span>
                         </Element>
                         <p className={styles.uttakDetaljer__data}>
-                            {`Normal arbeidstid: ${beregnDagerTimer(normalArbeidstid)} timer`}
+                            {`Normal arbeidstid: ${beregnetNormalArbeidstid} timer`}
                         </p>
-                        <p className={styles.uttakDetaljer__data}>
-                            {`Faktisk arbeidstid: ${beregnDagerTimer(faktiskArbeidstid)} timer`}
-                        </p>
+                        <span className={styles.uttakDetaljer__data}>
+                            <span>Faktisk arbeidstid:</span>
+                            <span
+                                className={cx({
+                                    'uttakDetaljer__data--utnullet': faktiskOverstigerNormal,
+                                    'uttakDetaljer__data--margin-left-right': true,
+                                })}
+                            >
+                                {beregnetFaktiskArbeidstid}
+                            </span>
+                            <span>{`${faktiskOverstigerNormal ? beregnetNormalArbeidstid : ''} timer`}</span>
+                            {faktiskOverstigerNormal && (
+                                <Hjelpetekst
+                                    className={styles.uttakDetaljer__data__questionMark}
+                                    type={PopoverOrientering.Hoyre}
+                                >
+                                    Overstigende timer tas ikke hensyn til, faktisk arbeidstid settes lik normal
+                                    arbeidstid
+                                </Hjelpetekst>
+                            )}
+                        </span>
                         <p className={styles.uttakDetaljer__data}>{`Utbetalingsgrad: ${utbetalingsgrad} %`}</p>
                     </div>
                 );
