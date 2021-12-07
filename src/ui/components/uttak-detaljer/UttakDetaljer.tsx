@@ -108,9 +108,12 @@ const formatAvkortingMotArbeid = (
             {utbetalingsgrader.map((utbetalingsgradItem, index) => {
                 const { normalArbeidstid, faktiskArbeidstid, utbetalingsgrad, arbeidsforhold } = utbetalingsgradItem;
                 const orgnr = arbeidsforhold?.organisasjonsnummer;
-                const arbeidsgivernavn = alleArbeidsforhold[orgnr]?.navn;
+                const aktoerId = arbeidsforhold?.aktørId;
+                const arbeidsforholdData = alleArbeidsforhold[orgnr || aktoerId];
+                const arbeidsgivernavn = arbeidsforholdData?.navn;
+                const arbeidsgiverFnr = arbeidsforholdData?.personIdentifikator;
                 const arbeidstype = arbeidstypeTilVisning[arbeidsforhold?.type];
-                const arbeidsgiverOgOrgnr = arbeidsgivernavn ? `${arbeidsgivernavn} (${orgnr})` : '';
+                const arbeidsgiverInfo = arbeidsgivernavn ? `${arbeidsgivernavn} (${orgnr || arbeidsgiverFnr})` : '';
                 const beregnetNormalArbeidstid = beregnDagerTimer(normalArbeidstid);
                 const beregnetFaktiskArbeidstid = beregnDagerTimer(faktiskArbeidstid);
                 const faktiskOverstigerNormal = beregnetNormalArbeidstid < beregnetFaktiskArbeidstid;
@@ -119,7 +122,7 @@ const formatAvkortingMotArbeid = (
                     <div key={index}>
                         <Element className={styles.uttakDetaljer__avkortingMotArbeid__heading}>
                             <span>{arbeidstype}</span>
-                            <span>{arbeidsgiverOgOrgnr || orgnr}</span>
+                            <span>{arbeidsgiverInfo || orgnr || arbeidsgiverFnr}</span>
                         </Element>
                         <p className={styles.uttakDetaljer__data}>
                             {`Normal arbeidstid: ${beregnetNormalArbeidstid} timer`}
