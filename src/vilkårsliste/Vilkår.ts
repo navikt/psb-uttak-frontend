@@ -12,6 +12,10 @@ const vilkår = [
         kode: 'FP_VK_23', // Opptjeningsvilkåret
     },
     {
+        name: 'Beregningsgrunnlag',
+        kode: 'FP_VK_41', // Beregningsgrunnlagvilkår
+    },
+    {
         name: 'Omsorgen for',
         kode: 'K9_VK_1',
     },
