@@ -20,7 +20,7 @@ const IkkeOppfylteÅrsakerMedTekst = [
     },
     {
         årsak: Årsaker.FOR_LAV_TAPT_ARBEIDSTID,
-        tekst: 'Årsak for 0 % uttaksgrad: Tapt arbeidstid må være minst 20 %',
+        tekst: 'Årsak for 0 % uttaksgrad: Tapt arbeidstid må være minst 20 %. Tapt arbeidstid regnes ut fra aktive arbeidsforhold, næringsaktivitet og frilansoppdrag.',
     },
     {
         årsak: Årsaker.FOR_LAV_ØNSKET_UTTAKSGRAD,
