@@ -21,6 +21,7 @@ import TableColumn from '../table/TableColumn';
 import TableRow from '../table/TableRow';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 import styles from './uttak.less';
+import AvvikIMType from '../../../constants/AvvikIMType';
 
 const cx = classNames.bind(styles);
 
@@ -28,9 +29,10 @@ interface UttakProps {
     uttak: Uttaksperiode;
     erValgt: boolean;
     velgPeriode: () => void;
+    skalViseAvvik: boolean;
 }
 
-const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
+const Uttak = ({ uttak, erValgt, velgPeriode, skalViseAvvik}: UttakProps): JSX.Element => {
     const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, endringsstatus } = uttak;
     const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, Årsaker.UTENOM_PLEIEBEHOV);
     const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
@@ -71,10 +73,23 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                     )}
                 </TableColumn>
 
+                {skalViseAvvik && <TableColumn className={styles.uttak__avvik}>
+                    {
+                        uttak.avvikImSøknad &&
+                        (uttak.avvikImSøknad === AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM || uttak.avvikImSøknad === AvvikIMType.IM_REFUSJONSKRAV_TRUMFER_SØKNAD) &&
+                        <Normaltekst>
+                            {uttak.avvikImSøknad === AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM
+                                ? 'Søknad uten matchende inntektsmelding'
+                                : 'Inntektsmeldingens refusjonskrav trumfer søknaden'}
+                        </Normaltekst>
+                    }
+                </TableColumn>}
+
                 <TableColumn className={styles.uttak__uttaksgrad}>
                     <p className={styles.uttak__uttaksgrad__tekst}>{`${uttaksgrad} %`}</p>
                     <div className={uttakGradIndikatorCls} />
                 </TableColumn>
+
                 <TableColumn>
                     <div className={styles.uttak__lastColumn}>
                         <div className={styles.uttak__behandlerIcon}>
@@ -94,7 +109,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                     </div>
                 </TableColumn>
             </TableRow>
-            <FullWidthRow>
+            <FullWidthRow colSpan={skalViseAvvik ? 7 : 6}>
                 <Collapse isOpened={erValgt}>
                     <div className={styles.expanded}>
                         {harOppfyltAlleInngangsvilkår ? (

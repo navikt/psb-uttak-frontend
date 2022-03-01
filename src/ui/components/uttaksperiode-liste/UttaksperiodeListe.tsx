@@ -4,16 +4,24 @@ import Table from '../table/Table';
 import TableColumn from '../table/TableColumn';
 import styles from './uttaksperiodeListe.less';
 import Uttak from '../uttak/Uttak';
+import AvvikIMType from '../../../constants/AvvikIMType';
 
 interface UttaksperiodeListeProps {
     uttaksperioder: Uttaksperiode[];
 }
 
-const headers = ['Uttaksperiode', 'Inngangsvilkår', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
 
 const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
     const [valgtPeriodeIndex, velgPeriodeIndex] = React.useState<number>();
     const { uttaksperioder } = props;
+    const skalViseAvvik = uttaksperioder.find(uttaksperiode => uttaksperiode.avvikImSøknad &&
+        (uttaksperiode.avvikImSøknad === AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM || uttaksperiode.avvikImSøknad === AvvikIMType.IM_REFUSJONSKRAV_TRUMFER_SØKNAD),
+    );
+
+    const headers = skalViseAvvik
+        ? ['Uttaksperiode', 'Inngangsvilkår', 'Pleiebehov', 'Parter', 'Avvik', 'Søkers uttaksgrad']
+        : ['Uttaksperiode', 'Inngangsvilkår', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
+
 
     const velgPeriode = (index: number) => {
         if (valgtPeriodeIndex === index) {
@@ -45,6 +53,7 @@ const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
                         uttak={uttak}
                         erValgt={valgtPeriodeIndex === index}
                         velgPeriode={() => velgPeriode(index)}
+                        skalViseAvvik={!!skalViseAvvik}
                     />
                 ))}
             </Table>
