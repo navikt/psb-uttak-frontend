@@ -5,6 +5,7 @@ import TableColumn from '../table/TableColumn';
 import styles from './uttaksperiodeListe.less';
 import Uttak from '../uttak/Uttak';
 import AvvikIMType from '../../../constants/AvvikIMType';
+import ContainerContext from '../../context/ContainerContext';
 
 interface UttaksperiodeListeProps {
     uttaksperioder: Uttaksperiode[];
@@ -12,9 +13,11 @@ interface UttaksperiodeListeProps {
 
 
 const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
+    const { erFagytelsetypeLivetsSluttfase } = React.useContext(ContainerContext);
+
     const [valgtPeriodeIndex, velgPeriodeIndex] = React.useState<number>();
     const { uttaksperioder } = props;
-    const skalViseAvvik = uttaksperioder.find(uttaksperiode => uttaksperiode.avvikImSøknad &&
+    const skalViseAvvik = erFagytelsetypeLivetsSluttfase && uttaksperioder.find(uttaksperiode => uttaksperiode.avvikImSøknad &&
         (uttaksperiode.avvikImSøknad === AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM || uttaksperiode.avvikImSøknad === AvvikIMType.IM_REFUSJONSKRAV_TRUMFER_SØKNAD),
     );
 
