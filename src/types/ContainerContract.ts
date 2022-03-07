@@ -6,6 +6,7 @@ interface ContainerContract {
     aktivBehandlingUuid: string;
     arbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
     aksjonspunktkoder: string[];
+    erFagytelsetypeLivetsSluttfase: boolean;
 }
 
 export default ContainerContract;
