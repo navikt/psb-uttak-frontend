@@ -4,16 +4,20 @@ import Table from '../table/Table';
 import TableColumn from '../table/TableColumn';
 import styles from './uttaksperiodeListe.less';
 import Uttak from '../uttak/Uttak';
+import ContainerContext from '../../context/ContainerContext';
 
 interface UttaksperiodeListeProps {
     uttaksperioder: Uttaksperiode[];
 }
 
-const headers = ['Uttaksperiode', 'Inngangsvilkår', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
-
 const UttaksperiodeListe = (props: UttaksperiodeListeProps): JSX.Element => {
     const [valgtPeriodeIndex, velgPeriodeIndex] = React.useState<number>();
+    const { erFagytelsetypeLivetsSluttfase } = React.useContext(ContainerContext);
     const { uttaksperioder } = props;
+
+    const headers = erFagytelsetypeLivetsSluttfase
+        ? ['Uttaksperiode', 'Inngangsvilkår', 'Pleie i hjemmet', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad']
+        : ['Uttaksperiode', 'Inngangsvilkår', 'Pleiebehov', 'Parter', 'Søkers uttaksgrad'];
 
     const velgPeriode = (index: number) => {
         if (valgtPeriodeIndex === index) {
