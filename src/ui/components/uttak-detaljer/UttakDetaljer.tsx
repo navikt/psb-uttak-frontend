@@ -116,6 +116,20 @@ const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn, pleieb
     );
 };
 
+const formatGraderingMotTilsynLivetsSluttfase = (graderingMotTilsyn: GraderingMotTilsyn, pleiebehov: number) => {
+    const { etablertTilsyn, andreSøkeresTilsyn, tilgjengeligForSøker } = graderingMotTilsyn;
+
+    return (
+        <div className={styles.uttakDetaljer__graderingMotTilsyn}>
+            <p className={styles.uttakDetaljer__data}>{`Maks antall dager med pleiepenger: ${pleiebehov} dager`}</p>
+            <span className={styles.uttakDetaljer__data}>{`- Søkers tilsyn: ${etablertTilsyn} dager`}</span>
+            <p className={styles.uttakDetaljer__data}>{`- Andre søkeres tilsyn: ${andreSøkeresTilsyn} dager`}</p>
+            <hr className={styles.uttakDetaljer__separator} />
+            <p className={styles.uttakDetaljer__sum}>{`= ${tilgjengeligForSøker} dager tilgjengelig for søker`}</p>
+        </div>
+    );
+};
+
 const formatAvkortingMotArbeid = (
     utbetalingsgrader: Utbetalingsgrad[],
     søkersTapteArbeidstid: number,
@@ -210,7 +224,7 @@ interface UttakDetaljerProps {
 }
 
 const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
-    const { arbeidsforhold } = React.useContext(ContainerContext);
+    const { arbeidsforhold, erFagytelsetypeLivetsSluttfase } = React.useContext(ContainerContext);
     const {
         utbetalingsgrader,
         graderingMotTilsyn,
@@ -232,7 +246,7 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
             <div className={styles.uttakDetaljer__grid}>
                 {graderingMotTilsyn && (
                     <UttakUtregning
-                        heading="Gradering mot tilsyn"
+                        heading={erFagytelsetypeLivetsSluttfase ? 'Avkortning mot tilsyn' : 'Gradering mot tilsyn'}
                         highlight={shouldHighlight(Årsaker.GRADERT_MOT_TILSYN, årsaker)}
                         headingPostContent={() =>
                             harBarnetsDødsfallÅrsak(årsaker) && (
@@ -245,7 +259,9 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
                             )
                         }
                     >
-                        {formatGraderingMotTilsyn(graderingMotTilsyn, pleiebehov)}
+                        {erFagytelsetypeLivetsSluttfase
+                            ? formatGraderingMotTilsynLivetsSluttfase(graderingMotTilsyn, pleiebehov)
+                            : formatGraderingMotTilsyn(graderingMotTilsyn, pleiebehov)}
                     </UttakUtregning>
                 )}
                 <UttakUtregning
