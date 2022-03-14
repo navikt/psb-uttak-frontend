@@ -21,6 +21,8 @@ export interface Uttaksperiodeelement {
     søkersTapteArbeidstid: number;
     pleiebehov: number;
     endringsstatus?: Endringsstatus;
+    utenlandsoppholdUtenÅrsak?: boolean;
+    utenlandsoppholdÅrsak?: string;
 }
 
 export interface Uttaksperiode extends Uttaksperiodeelement {

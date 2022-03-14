@@ -15,8 +15,7 @@ const IkkeOppfylteÅrsakerMedTekst = [
     },
     {
         årsak: Årsaker.FOR_LAV_REST_PGA_ETABLERT_TILSYN_OG_ANDRE_SØKERE,
-        tekst:
-            'Årsak for 0 % uttaksgrad: Mindre enn 20 % pleiepenger tilgjengelig grunnet annen søkers uttak og tid i tilsynsordning',
+        tekst: 'Årsak for 0 % uttaksgrad: Mindre enn 20 % pleiepenger tilgjengelig grunnet annen søkers uttak og tid i tilsynsordning',
     },
     {
         årsak: Årsaker.FOR_LAV_TAPT_ARBEIDSTID,
@@ -25,6 +24,10 @@ const IkkeOppfylteÅrsakerMedTekst = [
     {
         årsak: Årsaker.FOR_LAV_ØNSKET_UTTAKSGRAD,
         tekst: 'Årsak for 0 % uttaksgrad: Uttaksgrad må være minst 20 %',
+    },
+    {
+        årsak: Årsaker.FOR_MANGE_DAGER_UTENLANDSOPPHOLD,
+        tekst: 'Årsak for avslag: Søker har mottatt pleiepenger i utlandet i 8 uker.',
     },
 ];
 

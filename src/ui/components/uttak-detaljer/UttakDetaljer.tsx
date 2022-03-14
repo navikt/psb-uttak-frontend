@@ -1,6 +1,6 @@
 import { ContentWithTooltip, GreenCheckIcon, OnePersonIconBlue } from '@navikt/k9-react-components';
 import classNames from 'classnames/bind';
-import { EtikettAdvarsel } from 'nav-frontend-etiketter';
+import { EtikettAdvarsel, EtikettSuksess } from 'nav-frontend-etiketter';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import { Element } from 'nav-frontend-typografi';
@@ -34,10 +34,28 @@ const getÅrsaksetiketter = (årsaker: Årsaker[]) => {
 const getTekstVedBarnetsDødsfall = (årsaker: Årsaker[]) => {
     const funnedeÅrsaker = BarnetsDødsfallÅrsakerMedTekst.filter((årsak) => harÅrsak(årsaker, årsak.årsak));
     return funnedeÅrsaker.map((årsak) => (
-        <div key={årsak.årsak} className={styles.uttakDetaljer__etikettBarnetsDødsfall}>
+        <div key={årsak.årsak} className={styles.uttakDetaljer__etikett}>
             {årsak.tekst}
         </div>
     ));
+};
+
+const utenlandsopphold = (årsaker, utenlandsoppholdÅrsak, utenlandsoppholdUtenÅrsak) => {
+    const { kodeverkUtenlandsoppholdÅrsaker } = React.useContext(ContainerContext);
+
+    if (!utenlandsoppholdÅrsak) {
+        return null;
+    }
+
+    if (utenlandsoppholdUtenÅrsak && harÅrsak(årsaker, Årsaker.FOR_MANGE_DAGER_UTENLANDSOPPHOLD)) {
+        return null;
+    }
+
+    return (
+        <EtikettSuksess className={styles.uttakDetaljer__etikett}>
+            {kodeverkUtenlandsoppholdÅrsaker.find((årsak) => årsak.kode === utenlandsoppholdÅrsak)?.navn}{' '}
+        </EtikettSuksess>
+    );
 };
 
 const harBeredskapEllerNattevåkÅrsak = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsak) => {
@@ -193,13 +211,21 @@ interface UttakDetaljerProps {
 
 const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
     const { arbeidsforhold } = React.useContext(ContainerContext);
-    const { utbetalingsgrader, graderingMotTilsyn, søkerBerOmMaksimalt, årsaker, søkersTapteArbeidstid, pleiebehov } =
-        uttak;
-
+    const {
+        utbetalingsgrader,
+        graderingMotTilsyn,
+        søkerBerOmMaksimalt,
+        årsaker,
+        søkersTapteArbeidstid,
+        pleiebehov,
+        utenlandsoppholdÅrsak,
+        utenlandsoppholdUtenÅrsak,
+    } = uttak;
     return (
         <div className={styles.uttakDetaljer}>
             {getÅrsaksetiketter(årsaker)}
             {getTekstVedBarnetsDødsfall(årsaker)}
+            {utenlandsopphold(årsaker, utenlandsoppholdÅrsak, utenlandsoppholdUtenÅrsak)}
             <div className={styles.uttakDetaljer__oppsummering}>
                 {søkerBerOmMaksimalt && getSøkerBerOmMaksimalt(søkerBerOmMaksimalt, årsaker)}
             </div>
