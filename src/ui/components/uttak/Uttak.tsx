@@ -55,7 +55,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                 <TableColumn>
                     {harOppfyltAlleInngangsvilkår ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
                 </TableColumn>
-                {erFagytelsetypeLivetsSluttfase && <TableColumn><GreenCheckIconFilled /></TableColumn>}
+                {erFagytelsetypeLivetsSluttfase && <TableColumn>{ uttaksgrad === 0 ? <RedCrossIconFilled /> : <GreenCheckIconFilled />}</TableColumn>}
                 <TableColumn>
                     <div className={styles.uttak__iconContainer}>
                         {harPleiebehov ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
