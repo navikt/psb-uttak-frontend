@@ -21,6 +21,7 @@ import TableColumn from '../table/TableColumn';
 import TableRow from '../table/TableRow';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 import styles from './uttak.less';
+import ContainerContext from '../../context/ContainerContext';
 
 const cx = classNames.bind(styles);
 
@@ -32,6 +33,8 @@ interface UttakProps {
 
 const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
     const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, endringsstatus } = uttak;
+    const { erFagytelsetypeLivetsSluttfase } = React.useContext(ContainerContext);
+
     const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, Årsaker.UTENOM_PLEIEBEHOV);
     const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
 
@@ -52,6 +55,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                 <TableColumn>
                     {harOppfyltAlleInngangsvilkår ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
                 </TableColumn>
+                {erFagytelsetypeLivetsSluttfase && <TableColumn>{ uttaksgrad === 0 ? <RedCrossIconFilled /> : <GreenCheckIconFilled />}</TableColumn>}
                 <TableColumn>
                     <div className={styles.uttak__iconContainer}>
                         {harPleiebehov ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
@@ -94,7 +98,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                     </div>
                 </TableColumn>
             </TableRow>
-            <FullWidthRow>
+            <FullWidthRow colSpan={erFagytelsetypeLivetsSluttfase ? 7 : 6}>
                 <Collapse isOpened={erValgt}>
                     <div className={styles.expanded}>
                         {harOppfyltAlleInngangsvilkår ? (
