@@ -56,7 +56,7 @@ const utenlandsoppholdInfo = (årsaker, utenlandsopphold, utenlandsoppholdUtenÅ
 
     return (
         <EtikettSuksess className={styles.uttakDetaljer__etikett}>
-            {kodeverkUtenlandsoppholdÅrsak?.find((årsak) => årsak.kode === utenlandsopphold.kode)?.navn}
+            {kodeverkUtenlandsoppholdÅrsak?.find((årsak) => årsak.kode === utenlandsopphold.årsak)?.navn}
         </EtikettSuksess>
     );
 };
