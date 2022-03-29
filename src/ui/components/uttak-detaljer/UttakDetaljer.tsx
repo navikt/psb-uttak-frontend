@@ -40,12 +40,12 @@ const getTekstVedBarnetsDødsfall = (årsaker: Årsaker[]) => {
     ));
 };
 
-const utenlandsopphold = (årsaker, utenlandsoppholdÅrsak, utenlandsoppholdUtenÅrsak) => {
+const utenlandsoppholdInfo = (årsaker, utenlandsopphold, utenlandsoppholdUtenÅrsak) => {
     const { kodeverkUtenlandsoppholdÅrsaker } = React.useContext(ContainerContext);
     console.log(årsaker)
-    console.log(utenlandsoppholdÅrsak)
+    console.log(utenlandsopphold)
     console.log(utenlandsoppholdUtenÅrsak)
-    if (!utenlandsoppholdÅrsak) {
+    if (!utenlandsopphold) {
         return null;
     }
 
@@ -55,7 +55,7 @@ const utenlandsopphold = (årsaker, utenlandsoppholdÅrsak, utenlandsoppholdUten
 
     return (
         <EtikettSuksess className={styles.uttakDetaljer__etikett}>
-            {kodeverkUtenlandsoppholdÅrsaker.find((årsak) => årsak.kode === utenlandsoppholdÅrsak.kode)?.navn}
+            {kodeverkUtenlandsoppholdÅrsaker.find((årsak) => årsak.kode === utenlandsopphold.kode)?.navn}
         </EtikettSuksess>
     );
 };
@@ -234,14 +234,14 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
         årsaker,
         søkersTapteArbeidstid,
         pleiebehov,
-        utenlandsoppholdÅrsak,
+        utenlandsoppholdÅrsak: utenlandsopphold,
         utenlandsoppholdUtenÅrsak,
     } = uttak;
     return (
         <div className={styles.uttakDetaljer}>
             {getÅrsaksetiketter(årsaker)}
             {getTekstVedBarnetsDødsfall(årsaker)}
-            {utenlandsopphold(årsaker, utenlandsoppholdÅrsak, utenlandsoppholdUtenÅrsak)}
+            {utenlandsoppholdInfo(årsaker, utenlandsopphold, utenlandsoppholdUtenÅrsak)}
             <div className={styles.uttakDetaljer__oppsummering}>
                 {søkerBerOmMaksimalt && getSøkerBerOmMaksimalt(søkerBerOmMaksimalt, årsaker)}
             </div>
