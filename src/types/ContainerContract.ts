@@ -8,7 +8,7 @@ interface ContainerContract {
     arbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
     aksjonspunktkoder: string[];
     erFagytelsetypeLivetsSluttfase: boolean;
-    kodeverkUtenlandsoppholdÅrsaker: KodeverkMedNavn[];
+    kodeverkUtenlandsoppholdÅrsak: KodeverkMedNavn[];
 }
 
 export default ContainerContract;

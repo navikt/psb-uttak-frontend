@@ -41,11 +41,11 @@ const getTekstVedBarnetsDødsfall = (årsaker: Årsaker[]) => {
 };
 
 const utenlandsoppholdInfo = (årsaker, utenlandsopphold, utenlandsoppholdUtenÅrsak) => {
-    const { kodeverkUtenlandsoppholdÅrsaker } = React.useContext(ContainerContext);
+    const { kodeverkUtenlandsoppholdÅrsak } = React.useContext(ContainerContext);
     console.log(årsaker)
     console.log(utenlandsopphold)
     console.log(utenlandsoppholdUtenÅrsak)
-    console.log(kodeverkUtenlandsoppholdÅrsaker)
+    console.log(kodeverkUtenlandsoppholdÅrsak)
     if (!utenlandsopphold) {
         return null;
     }
@@ -56,7 +56,7 @@ const utenlandsoppholdInfo = (årsaker, utenlandsopphold, utenlandsoppholdUtenÅ
 
     return (
         <EtikettSuksess className={styles.uttakDetaljer__etikett}>
-            {kodeverkUtenlandsoppholdÅrsaker?.find((årsak) => årsak.kode === utenlandsopphold.kode)?.navn}
+            {kodeverkUtenlandsoppholdÅrsak?.find((årsak) => årsak.kode === utenlandsopphold.kode)?.navn}
         </EtikettSuksess>
     );
 };
