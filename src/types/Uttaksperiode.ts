@@ -22,7 +22,7 @@ export interface Uttaksperiodeelement {
     pleiebehov: number;
     endringsstatus?: Endringsstatus;
     utenlandsoppholdUtenÅrsak?: boolean;
-    utenlandsoppholdÅrsak?: string;
+    utenlandsopphold?: string;
 }
 
 export interface Uttaksperiode extends Uttaksperiodeelement {

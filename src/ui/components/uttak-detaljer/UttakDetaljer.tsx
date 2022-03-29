@@ -234,7 +234,7 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
         årsaker,
         søkersTapteArbeidstid,
         pleiebehov,
-        utenlandsoppholdÅrsak: utenlandsopphold,
+        utenlandsopphold,
         utenlandsoppholdUtenÅrsak,
     } = uttak;
     return (
