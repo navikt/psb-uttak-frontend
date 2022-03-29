@@ -42,11 +42,8 @@ const getTekstVedBarnetsDødsfall = (årsaker: Årsaker[]) => {
 
 const utenlandsoppholdInfo = (årsaker, utenlandsopphold, utenlandsoppholdUtenÅrsak) => {
     const { kodeverkUtenlandsoppholdÅrsak } = React.useContext(ContainerContext);
-    console.log(årsaker)
-    console.log(utenlandsopphold)
-    console.log(utenlandsoppholdUtenÅrsak)
-    console.log(kodeverkUtenlandsoppholdÅrsak)
-    if (!utenlandsopphold) {
+
+    if (!utenlandsopphold?.landkode) {
         return null;
     }
 
