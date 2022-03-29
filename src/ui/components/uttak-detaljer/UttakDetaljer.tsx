@@ -45,6 +45,7 @@ const utenlandsoppholdInfo = (årsaker, utenlandsopphold, utenlandsoppholdUtenÅ
     console.log(årsaker)
     console.log(utenlandsopphold)
     console.log(utenlandsoppholdUtenÅrsak)
+    console.log(kodeverkUtenlandsoppholdÅrsaker)
     if (!utenlandsopphold) {
         return null;
     }
@@ -55,7 +56,7 @@ const utenlandsoppholdInfo = (årsaker, utenlandsopphold, utenlandsoppholdUtenÅ
 
     return (
         <EtikettSuksess className={styles.uttakDetaljer__etikett}>
-            {kodeverkUtenlandsoppholdÅrsaker.find((årsak) => årsak.kode === utenlandsopphold.kode)?.navn}
+            {kodeverkUtenlandsoppholdÅrsaker?.find((årsak) => årsak.kode === utenlandsopphold.kode)?.navn}
         </EtikettSuksess>
     );
 };
