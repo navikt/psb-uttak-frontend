@@ -45,7 +45,10 @@ const utenlandsoppholdTekst = (utenlandsopphold, kodeverk) => {
         return 'Periode med utenlandsopphold i EØS-land, telles ikke i 8 uker';
     }
 
-    return kodeverk?.UtenlandsoppholdÅrsak?.find((v) => v.kode === utenlandsopphold?.årsak)?.navn || 'Ukjent årsak';
+    console.log(utenlandsopphold)
+    console.log(kodeverk)
+
+    return kodeverk?.UtenlandsoppholdÅrsak?.find((v) => v.kode === utenlandsopphold?.årsak)?.navn;
 };
 
 const utenlandsoppholdInfo = (årsaker, utenlandsopphold) => {
