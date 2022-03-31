@@ -245,13 +245,12 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
         søkersTapteArbeidstid,
         pleiebehov,
         utenlandsopphold,
-        utenlandsoppholdUtenÅrsak,
     } = uttak;
     return (
         <div className={styles.uttakDetaljer}>
             {getÅrsaksetiketter(årsaker)}
             {getTekstVedBarnetsDødsfall(årsaker)}
-            {utenlandsoppholdInfo(årsaker, utenlandsopphold, utenlandsoppholdUtenÅrsak)}
+            {utenlandsoppholdInfo(årsaker, utenlandsopphold)}
             <div className={styles.uttakDetaljer__oppsummering}>
                 {søkerBerOmMaksimalt && getSøkerBerOmMaksimalt(søkerBerOmMaksimalt, årsaker)}
             </div>
