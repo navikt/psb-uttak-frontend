@@ -40,20 +40,32 @@ const getTekstVedBarnetsDødsfall = (årsaker: Årsaker[]) => {
     ));
 };
 
-const utenlandsoppholdInfo = (årsaker, utenlandsopphold, utenlandsoppholdUtenÅrsak) => {
+const utenlandsoppholdTekst = (utenlandsopphold, kodeverk) => {
+    if (utenlandsopphold?.erEøsLand) {
+        return 'Periode med utenlandsopphold i EØS-land, telles ikke i 8 uker';
+    }
+
+    return kodeverk?.UtenlandsoppholdÅrsak?.find((v) => v.kode === utenlandsopphold?.årsak)?.navn || 'Ukjent årsak';
+};
+
+const utenlandsoppholdInfo = (årsaker, utenlandsopphold) => {
     const { kodeverkUtenlandsoppholdÅrsak } = React.useContext(ContainerContext);
 
     if (!utenlandsopphold?.landkode) {
         return null;
     }
 
-    if (utenlandsoppholdUtenÅrsak && harÅrsak(årsaker, Årsaker.FOR_MANGE_DAGER_UTENLANDSOPPHOLD)) {
+    if (
+        utenlandsopphold?.landkode &&
+        utenlandsopphold?.årsak === 'INGEN' &&
+        harÅrsak(årsaker, Årsaker.FOR_MANGE_DAGER_UTENLANDSOPPHOLD)
+    ) {
         return null;
     }
 
     return (
         <EtikettSuksess className={styles.uttakDetaljer__etikett}>
-            {kodeverkUtenlandsoppholdÅrsak?.find((årsak) => årsak.kode === utenlandsopphold.årsak)?.navn}
+            {utenlandsoppholdTekst(utenlandsopphold, kodeverkUtenlandsoppholdÅrsak)}
         </EtikettSuksess>
     );
 };
