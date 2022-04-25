@@ -60,7 +60,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                     <div className={styles.uttak__iconContainer}>
                         {harPleiebehov ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
                     </div>
-                    {harPleiebehov ? `${pleiebehov} %` : null}
+                    {harPleiebehov ? `${pleiebehov} ${erFagytelsetypeLivetsSluttfase ? '' : '%' }` : null}
                 </TableColumn>
                 <TableColumn>
                     {uttak.annenPart === AnnenPart.ALENE && (
