@@ -55,12 +55,12 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                 <TableColumn>
                     {harOppfyltAlleInngangsvilkår ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
                 </TableColumn>
-                {erFagytelsetypeLivetsSluttfase && <TableColumn>{ uttaksgrad === 0 ? <RedCrossIconFilled /> : <GreenCheckIconFilled />}</TableColumn>}
+                {erFagytelsetypeLivetsSluttfase && <TableColumn>{uttaksgrad === 0 ? <RedCrossIconFilled /> : <GreenCheckIconFilled />}</TableColumn>}
                 <TableColumn>
                     <div className={styles.uttak__iconContainer}>
                         {harPleiebehov ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
                     </div>
-                    {harPleiebehov ? `${pleiebehov} %` : null}
+                    {harPleiebehov && !erFagytelsetypeLivetsSluttfase ? `${pleiebehov}%` : null}
                 </TableColumn>
                 <TableColumn>
                     {uttak.annenPart === AnnenPart.ALENE && (
@@ -87,9 +87,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                         <button
                             onClick={velgPeriode}
                             type="button"
-                            className={`${styles.uttak__expandButton} ${
-                                erValgt && styles['uttak__expandButton--expanded']
-                            }`}
+                            className={`${styles.uttak__expandButton} ${erValgt && styles['uttak__expandButton--expanded']}`}
                             aria-label={erValgt ? 'Lukk' : 'Åpne'}
                             aria-expanded={erValgt}
                         >
