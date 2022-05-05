@@ -1,6 +1,6 @@
 import { ContentWithTooltip, GreenCheckIcon, OnePersonIconBlue } from '@navikt/k9-react-components';
 import classNames from 'classnames/bind';
-import { EtikettAdvarsel } from 'nav-frontend-etiketter';
+import { EtikettAdvarsel, EtikettSuksess } from 'nav-frontend-etiketter';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import { Element } from 'nav-frontend-typografi';
@@ -34,10 +34,40 @@ const getÅrsaksetiketter = (årsaker: Årsaker[]) => {
 const getTekstVedBarnetsDødsfall = (årsaker: Årsaker[]) => {
     const funnedeÅrsaker = BarnetsDødsfallÅrsakerMedTekst.filter((årsak) => harÅrsak(årsaker, årsak.årsak));
     return funnedeÅrsaker.map((årsak) => (
-        <div key={årsak.årsak} className={styles.uttakDetaljer__etikettBarnetsDødsfall}>
+        <div key={årsak.årsak} className={styles.uttakDetaljer__etikett}>
             {årsak.tekst}
         </div>
     ));
+};
+
+const utenlandsoppholdTekst = (utenlandsopphold, kodeverk) => {
+    if (utenlandsopphold?.erEøsLand) {
+        return 'Periode med utenlandsopphold i EØS-land, telles ikke i 8 uker';
+    }
+
+    return kodeverk?.find((v) => v.kode === utenlandsopphold?.årsak)?.navn;
+};
+
+const utenlandsoppholdInfo = (årsaker, utenlandsopphold) => {
+    const { kodeverkUtenlandsoppholdÅrsak } = React.useContext(ContainerContext);
+
+    if (!utenlandsopphold?.landkode) {
+        return null;
+    }
+
+    if (
+        utenlandsopphold?.landkode &&
+        utenlandsopphold?.årsak === 'INGEN' &&
+        harÅrsak(årsaker, Årsaker.FOR_MANGE_DAGER_UTENLANDSOPPHOLD)
+    ) {
+        return null;
+    }
+
+    return (
+        <EtikettSuksess className={styles.uttakDetaljer__etikett}>
+            {utenlandsoppholdTekst(utenlandsopphold, kodeverkUtenlandsoppholdÅrsak)}
+        </EtikettSuksess>
+    );
 };
 
 const harBeredskapEllerNattevåkÅrsak = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsak) => {
@@ -193,13 +223,20 @@ interface UttakDetaljerProps {
 
 const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
     const { arbeidsforhold, erFagytelsetypeLivetsSluttfase } = React.useContext(ContainerContext);
-    const { utbetalingsgrader, graderingMotTilsyn, søkerBerOmMaksimalt, årsaker, søkersTapteArbeidstid, pleiebehov } =
-        uttak;
-
+    const {
+        utbetalingsgrader,
+        graderingMotTilsyn,
+        søkerBerOmMaksimalt,
+        årsaker,
+        søkersTapteArbeidstid,
+        pleiebehov,
+        utenlandsopphold,
+    } = uttak;
     return (
         <div className={styles.uttakDetaljer}>
             {getÅrsaksetiketter(årsaker)}
             {getTekstVedBarnetsDødsfall(årsaker)}
+            {utenlandsoppholdInfo(årsaker, utenlandsopphold)}
             <div className={styles.uttakDetaljer__oppsummering}>
                 {søkerBerOmMaksimalt && getSøkerBerOmMaksimalt(søkerBerOmMaksimalt, årsaker)}
             </div>

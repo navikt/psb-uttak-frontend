@@ -1,5 +1,6 @@
 import Uttaksperioder from './Uttaksperioder';
 import ArbeidsgiverOpplysninger from './ArbeidsgiverOpplysninger';
+import KodeverkMedNavn from './kodeverkMedNavnTsType';
 
 interface ContainerContract {
     uttaksperioder: Uttaksperioder;
@@ -7,6 +8,7 @@ interface ContainerContract {
     arbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
     aksjonspunktkoder: string[];
     erFagytelsetypeLivetsSluttfase: boolean;
+    kodeverkUtenlandsoppholdÅrsak: KodeverkMedNavn[];
 }
 
 export default ContainerContract;
