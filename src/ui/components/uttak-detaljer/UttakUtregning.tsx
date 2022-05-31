@@ -10,7 +10,7 @@ interface UttakUtregningProps {
     heading: string;
     children: React.ReactNode;
     highlight?: boolean;
-    headingPostContent?: () => React.ReactNode;
+    headingPostContent?: React.ReactNode;
 }
 
 const UttakUtregning = ({ heading, children, highlight, headingPostContent }: UttakUtregningProps): JSX.Element => {
@@ -22,7 +22,7 @@ const UttakUtregning = ({ heading, children, highlight, headingPostContent }: Ut
             <div className={styles.uttakUtregning__headingContainer}>
                 <div className={styles.uttakUtregning__headingIcon}>{highlight && <GreenCheckIcon size={19} />}</div>
                 <Element>{heading}</Element>
-                {headingPostContent && headingPostContent()}
+                {headingPostContent}
             </div>
             <hr />
             {children}
