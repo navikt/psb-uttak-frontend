@@ -46,6 +46,7 @@
         "react/require-default-props": "off",
         "react/prop-types": "off",
         "no-use-before-define": "off",
-        "no-shadow": "off"
+        "no-shadow": "off",
+        "react/function-component-definition": "off"
     }
 }

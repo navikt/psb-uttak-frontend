@@ -4,6 +4,8 @@ import lagUttaksperiodeliste from '../util/uttaksperioder';
 import UttaksperiodeListe from './components/uttaksperiode-liste/UttaksperiodeListe';
 import ContainerContext from './context/ContainerContext';
 import Infostripe from './components/infostripe/Infostripe';
+import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe';
+import '@navikt/ds-css';
 
 interface MainComponentProps {
     containerData: ContainerContract;
@@ -18,6 +20,7 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
     return (
         <ContainerContext.Provider value={containerData}>
             <Infostripe harVentAnnenPSBSakAksjonspunkt={harVentAnnenPSBSakAksjonspunkt} />
+            <UtsattePerioderStripe />
             {!harVentAnnenPSBSakAksjonspunkt && (
                 <UttaksperiodeListe uttaksperioder={lagUttaksperiodeliste(uttaksperioder)} />
             )}

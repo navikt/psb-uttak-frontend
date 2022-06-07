@@ -245,7 +245,7 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
                     <UttakUtregning
                         heading="Gradering mot tilsyn"
                         highlight={shouldHighlight(Årsaker.GRADERT_MOT_TILSYN, årsaker)}
-                        headingPostContent={() =>
+                        headingPostContent={
                             harBarnetsDødsfallÅrsak(årsaker) && (
                                 <Hjelpetekst
                                     className={styles.uttakDetaljer__data__questionMark}
