@@ -34,7 +34,7 @@ const getÅrsaksetiketter = (årsaker: Årsaker[]) => {
 const getTekstVedBarnetsDødsfall = (årsaker: Årsaker[]) => {
     const funnedeÅrsaker = BarnetsDødsfallÅrsakerMedTekst.filter((årsak) => harÅrsak(årsaker, årsak.årsak));
     return funnedeÅrsaker.map((årsak) => (
-        <div key={årsak.årsak} className={styles.uttakDetaljer__etikett}>
+        <div key={årsak.årsak} className={styles.uttakDetaljer__etikettBarnetsDødsfall}>
             {årsak.tekst}
         </div>
     ));

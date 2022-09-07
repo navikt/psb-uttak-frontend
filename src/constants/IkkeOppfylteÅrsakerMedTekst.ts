@@ -29,6 +29,10 @@ const IkkeOppfylteÅrsakerMedTekst = [
         årsak: Årsaker.FOR_MANGE_DAGER_UTENLANDSOPPHOLD,
         tekst: 'Årsak for avslag: Søker har mottatt pleiepenger i utlandet i 8 uker.',
     },
+    {
+        årsak: Årsaker.BARNETS_DØDSFALL,
+        tekst: 'Årsak for avslag: Barnet er død, perioden går utover 6 uker eller 3 måneder.',
+    },
 ];
 
 export default IkkeOppfylteÅrsakerMedTekst;
