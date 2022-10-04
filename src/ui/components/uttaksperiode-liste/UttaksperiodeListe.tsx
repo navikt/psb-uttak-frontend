@@ -2,7 +2,7 @@ import React from 'react';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import Table from '../table/Table';
 import TableColumn from '../table/TableColumn';
-import styles from './uttaksperiodeListe.less';
+import styles from './uttaksperiodeListe.css';
 import Uttak from '../uttak/Uttak';
 import ContainerContext from '../../context/ContainerContext';
 

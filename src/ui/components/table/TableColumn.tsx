@@ -1,7 +1,7 @@
 import React, { ReactNode, FunctionComponent } from 'react';
 import classnames from 'classnames/bind';
 
-import styles from './tableColumn.less';
+import styles from './tableColumn.css';
 
 const classNames = classnames.bind(styles);
 

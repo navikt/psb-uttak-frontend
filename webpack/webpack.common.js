@@ -15,7 +15,7 @@ const IMAGES_DIR = path.resolve(__dirname, '../src/ui/assets/images');
 module.exports = {
     entry: path.resolve(__dirname, '../', 'src') + '/app.ts',
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.less'],
+        extensions: ['.ts', '.tsx', '.js', '.css'],
     },
     module: {
         rules: [
@@ -28,11 +28,7 @@ module.exports = {
                 include: [SRC_DIR],
             },
             {
-                test: /\.scss$/,
-                use: [cssExtractLoaderConfig, 'css-loader', 'sass-loader'],
-            },
-            {
-                test: /\.less$/,
+                test: /\.css$/,
                 use: [
                     cssExtractLoaderConfig,
                     {
@@ -41,19 +37,6 @@ module.exports = {
                             importLoaders: 1,
                             modules: {
                                 localIdentName: '[name]_[local]_[contenthash:base64:5]',
-                            },
-                        },
-                    },
-                    {
-                        loader: 'less-loader',
-                        options: {
-                            lessOptions: {
-                                modules: true,
-                                localIdentName: '[name]_[local]_[contenthash:base64:5]',
-                                modifyVars: {
-                                    nodeModulesPath: '~',
-                                    coreModulePath: '~',
-                                },
                             },
                         },
                     },

@@ -6,6 +6,7 @@ import ContainerContext from './context/ContainerContext';
 import Infostripe from './components/infostripe/Infostripe';
 import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe';
 import '@navikt/ds-css';
+import '@navikt/ft-plattform-komponenter/dist/style.css';
 
 interface MainComponentProps {
     containerData: ContainerContract;

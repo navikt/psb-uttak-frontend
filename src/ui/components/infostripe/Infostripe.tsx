@@ -1,6 +1,6 @@
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import React from 'react';
-import styles from './infostripe.less';
+import styles from './infostripe.css';
 import ContainerContext from '../../context/ContainerContext';
 
 interface InfostripeProps {
