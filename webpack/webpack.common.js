@@ -8,7 +8,7 @@ const cssExtractLoaderConfig = {
     },
 };
 
-const CORE_DIR = path.resolve(__dirname, '../node_modules');
+const nodeModules = path.resolve(__dirname, '../node_modules');
 const SRC_DIR = path.resolve(__dirname, '../src');
 const IMAGES_DIR = path.resolve(__dirname, '../src/ui/assets/images');
 
@@ -41,7 +41,7 @@ module.exports = {
                         },
                     },
                 ],
-                exclude: [CORE_DIR],
+                exclude: [nodeModules],
             },
             {
                 test: /\.(less|css)?$/,
@@ -62,7 +62,7 @@ module.exports = {
                         },
                     },
                 ],
-                include: [CORE_DIR],
+                include: [nodeModules],
             },
             {
                 test: /\.(jpg|png|svg)$/,
