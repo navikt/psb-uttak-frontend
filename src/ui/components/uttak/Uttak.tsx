@@ -12,24 +12,18 @@ import * as React from 'react';
 import { Collapse } from 'react-collapse';
 import AnnenPart from '../../../constants/AnnenPart';
 import Årsaker from '../../../constants/Årsaker';
-import { Period } from '../../../types/Period';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
-import { prettifyDate } from '../../../util/dateUtils';
 import { harÅrsak } from '../../../util/årsakUtils';
 import Vilkårsliste from '../../../vilkårsliste/Vilkårsliste';
-import ContainerContext from '../../context/ContainerContext';
-import NewIcon from '../icons/NewIcon';
+import Endringsstatus from '../icons/Endringsstatus';
 import FullWidthRow from '../table/FullWidthRow';
 import TableColumn from '../table/TableColumn';
 import TableRow from '../table/TableRow';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 import styles from './uttak.less';
+import ContainerContext from '../../context/ContainerContext';
 
 const cx = classNames.bind(styles);
-
-const periodevisning = (periode: Period): string => {
-    return `${prettifyDate(periode.fom)} - ${prettifyDate(periode.tom)}`;
-};
 
 interface UttakProps {
     uttak: Uttaksperiode;
@@ -38,8 +32,9 @@ interface UttakProps {
 }
 
 const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
-    const { aktivBehandlingUuid } = React.useContext(ContainerContext);
-    const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, kildeBehandlingUUID } = uttak;
+    const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, endringsstatus } = uttak;
+    const { erFagytelsetypeLivetsSluttfase } = React.useContext(ContainerContext);
+
     const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, Årsaker.UTENOM_PLEIEBEHOV);
     const harPleiebehov = !harUtenomPleiebehovÅrsak && pleiebehov && pleiebehov > 0;
 
@@ -50,22 +45,22 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
     });
 
     const harOppfyltAlleInngangsvilkår = !harÅrsak(årsaker, Årsaker.INNGANGSVILKÅR_IKKE_OPPFYLT);
-    const erNyEllerEndretIAktivBehandling = aktivBehandlingUuid === kildeBehandlingUUID;
 
     return (
         <>
             <TableRow className={erValgt ? styles.uttak__expandedRow : ''} onClick={velgPeriode}>
                 <TableColumn>
-                    <Normaltekst>{periodevisning(periode)}</Normaltekst>
+                    <Normaltekst>{periode.prettifyPeriod()}</Normaltekst>
                 </TableColumn>
                 <TableColumn>
                     {harOppfyltAlleInngangsvilkår ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
                 </TableColumn>
+                {erFagytelsetypeLivetsSluttfase && <TableColumn>{uttaksgrad === 0 ? <RedCrossIconFilled /> : <GreenCheckIconFilled />}</TableColumn>}
                 <TableColumn>
                     <div className={styles.uttak__iconContainer}>
                         {harPleiebehov ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
                     </div>
-                    {harPleiebehov ? `${pleiebehov} %` : null}
+                    {harPleiebehov && !erFagytelsetypeLivetsSluttfase ? `${pleiebehov}%` : null}
                 </TableColumn>
                 <TableColumn>
                     {uttak.annenPart === AnnenPart.ALENE && (
@@ -86,19 +81,13 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                 </TableColumn>
                 <TableColumn>
                     <div className={styles.uttak__lastColumn}>
-                        {erNyEllerEndretIAktivBehandling && (
-                            <div className={styles.uttak__behandlerIcon}>
-                                <ContentWithTooltip tooltipText="Ny/endret denne behandlingen">
-                                    <NewIcon />
-                                </ContentWithTooltip>
-                            </div>
-                        )}
+                        <div className={styles.uttak__behandlerIcon}>
+                            <Endringsstatus status={endringsstatus} />
+                        </div>
                         <button
                             onClick={velgPeriode}
                             type="button"
-                            className={`${styles.uttak__expandButton} ${
-                                erValgt && styles['uttak__expandButton--expanded']
-                            }`}
+                            className={`${styles.uttak__expandButton} ${erValgt && styles['uttak__expandButton--expanded']}`}
                             aria-label={erValgt ? 'Lukk' : 'Åpne'}
                             aria-expanded={erValgt}
                         >
@@ -107,7 +96,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                     </div>
                 </TableColumn>
             </TableRow>
-            <FullWidthRow>
+            <FullWidthRow colSpan={erFagytelsetypeLivetsSluttfase ? 7 : 6}>
                 <Collapse isOpened={erValgt}>
                     <div className={styles.expanded}>
                         {harOppfyltAlleInngangsvilkår ? (

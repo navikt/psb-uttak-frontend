@@ -39,11 +39,6 @@
         align-items: center;
         margin: 0 1.125rem 1rem;
         padding: 0.8125rem 1.125rem;
-        border: 1px solid #ba3a26;
-        background-color: #f1d8d4;
-    }
-
-    &__graderingMotTilsyn {
     }
 
     &__data {
@@ -53,12 +48,19 @@
 
         &--utnullet {
             text-decoration: line-through;
-            margin-left: 0.25rem;
         }
 
         &__questionMark {
             margin-left: 0.75rem;
             margin-top: -0.125rem;
+        }
+
+        &--margin-left {
+            margin-left: 0.25rem;
+        }
+
+        &--margin-left-right {
+            margin: 0 4px;
         }
     }
 
@@ -75,11 +77,20 @@
 
     &__avkortingMotArbeid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
         column-gap: 2rem;
 
         &__heading {
             margin: 0.5rem 0;
+            span {
+                display: block;
+            }
         }
+    }
+    &__etikettBarnetsDødsfall {
+        background: #cde7d8;
+        border: 1px solid #06893a;
+        border-radius: 0.3125rem;
+        margin: 0 1.125rem 1rem;
+        padding: 0.8125rem 1.125rem;
     }
 }

@@ -9,14 +9,10 @@ dayjs.extend(utc);
 dayjs.extend(duration);
 dayjs.extend(customParseFormat);
 
-export const prettifyDate = (date: string) => {
-    return dayjs(date).utc(true).format('DD.MM.YYYY');
-};
+export const prettifyDate = (date: string): string => dayjs(date).utc(true).format('DD.MM.YYYY');
 
-export const beregnDagerTimer = (dur: string) => {
-    return Math.round(dayjs.duration(dur).asHours() * 100) / 100;
-};
+export const beregnDagerTimer = (dur: string): number => Math.round(dayjs.duration(dur).asHours() * 100) / 100;
 
-export function dateFromString(dateString: string) {
+export function dateFromString(dateString: string): dayjs.Dayjs {
     return dayjs(dateString, dateFormats).utc(true);
 }

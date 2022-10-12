@@ -1,10 +1,12 @@
-import { ContentWithTooltip, GreenCheckIcon, OnePersonIconBlue, OnePersonOutline } from '@navikt/k9-react-components';
+import { ContentWithTooltip, GreenCheckIcon, OnePersonIconBlue } from '@navikt/k9-react-components';
 import classNames from 'classnames/bind';
-import { EtikettAdvarsel } from 'nav-frontend-etiketter';
+import { EtikettAdvarsel, EtikettSuksess } from 'nav-frontend-etiketter';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import { Element } from 'nav-frontend-typografi';
 import * as React from 'react';
+import { arbeidstypeTilVisning } from '../../../constants/Arbeidstype';
+import BarnetsDødsfallÅrsakerMedTekst from '../../../constants/BarnetsDødsfallÅrsakerMedTekst';
 import IkkeOppfylteÅrsakerMedTekst from '../../../constants/IkkeOppfylteÅrsakerMedTekst';
 import OverseEtablertTilsynÅrsak from '../../../constants/OverseEtablertTilsynÅrsak';
 import Årsaker from '../../../constants/Årsaker';
@@ -29,6 +31,45 @@ const getÅrsaksetiketter = (årsaker: Årsaker[]) => {
     ));
 };
 
+const getTekstVedBarnetsDødsfall = (årsaker: Årsaker[]) => {
+    const funnedeÅrsaker = BarnetsDødsfallÅrsakerMedTekst.filter((årsak) => harÅrsak(årsaker, årsak.årsak));
+    return funnedeÅrsaker.map((årsak) => (
+        <div key={årsak.årsak} className={styles.uttakDetaljer__etikettBarnetsDødsfall}>
+            {årsak.tekst}
+        </div>
+    ));
+};
+
+const utenlandsoppholdTekst = (utenlandsopphold, kodeverk) => {
+    if (utenlandsopphold?.erEøsLand) {
+        return 'Periode med utenlandsopphold i EØS-land, telles ikke i 8 uker';
+    }
+
+    return kodeverk?.find((v) => v.kode === utenlandsopphold?.årsak)?.navn;
+};
+
+const utenlandsoppholdInfo = (årsaker, utenlandsopphold) => {
+    const { kodeverkUtenlandsoppholdÅrsak } = React.useContext(ContainerContext);
+
+    if (!utenlandsopphold?.landkode) {
+        return null;
+    }
+
+    if (
+        utenlandsopphold?.landkode &&
+        utenlandsopphold?.årsak === 'INGEN' &&
+        harÅrsak(årsaker, Årsaker.FOR_MANGE_DAGER_UTENLANDSOPPHOLD)
+    ) {
+        return null;
+    }
+
+    return (
+        <EtikettSuksess className={styles.uttakDetaljer__etikett}>
+            {utenlandsoppholdTekst(utenlandsopphold, kodeverkUtenlandsoppholdÅrsak)}
+        </EtikettSuksess>
+    );
+};
+
 const harBeredskapEllerNattevåkÅrsak = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsak) => {
     const beredskapEllerNattevåkÅrsaker = [
         OverseEtablertTilsynÅrsak.BEREDSKAP,
@@ -38,7 +79,7 @@ const harBeredskapEllerNattevåkÅrsak = (overseEtablertTilsynÅrsak: OverseEtab
     return beredskapEllerNattevåkÅrsaker.some((årsak) => årsak === overseEtablertTilsynÅrsak);
 };
 
-const hentÅrsakstekst = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsak, etablertTilsyn: number) => {
+const getÅrsakstekst = (overseEtablertTilsynÅrsak: OverseEtablertTilsynÅrsak, etablertTilsyn: number) => {
     if (overseEtablertTilsynÅrsak === OverseEtablertTilsynÅrsak.BEREDSKAP) {
         return `Etablert tilsyn på ${etablertTilsyn} % blir ikke medregnet på grunn av beredskap.`;
     }
@@ -54,17 +95,19 @@ const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn, pleieb
     const utnullingPåGrunnAvBeredskapEllerNattevåk =
         overseEtablertTilsynÅrsak && harBeredskapEllerNattevåkÅrsak(overseEtablertTilsynÅrsak);
     const beredskapEllerNattevåkÅrsakTekst = utnullingPåGrunnAvBeredskapEllerNattevåk
-        ? hentÅrsakstekst(overseEtablertTilsynÅrsak, etablertTilsyn)
+        ? getÅrsakstekst(overseEtablertTilsynÅrsak, etablertTilsyn)
         : '';
 
     return (
         <div className={styles.uttakDetaljer__graderingMotTilsyn}>
             <p className={styles.uttakDetaljer__data}>{`Pleiebehov: ${pleiebehov} %`}</p>
-            <p className={styles.uttakDetaljer__data}>
+            <span className={styles.uttakDetaljer__data}>
                 {`- Etablert tilsyn: `}
                 {overseEtablertTilsynÅrsak ? (
                     <>
-                        <span className={styles['uttakDetaljer__data--utnullet']}>{etablertTilsyn} %</span>
+                        <span className={cx('uttakDetaljer__data--utnullet', 'uttakDetaljer__data--margin-left')}>
+                            {etablertTilsyn} %
+                        </span>
                         <Hjelpetekst
                             className={styles.uttakDetaljer__data__questionMark}
                             type={PopoverOrientering.Hoyre}
@@ -77,7 +120,7 @@ const formatGraderingMotTilsyn = (graderingMotTilsyn: GraderingMotTilsyn, pleieb
                 ) : (
                     `${etablertTilsyn} %`
                 )}
-            </p>
+            </span>
             <p className={styles.uttakDetaljer__data}>{`- Andre søkeres tilsyn: ${andreSøkeresTilsyn} %`}</p>
             <hr className={styles.uttakDetaljer__separator} />
             <p className={styles.uttakDetaljer__sum}>{`= ${tilgjengeligForSøker} % tilgjengelig for søker`}</p>
@@ -90,31 +133,64 @@ const formatAvkortingMotArbeid = (
     søkersTapteArbeidstid: number,
     alleArbeidsforhold: Record<string, ArbeidsgiverOpplysninger>
 ) => (
-    <div className={styles.uttakDetaljer__avkortingMotArbeid}>
-        {utbetalingsgrader.map((utbetalingsgradItem, index) => {
-            const { normalArbeidstid, faktiskArbeidstid, utbetalingsgrad, arbeidsforhold } = utbetalingsgradItem;
-            const orgnr = arbeidsforhold?.organisasjonsnummer;
-            const arbeidsgivernavn = alleArbeidsforhold[orgnr]?.navn || 'Arbeidsgiver';
-            return (
-                <div key={index}>
-                    <Element
-                        className={styles.uttakDetaljer__avkortingMotArbeid__heading}
-                    >{`${arbeidsgivernavn}:`}</Element>
-                    <p className={styles.uttakDetaljer__data}>
-                        {`Normal arbeidstid: ${beregnDagerTimer(normalArbeidstid)} timer`}
-                    </p>
-                    <p className={styles.uttakDetaljer__data}>
-                        {`Faktisk arbeidstid: ${beregnDagerTimer(faktiskArbeidstid)} timer`}
-                    </p>
-                    <p className={styles.uttakDetaljer__data}>{`Utbetalingsgrad: ${utbetalingsgrad} %`}</p>
-                    <p className={styles.uttakDetaljer__sum}>{`Søkers inntektstap: ${søkersTapteArbeidstid} %`}</p>
-                </div>
-            );
-        })}
-    </div>
+    <>
+        <div className={styles.uttakDetaljer__avkortingMotArbeid}>
+            {utbetalingsgrader.map((utbetalingsgradItem, index) => {
+                const { normalArbeidstid, faktiskArbeidstid, utbetalingsgrad, arbeidsforhold } = utbetalingsgradItem;
+                const orgnr = arbeidsforhold?.organisasjonsnummer;
+                const aktoerId = arbeidsforhold?.aktørId;
+                const arbeidsforholdData = alleArbeidsforhold[orgnr || aktoerId];
+                const arbeidsgivernavn = arbeidsforholdData?.navn;
+                const arbeidsgiverFnr = arbeidsforholdData?.personIdentifikator;
+                const arbeidstype = arbeidstypeTilVisning[arbeidsforhold?.type];
+                const arbeidsgiverInfo = arbeidsgivernavn ? `${arbeidsgivernavn} (${orgnr || arbeidsgiverFnr})` : '';
+                const beregnetNormalArbeidstid = beregnDagerTimer(normalArbeidstid);
+                const beregnetFaktiskArbeidstid = beregnDagerTimer(faktiskArbeidstid);
+                const faktiskOverstigerNormal = beregnetNormalArbeidstid < beregnetFaktiskArbeidstid;
+                return (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <div key={index}>
+                        <Element className={styles.uttakDetaljer__avkortingMotArbeid__heading}>
+                            <span>{arbeidstype}</span>
+                            <span>{arbeidsgiverInfo || orgnr || arbeidsgiverFnr}</span>
+                        </Element>
+                        <p className={styles.uttakDetaljer__data}>
+                            {`Normal arbeidstid: ${beregnetNormalArbeidstid} timer`}
+                        </p>
+                        <span className={styles.uttakDetaljer__data}>
+                            <span>Faktisk arbeidstid:</span>
+                            <span
+                                className={cx({
+                                    'uttakDetaljer__data--utnullet': faktiskOverstigerNormal,
+                                    'uttakDetaljer__data--margin-left-right': true,
+                                })}
+                            >
+                                {beregnetFaktiskArbeidstid}
+                            </span>
+                            <span>{`${faktiskOverstigerNormal ? beregnetNormalArbeidstid : ''} timer`}</span>
+                            {faktiskOverstigerNormal && (
+                                <Hjelpetekst
+                                    className={styles.uttakDetaljer__data__questionMark}
+                                    type={PopoverOrientering.Hoyre}
+                                >
+                                    Overstigende timer tas ikke hensyn til, faktisk arbeidstid settes lik normal
+                                    arbeidstid
+                                </Hjelpetekst>
+                            )}
+                        </span>
+                        <p className={styles.uttakDetaljer__data}>{`Utbetalingsgrad: ${utbetalingsgrad} %`}</p>
+                    </div>
+                );
+            })}
+        </div>
+        <hr />
+        <p className={styles.uttakDetaljer__sum}>{`= ${søkersTapteArbeidstid} % totalt inntektstap`}</p>
+    </>
 );
 
 const shouldHighlight = (aktuellÅrsak: Årsaker, årsaker: Årsaker[]) => årsaker.some((årsak) => årsak === aktuellÅrsak);
+const harBarnetsDødsfallÅrsak = (årsaker: Årsaker[]) =>
+    BarnetsDødsfallÅrsakerMedTekst.some((barnetsDødsfallÅrsak) => harÅrsak(årsaker, barnetsDødsfallÅrsak.årsak));
 
 const getSøkerBerOmMaksimalt = (søkerBerOmMaksimalt: number, årsaker: Årsaker[]) => {
     const highlightSøkerBerOmMaksimalt =
@@ -146,40 +222,39 @@ interface UttakDetaljerProps {
 }
 
 const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
-    const { arbeidsforhold } = React.useContext(ContainerContext);
+    const { arbeidsforhold, erFagytelsetypeLivetsSluttfase } = React.useContext(ContainerContext);
     const {
         utbetalingsgrader,
-        uttaksgrad,
         graderingMotTilsyn,
         søkerBerOmMaksimalt,
         årsaker,
         søkersTapteArbeidstid,
         pleiebehov,
+        utenlandsopphold,
     } = uttak;
-
-    const tilgjengeligForAndreSøkere = graderingMotTilsyn?.tilgjengeligForSøker
-        ? graderingMotTilsyn.tilgjengeligForSøker - uttaksgrad
-        : 0;
-
     return (
         <div className={styles.uttakDetaljer}>
             {getÅrsaksetiketter(årsaker)}
+            {getTekstVedBarnetsDødsfall(årsaker)}
+            {utenlandsoppholdInfo(årsaker, utenlandsopphold)}
             <div className={styles.uttakDetaljer__oppsummering}>
                 {søkerBerOmMaksimalt && getSøkerBerOmMaksimalt(søkerBerOmMaksimalt, årsaker)}
-                <div className={styles.uttakDetaljer__oppsummering__container}>
-                    <ContentWithTooltip tooltipText="Annen part">
-                        <OnePersonOutline />
-                    </ContentWithTooltip>
-                    <p className={styles.uttakDetaljer__oppsummering__tekst}>
-                        {`Tilgjengelig for andre søkere: ${tilgjengeligForAndreSøkere} %`}
-                    </p>
-                </div>
             </div>
             <div className={styles.uttakDetaljer__grid}>
-                {graderingMotTilsyn && (
+                {graderingMotTilsyn && !erFagytelsetypeLivetsSluttfase && (
                     <UttakUtregning
                         heading="Gradering mot tilsyn"
                         highlight={shouldHighlight(Årsaker.GRADERT_MOT_TILSYN, årsaker)}
+                        headingPostContent={
+                            harBarnetsDødsfallÅrsak(årsaker) && (
+                                <Hjelpetekst
+                                    className={styles.uttakDetaljer__data__questionMark}
+                                    type={PopoverOrientering.Hoyre}
+                                >
+                                    Gradering mot tilsyn blir ikke medregnet på grunn av barnets dødsfall.
+                                </Hjelpetekst>
+                            )
+                        }
                     >
                         {formatGraderingMotTilsyn(graderingMotTilsyn, pleiebehov)}
                     </UttakUtregning>

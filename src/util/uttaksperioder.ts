@@ -1,4 +1,4 @@
-import { Period } from '../types/Period';
+import Period from '../types/Period';
 import { Uttaksperiode } from '../types/Uttaksperiode';
 import Uttaksperioder from '../types/Uttaksperioder';
 import { sortPeriodsByNewest } from './periodUtils';

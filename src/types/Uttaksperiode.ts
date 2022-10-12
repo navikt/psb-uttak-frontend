@@ -1,10 +1,11 @@
-import { Period } from './Period';
+import Period from './Period';
 import Utbetalingsgrad from './Utbetalingsgrad';
 import GraderingMotTilsyn from './GraderingMotTilsyn';
 import Utfall from '../constants/Utfall';
 import Inngangsvilkår from './Inngangsvilkår';
 import AnnenPart from '../constants/AnnenPart';
 import Årsaker from '../constants/Årsaker';
+import Endringsstatus from './Endringsstatus';
 
 export interface Uttaksperiodeelement {
     utfall: Utfall;
@@ -19,6 +20,9 @@ export interface Uttaksperiodeelement {
     annenPart: AnnenPart;
     søkersTapteArbeidstid: number;
     pleiebehov: number;
+    endringsstatus?: Endringsstatus;
+    utenlandsoppholdUtenÅrsak?: boolean;
+    utenlandsopphold?: string;
 }
 
 export interface Uttaksperiode extends Uttaksperiodeelement {

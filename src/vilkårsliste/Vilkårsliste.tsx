@@ -10,9 +10,8 @@ interface VilkårslisteProps {
     inngangsvilkår: Inngangsvilkår;
 }
 
-const erVilkårOppfylt = (vilkårkode: string, inngangsvilkår: Inngangsvilkår) => {
-    return inngangsvilkår[vilkårkode] === Utfall.OPPFYLT;
-};
+const erVilkårOppfylt = (vilkårkode: string, inngangsvilkår: Inngangsvilkår) =>
+    inngangsvilkår[vilkårkode] === Utfall.OPPFYLT;
 
 const Vilkårsliste = ({ inngangsvilkår }: VilkårslisteProps): JSX.Element => (
     <div className={styles.vilkårsliste}>

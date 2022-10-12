@@ -3,11 +3,12 @@ import styles from './fullWidthRow.less';
 
 interface FullWidthRowProps {
     children: React.ReactNode;
+    colSpan: number;
 }
 
-const FullWidthRow = ({ children }: FullWidthRowProps): JSX.Element => (
+const FullWidthRow = ({ children, colSpan }: FullWidthRowProps): JSX.Element => (
     <tr>
-        <td className={styles.fullWidthRow__column} colSpan={6}>
+        <td className={styles.fullWidthRow__column} colSpan={colSpan}>
             {children}
         </td>
     </tr>
