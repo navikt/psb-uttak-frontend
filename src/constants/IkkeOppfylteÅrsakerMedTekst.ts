@@ -31,7 +31,7 @@ const IkkeOppfylteÅrsakerMedTekst = [
     },
     {
         årsak: Årsaker.BARNETS_DØDSFALL,
-        tekst: 'Årsak for avslag: Barnet er død, perioden går utover 6 uker eller 3 måneder.',
+        tekst: 'Årsak for avslag: Pleietrengende er død.',
     },
 ];
 
