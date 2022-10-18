@@ -5,7 +5,7 @@ import {
     OnePersonIconGray,
     RedCrossIconFilled,
     TwoPersonsWithOneHighlightedIconGray,
-} from '@navikt/k9-react-components';
+} from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import { Normaltekst } from 'nav-frontend-typografi';
 import * as React from 'react';
@@ -20,7 +20,7 @@ import FullWidthRow from '../table/FullWidthRow';
 import TableColumn from '../table/TableColumn';
 import TableRow from '../table/TableRow';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
-import styles from './uttak.less';
+import styles from './uttak.css';
 import ContainerContext from '../../context/ContainerContext';
 
 const cx = classNames.bind(styles);
@@ -55,7 +55,9 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                 <TableColumn>
                     {harOppfyltAlleInngangsvilkår ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
                 </TableColumn>
-                {erFagytelsetypeLivetsSluttfase && <TableColumn>{uttaksgrad === 0 ? <RedCrossIconFilled /> : <GreenCheckIconFilled />}</TableColumn>}
+                {erFagytelsetypeLivetsSluttfase && (
+                    <TableColumn>{uttaksgrad === 0 ? <RedCrossIconFilled /> : <GreenCheckIconFilled />}</TableColumn>
+                )}
                 <TableColumn>
                     <div className={styles.uttak__iconContainer}>
                         {harPleiebehov ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
@@ -87,7 +89,9 @@ const Uttak = ({ uttak, erValgt, velgPeriode }: UttakProps): JSX.Element => {
                         <button
                             onClick={velgPeriode}
                             type="button"
-                            className={`${styles.uttak__expandButton} ${erValgt && styles['uttak__expandButton--expanded']}`}
+                            className={`${styles.uttak__expandButton} ${
+                                erValgt && styles['uttak__expandButton--expanded']
+                            }`}
                             aria-label={erValgt ? 'Lukk' : 'Åpne'}
                             aria-expanded={erValgt}
                         >

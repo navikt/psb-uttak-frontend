@@ -1,4 +1,4 @@
-import { ContentWithTooltip, GreenCheckIcon, OnePersonIconBlue } from '@navikt/k9-react-components';
+import { ContentWithTooltip, GreenCheckIcon, OnePersonIconBlue } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import { EtikettAdvarsel, EtikettSuksess } from 'nav-frontend-etiketter';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
@@ -17,7 +17,7 @@ import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import { beregnDagerTimer } from '../../../util/dateUtils';
 import { harÅrsak } from '../../../util/årsakUtils';
 import ContainerContext from '../../context/ContainerContext';
-import styles from './uttakDetaljer.less';
+import styles from './uttakDetaljer.css';
 import UttakUtregning from './UttakUtregning';
 
 const cx = classNames.bind(styles);

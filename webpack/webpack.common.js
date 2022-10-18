@@ -8,14 +8,14 @@ const cssExtractLoaderConfig = {
     },
 };
 
-const CORE_DIR = path.resolve(__dirname, '../node_modules');
+const nodeModules = path.resolve(__dirname, '../node_modules');
 const SRC_DIR = path.resolve(__dirname, '../src');
 const IMAGES_DIR = path.resolve(__dirname, '../src/ui/assets/images');
 
 module.exports = {
     entry: path.resolve(__dirname, '../', 'src') + '/app.ts',
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.less'],
+        extensions: ['.ts', '.tsx', '.js', '.css'],
     },
     module: {
         rules: [
@@ -28,11 +28,7 @@ module.exports = {
                 include: [SRC_DIR],
             },
             {
-                test: /\.scss$/,
-                use: [cssExtractLoaderConfig, 'css-loader', 'sass-loader'],
-            },
-            {
-                test: /\.less$/,
+                test: /\.css$/,
                 use: [
                     cssExtractLoaderConfig,
                     {
@@ -44,21 +40,8 @@ module.exports = {
                             },
                         },
                     },
-                    {
-                        loader: 'less-loader',
-                        options: {
-                            lessOptions: {
-                                modules: true,
-                                localIdentName: '[name]_[local]_[contenthash:base64:5]',
-                                modifyVars: {
-                                    nodeModulesPath: '~',
-                                    coreModulePath: '~',
-                                },
-                            },
-                        },
-                    },
                 ],
-                exclude: [CORE_DIR],
+                exclude: [nodeModules],
             },
             {
                 test: /\.(less|css)?$/,
@@ -79,7 +62,7 @@ module.exports = {
                         },
                     },
                 ],
-                include: [CORE_DIR],
+                include: [nodeModules],
             },
             {
                 test: /\.(jpg|png|svg)$/,
