@@ -1827,6 +1827,11 @@
   resolved "https://npm.pkg.github.com/download/@navikt/ds-icons/1.3.5/8750ba442903aca9bc95d4557e64328c4b872c26#8750ba442903aca9bc95d4557e64328c4b872c26"
   integrity sha512-/SBwomWktNqAdJRdo0JmI6TLiGSbQtn3qmTsxVfgcWrOEPvU3Z/LADCYuN03+ZmZTRROrmH/EXuKVVkxuu+UKw==
 
+"@navikt/ds-icons@^2.0.3":
+  version "2.0.3"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-icons/2.0.3/d791dbc8153db98949879d16fb0fd074f1b3c300#d791dbc8153db98949879d16fb0fd074f1b3c300"
+  integrity sha512-28+FyIAML9/cP6edqytZGRMnxPWITLaRNdubAUgJ8ZzFSqtGaDEW2hVvm2OLGI0gIAm9fvhHeaAHdF8cCDzNIA==
+
 "@navikt/ds-react@^1.3.5":
   version "1.3.5"
   resolved "https://npm.pkg.github.com/download/@navikt/ds-react/1.3.5/7c5a31a9af6494ab5fa1426ef173421f4851af44#7c5a31a9af6494ab5fa1426ef173421f4851af44"
@@ -1837,6 +1842,20 @@
     "@radix-ui/react-tabs" "1.0.0"
     "@radix-ui/react-toggle-group" "1.0.0"
     clsx "^1.1.1"
+    react-modal "3.15.1"
+
+"@navikt/ds-react@^2.0.3":
+  version "2.0.3"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-react/2.0.3/ffabec60c9fa38a43edfffd66a6da0f5b0e37582#ffabec60c9fa38a43edfffd66a6da0f5b0e37582"
+  integrity sha512-jICUb/PJiYo50TjmZvaSuknYqP+EGWEyxsLrqwh7eQyeVV5obL8bf4eJKBOBXgEiQ0xQCathb3wsA15IxhiTAg==
+  dependencies:
+    "@floating-ui/react-dom-interactions" "0.9.2"
+    "@navikt/ds-icons" "^2.0.3"
+    "@radix-ui/react-tabs" "1.0.0"
+    "@radix-ui/react-toggle-group" "1.0.0"
+    clsx "^1.2.1"
+    date-fns "2.29.3"
+    react-day-picker "8.3.4"
     react-modal "3.15.1"
 
 "@navikt/ft-kodeverk@^1.0.19":
@@ -3201,7 +3220,7 @@ clone-deep@^4.0.1:
     kind-of "^6.0.2"
     shallow-clone "^3.0.0"
 
-clsx@^1.1.1:
+clsx@^1.1.1, clsx@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
   integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
@@ -3545,6 +3564,11 @@ damerau-levenshtein@^1.0.8:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/damerau-levenshtein/-/damerau-levenshtein-1.0.8.tgz#b43d286ccbd36bc5b2f7ed41caf2d0aba1f8a6e7"
   integrity sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==
+
+date-fns@2.29.3:
+  version "2.29.3"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.29.3.tgz#27402d2fc67eb442b511b70bbdf98e6411cd68a8"
+  integrity sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==
 
 dayjs@1.11.5, dayjs@^1.11.5:
   version "1.11.5"
@@ -6825,6 +6849,11 @@ react-collapse@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/react-collapse/-/react-collapse-5.1.1.tgz#a2fa08ef13f372141b02e6a7d49ef72427bcbc2b"
   integrity sha512-k6cd7csF1o9LBhQ4AGBIdxB60SUEUMQDAnL2z1YvYNr9KoKr+nDkhN6FK7uGaBd/rYrYfrMpzpmJEIeHRYogBw==
+
+react-day-picker@8.3.4:
+  version "8.3.4"
+  resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-8.3.4.tgz#0942d66266c58cd815d393ec0d142372b0d42f4f"
+  integrity sha512-UuCbfZ69DhQmd+UhEv8nCPp5PxMk7ioNTuOLMlU0X7q3wd7o8TKDdsjduQoeBYTPTMS3LFdbA1qqbrIpRHo/Vg==
 
 react-dom@^18.2.0:
   version "18.2.0"
