@@ -18,6 +18,13 @@ function Endringsstatus({ status }: { status: EndringsstatusType }): JSX.Element
             </ContentWithTooltip>
         );
     }
+    if (status === 'UENDRET_RESULTAT') {
+        return (
+            <ContentWithTooltip tooltipText="Endret denne behandlingen, men uten endring i resultat">
+                <PillIcon text="Uendret resultat" type="info" />
+            </ContentWithTooltip>
+        );
+    }
     if (status === 'UENDRET') {
         return (
             <ContentWithTooltip tooltipText="Uendret denne behandlingen">
