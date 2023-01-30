@@ -5,5 +5,5 @@
     "team": "pleiepenger",
     "minReplicas": "1",
     "maxReplicas": "2",
-    "ingresses": ["https://psb-uttak-frontend.dev.adeo.no", "https://psb-uttak-frontend.intern.dev.adeo.no"]
+    "ingresses": ["https://psb-uttak-frontend.dev.adeo.no"]
 }
