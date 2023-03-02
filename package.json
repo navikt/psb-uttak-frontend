@@ -61,7 +61,7 @@
         "webpack-merge": "^5.8.0"
     },
     "dependencies": {
-        "@navikt/ds-css": "2.0.12",
+        "@navikt/ds-css": "2.5.0",
         "@navikt/ds-react": "2.0.12",
         "@navikt/ft-plattform-komponenter": "^1.4.6",
         "@popperjs/core": "^2.11.6",
