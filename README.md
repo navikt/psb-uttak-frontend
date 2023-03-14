@@ -1,4 +1,7 @@
-# Frontend for uttak
+# Flyttet til https://github.com/navikt/k9-saksbehandling-frontend
+
+
+## Frontend for uttak
 
 Dette er en frontend for uttak i saksbehandlingen av pleiepenger ved sykt barn.
 
